@@ -65,3 +65,30 @@ php artisan test
 ```
 
 Tests use the `karanikolis_test` database in the same MariaDB container. They do not use SQLite and do not read or write the development database.
+
+## Database Configuration
+
+The development database connection has one source of truth: `.env`.
+
+- `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` are used by Artisan and the application.
+- `docker-compose.yml` reads the same `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` values when publishing and initializing MariaDB.
+
+The test database name also has one source of truth: `DB_TEST_DATABASE` in `.env`.
+
+- `php artisan test` reads `DB_HOST`, `DB_PORT`, `DB_USERNAME`, and `DB_PASSWORD` from `.env`.
+- During tests only, Laravel uses `DB_TEST_DATABASE` instead of `DB_DATABASE`.
+- `phpunit.xml` intentionally does not hardcode the host port or database name.
+- If the test runner cannot reach `DB_HOST:DB_PORT`, or if `DB_TEST_DATABASE` is empty or equals `DB_DATABASE`, the application fails before running migrations with a message naming the bad setting.
+
+To change the MariaDB host port, update `DB_PORT` in `.env`, then recreate the container mapping:
+
+```bash
+docker compose up -d
+```
+
+To change the test database name, update `DB_TEST_DATABASE` in `.env`. On a brand-new Docker volume, the init script creates that database automatically. On an existing Docker volume, create and grant the new database manually inside the container, or recreate the local database volume if you can discard local data:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
