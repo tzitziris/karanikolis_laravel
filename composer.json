@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "inertiajs/inertia-laravel": "^3.1",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0"
     },
@@ -30,6 +31,10 @@
         }
     },
     "scripts": {
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd\" \"php artisan serve\" \"npm run dev\" --names=server,vite --kill-others"
+        ],
         "test": [
             "@php artisan config:clear --ansi @no_additional_args",
             "@php artisan test"

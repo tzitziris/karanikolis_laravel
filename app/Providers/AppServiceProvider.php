@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use RuntimeException;
+use Throwable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $connectionName = config('database.default');
-        $developmentDatabase = env('DB_DATABASE');
+        $developmentDatabase = config("database.connections.{$connectionName}.development_database");
 
         if ($connectionName !== 'mariadb') {
             throw new RuntimeException(
@@ -33,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
             );
         }
 
-        $configuredTestDatabase = env('DB_TEST_DATABASE');
+        $configuredTestDatabase = config("database.connections.{$connectionName}.test_database");
 
         if (! is_string($configuredTestDatabase) || $configuredTestDatabase === '') {
             throw new RuntimeException(
@@ -51,6 +53,8 @@ class AppServiceProvider extends ServiceProvider
             );
         }
 
+        DB::purge($connectionName);
+
         $host = config("database.connections.{$connectionName}.host");
         $port = (int) config("database.connections.{$connectionName}.port");
         $socket = @fsockopen($host, $port, $errorCode, $errorMessage, 1.0);
@@ -64,5 +68,15 @@ class AppServiceProvider extends ServiceProvider
         }
 
         fclose($socket);
+
+        try {
+            DB::connection($connectionName)->getPdo();
+        } catch (Throwable $exception) {
+            throw new RuntimeException(
+                "Test database misconfiguration: DB_TEST_DATABASE={$testDatabase} is not accessible on DB_HOST={$host} DB_PORT={$port}. ".
+                'Create and grant that database in the MariaDB container, or recreate the local database volume after changing DB_TEST_DATABASE.',
+                previous: $exception,
+            );
+        }
     }
 }

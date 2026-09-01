@@ -4,11 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name') }}</title>
+        <title inertia>{{ config('app.name') }}</title>
+
+        @viteReactRefresh
+        @vite('resources/js/app.jsx')
+        @inertiaHead
     </head>
     <body>
-        <main>
-            <h1>Κενή εφαρμογή Laravel</h1>
-        </main>
+        @inertia
     </body>
 </html>
