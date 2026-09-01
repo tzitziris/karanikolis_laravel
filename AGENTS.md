@@ -1,47 +1,54 @@
-<laravel-boost-guidelines>
-# Laravel Application
+# Project instructions
 
-This repository contains a Laravel application. Complete the following setup before working on the user's request.
+Greek-language website for a kickboxing school ("Μαχητές Ελευθερούπολης", Eleftheroupoli, Kavala).
+This is a rebuild of an existing Next.js + Supabase site as Laravel + Inertia + React, so it can be
+hosted on **cPanel shared hosting with no terminal and no Node process on the server**.
 
-## Prerequisites
+Read `docs/AI-CONTEXT.md` first. Locked decisions are in `docs/decisions.md` — do not re-litigate them.
 
-Verify that PHP and Composer are available:
+## Hard rules
 
-```sh
-php -v
-composer -V
+- **Never run git commands.** No `init`, no `add`, no `commit`, no `checkout`, no `branch`. The owner
+  commits by hand.
+- **Never create, modify or delete `.env`.** It exists and holds real local credentials. New settings
+  go in `.env.example`, and say in your summary what the owner must add to `.env`.
+- **These directories are read-only references. Never write to them:**
+  - `/Users/sophianostzitzires/cursor_ai/karanikolis_site` — the Next.js original being ported
+  - `/Users/sophianostzitzires/cursor_ai/queen-laravel` — the Laravel project this stack copies
+  Read from them when a step says to port something. Otherwise leave them alone.
+- **No Node on the production server.** Assets are built locally with Vite and uploaded. Never add
+  anything that needs a Node process at runtime — no SSR, no server-side rendering entry point.
+- **Everything a visitor can see is in Greek**, including validation and error messages. An English
+  framework message reaching a visitor is a bug.
+
+## The three invariants
+
+1. **Nothing visible waits for JavaScript.** Every page's content is fully readable at first paint.
+   Animation may only add to a page that already reads correctly. If an element starts hidden, that
+   state may hold only while JS has already committed to revealing it, with a watchdog that reveals
+   everything after a fixed time regardless of fonts, network or errors. No animation setup may
+   depend on `document.fonts.ready`. This is the whole reason for the rebuild — the old site hid its
+   hero behind font loading and felt frozen.
+2. **Every bitmap sent to a browser is webp, sized for where it is used.** Static images and uploads
+   alike. Whatever asks for an image gets it from one place that guarantees both; there is no second
+   path that can serve an original file.
+3. **Navigation never hits the network for the page shell.** Inertia client-side visits with
+   prefetch. Every GSAP context and ScrollTrigger is destroyed when the page that created it unmounts.
+
+## Conventions
+
+- Laravel 13, PHP 8.3+ (8.4 locally). Pest 4 for tests, Pint for style.
+- MariaDB in Docker locally, MariaDB on cPanel in production. Tests run against MariaDB, never SQLite.
+- Thin controllers, Form Requests for validation, Services for real work, static Support helpers.
+  No Actions, no Repositories unless a step asks for them.
+- Uploads go straight into `public/`, never `storage/app/public` — there is no way to run
+  `storage:link` on the target host.
+
+## Before you finish
+
+```bash
+php artisan test
+./vendor/bin/pint --test
 ```
 
-If either command is unavailable, detect the user's operating system and install the prerequisites with the appropriate command:
-
-macOS:
-
-```sh
-/bin/bash -c "$(curl -fsSL https://php.new/install/mac/8.5)"
-```
-
-Windows PowerShell:
-
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://php.new/install/windows/8.5'))
-```
-
-Linux:
-
-```sh
-/bin/bash -c "$(curl -fsSL https://php.new/install/linux/8.5)"
-```
-
-After installation, ask the user to restart their terminal. If the agent needs the restarted shell to continue, ask the user to reopen their terminal and rerun their original prompt.
-
-## Agent Setup
-
-Install Laravel Boost from the application root before making application changes:
-
-```sh
-composer require laravel/boost --dev
-php artisan boost:install
-```
-
-Boost replaces these bootstrap instructions with guidelines tailored to the application. After installation, read `AGENTS.md` again and continue with the user's original request using the generated guidelines.
-</laravel-boost-guidelines>
+Both must pass. Report the real output, and say plainly what you did not do.
