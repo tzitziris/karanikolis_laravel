@@ -23,12 +23,16 @@ Read `docs/AI-CONTEXT.md` first. Locked decisions are in `docs/decisions.md` —
 
 ## The three invariants
 
-1. **Nothing visible waits for JavaScript.** Every page's content is fully readable at first paint.
-   Animation may only add to a page that already reads correctly. If an element starts hidden, that
-   state may hold only while JS has already committed to revealing it, with a watchdog that reveals
-   everything after a fixed time regardless of fonts, network or errors. No animation setup may
-   depend on `document.fonts.ready`. This is the whole reason for the rebuild — the old site hid its
-   hero behind font loading and felt frozen.
+1. **Content is never hidden waiting for asynchronous work.** The moment a page's component
+   renders, its content is visible. Animation may only enrich a page that already reads correctly.
+   An element may start hidden **only** when JavaScript itself applied that hidden state and has
+   already committed to revealing it, with a watchdog that reveals everything after a fixed time
+   regardless of fonts, network, or errors. Static CSS must never hide content that only JavaScript
+   can reveal, and no animation setup may depend on `document.fonts.ready`.
+   This is the whole reason for the rebuild — the old site hid its hero behind font loading and felt
+   frozen. Note what this rule is **not**: this is a client-rendered SPA with no SSR, so pages do not
+   work with JavaScript disabled, and we do not hand-write a second copy of any page's content to
+   pretend otherwise. Content lives in exactly one place.
 2. **Every bitmap sent to a browser is webp, sized for where it is used.** Static images and uploads
    alike. Whatever asks for an image gets it from one place that guarantees both; there is no second
    path that can serve an original file.
