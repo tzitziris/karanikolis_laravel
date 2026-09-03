@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
 @font-face {
+    font-family: "Inter Fallback";
+    font-style: normal;
+    font-weight: 400 900;
+    src: local("Arial");
+    size-adjust: 107.1194%;
+    ascent-override: 90.4365%;
+    descent-override: 22.518%;
+    line-gap-override: 0%;
+}
+
+@font-face {
     font-family: "Inter";
     font-style: normal;
     font-weight: 400 900;
@@ -19,6 +30,17 @@
 }
 
 @font-face {
+    font-family: "Roboto Condensed Fallback";
+    font-style: normal;
+    font-weight: 700 900;
+    src: local("Arial");
+    size-adjust: 88.828%;
+    ascent-override: 104.4416%;
+    descent-override: 27.4846%;
+    line-gap-override: 0%;
+}
+
+@font-face {
     font-family: "Roboto Condensed";
     font-style: normal;
     font-weight: 700 900;
@@ -34,6 +56,17 @@
     font-display: swap;
     src: url("/fonts/roboto-condensed/roboto-condensed-latin-700-900.woff2") format("woff2");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "JetBrains Mono Fallback";
+    font-style: normal;
+    font-weight: 400 700;
+    src: local("Courier New");
+    size-adjust: 99.9837%;
+    ascent-override: 102.0166%;
+    descent-override: 30.0049%;
+    line-gap-override: 0%;
 }
 
 @font-face {
@@ -69,9 +102,9 @@
     --blood: #D4A142;
     --blood-deep: #D4B366;
     --blood-glow: rgba(212, 161, 66, 0.45);
-    --font-inter: "Inter";
-    --font-bebas: "Roboto Condensed";
-    --font-jetbrains: "JetBrains Mono";
+    --font-body-face: "Inter", "Inter Fallback";
+    --font-display-face: "Roboto Condensed", "Roboto Condensed Fallback";
+    --font-code-face: "JetBrains Mono", "JetBrains Mono Fallback";
 }
 
 @theme inline {
@@ -89,9 +122,9 @@
     --color-ink-4: var(--ink-4);
     --color-line: var(--line);
     --color-line-strong: var(--line-strong);
-    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-    --font-display: var(--font-bebas), "Arial Narrow", ui-sans-serif, sans-serif;
-    --font-mono: var(--font-jetbrains), "SF Mono", Menlo, Consolas, monospace;
+    --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-display-face), ui-sans-serif, sans-serif;
+    --font-mono: var(--font-code-face), "SF Mono", Menlo, Consolas, monospace;
 }
 
 * {
@@ -110,7 +143,7 @@ body {
     overflow-x: hidden;
     background: var(--ink-1);
     color: var(--bone);
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "ss01", "cv11";
 }
 

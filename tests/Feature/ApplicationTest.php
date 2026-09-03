@@ -73,11 +73,63 @@ it('keeps fonts local, swappable, and independent from JavaScript readiness', fu
     $scripts = collect(File::allFiles(resource_path('js')))
         ->map(fn (SplFileInfo $file) => File::get($file->getPathname()))
         ->implode("\n");
+    $lowercaseCss = strtolower($css);
 
     expect($css)->toContain('font-display: swap')
         ->and($css)->not->toContain('fonts.gstatic.com')
         ->and($css)->not->toContain('fonts.googleapis.com')
         ->and($css)->not->toContain('Bebas Neue')
+        ->and($lowercaseCss)->not->toContain('bebas')
+        ->and($css)->toContain('--font-body-face')
+        ->and($css)->toContain('--font-display-face')
+        ->and($css)->toContain('--font-code-face')
         ->and($scripts)->not->toContain('document.fonts')
         ->and($scripts)->not->toContain('fonts.ready');
+});
+
+it('requires every shipped font family to have a metric-matched fallback face', function () {
+    $css = File::get(resource_path('css/app.css'));
+    preg_match_all('/@font-face\s*\{(?<body>.*?)\}/s', $css, $matches);
+
+    $faces = collect($matches['body'])
+        ->map(function (string $body) {
+            preg_match_all('/(?<property>[-a-z]+)\s*:\s*(?<value>[^;]+);/i', $body, $declarations);
+
+            $properties = collect($declarations['property'])
+                ->mapWithKeys(fn (string $property, int $index) => [
+                    strtolower($property) => trim($declarations['value'][$index]),
+                ]);
+
+            $family = trim($properties->get('font-family', ''), " \t\n\r\0\x0B\"'");
+
+            return [
+                'family' => $family,
+                'style' => $properties->get('font-style', 'normal'),
+                'weight' => preg_replace('/\s+/', ' ', $properties->get('font-weight', '400')),
+                'properties' => $properties,
+            ];
+        });
+
+    $shippedFaces = $faces
+        ->filter(fn (array $face) => str_contains($face['properties']->get('src', ''), 'url("/fonts/'))
+        ->reject(fn (array $face) => str_ends_with($face['family'], ' Fallback'));
+
+    expect($shippedFaces)->not->toBeEmpty();
+
+    foreach ($shippedFaces as $face) {
+        $fallback = $faces->first(fn (array $candidate) => $candidate['family'] === "{$face['family']} Fallback"
+            && $candidate['style'] === $face['style']
+            && $candidate['weight'] === $face['weight']);
+
+        expect($css)->toContain("\"{$face['family']}\", \"{$face['family']} Fallback\"");
+
+        expect($fallback)->not->toBeNull("Missing metric-matched fallback for {$face['family']} {$face['weight']}.")
+            ->and($fallback['properties']->get('src', ''))->toContain('local(')
+            ->and($fallback['properties']->get('src', ''))->not->toContain('url(');
+
+        foreach (['size-adjust', 'ascent-override', 'descent-override', 'line-gap-override'] as $metricDescriptor) {
+            expect($fallback['properties']->has($metricDescriptor))
+                ->toBeTrue("Missing {$metricDescriptor} on {$fallback['family']}.");
+        }
+    }
 });
