@@ -226,7 +226,7 @@ function PrinciplesSection() {
                 <ol className="mt-16 border-t border-line-strong sm:mt-20">
                     {principles.map((principle) => (
                         <li
-                            className="group grid min-h-72 items-center gap-8 border-b border-line-strong py-12 transition-colors duration-300 hover:bg-ink-2 sm:min-h-80 sm:grid-cols-[7rem_minmax(0,1fr)] sm:px-5 lg:grid-cols-[10rem_minmax(0,1fr)_minmax(18rem,28rem)] lg:gap-12 lg:px-8"
+                            className="group grid min-h-72 items-center gap-8 border-b border-line-strong py-12 transition-colors duration-300 hover:bg-ink-2 sm:min-h-80 sm:grid-cols-[7rem_minmax(0,1fr)] sm:px-5 lg:grid-cols-[7rem_minmax(0,1fr)_minmax(16rem,24rem)] lg:px-6 xl:grid-cols-[10rem_minmax(0,1fr)_minmax(18rem,28rem)] xl:gap-12 xl:px-8"
                             data-about-reveal
                             key={principle.number}
                         >
@@ -236,7 +236,7 @@ function PrinciplesSection() {
                             >
                                 {principle.number}
                             </p>
-                            <h3 className="font-display text-[clamp(3.2rem,7vw,7rem)] font-black uppercase leading-[0.8] text-bone transition-colors duration-300 group-hover:text-blood">
+                            <h3 className="font-display text-[clamp(2.8rem,4.8vw,5.75rem)] font-black uppercase leading-[0.84] text-bone transition-colors duration-300 group-hover:text-blood">
                                 {principle.title}
                             </h3>
                             <p className="max-w-md text-sm leading-7 text-bone-dim sm:col-start-2 lg:col-start-auto lg:text-base">

@@ -124,7 +124,7 @@ function CoachesHero() {
                     Η εμπειρία οδηγεί · Η συνέπεια χτίζει
                 </p>
                 <h1
-                    className="max-w-[68rem] font-display text-[clamp(4rem,12vw,12rem)] font-black uppercase leading-[0.74] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
+                    className="max-w-[68rem] font-display text-[clamp(3.5rem,12vw,12rem)] font-black uppercase leading-[0.74] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
                     data-coaches-reveal
                 >
                     Προπονητές
