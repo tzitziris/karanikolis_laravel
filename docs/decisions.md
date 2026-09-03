@@ -31,9 +31,16 @@ ADR-style log. Check here before asking "why is it done this way".
 
 ## Database
 
-- **MariaDB in Docker locally**, MariaDB on cPanel in production. *Rejected:* SQLite — it silently
-  accepts what MariaDB rejects (enums, ALTER TABLE limits, case-insensitive comparison), and the
-  difference would only surface after deploying.
+- **MariaDB 10.11 in Docker locally**, matching the cPanel production line. Do not bump the local
+  container to a newer MariaDB major/minor as a convenience: MariaDB 11.x can create collations that
+  MariaDB 10.11 cannot restore from a local dump. *Rejected:* tracking the newest MariaDB image.
+  *Rejected:* SQLite — it silently accepts what MariaDB rejects (enums, ALTER TABLE limits,
+  case-insensitive comparison), and the difference would only surface after deploying.
+- **Every project-created database declares `utf8mb4` and `utf8mb4_unicode_ci`.** The production
+  host's server default is latin1, and inherited defaults can turn Greek article titles into
+  mojibake without throwing an error. The local Docker init script creates both the development and
+  test databases explicitly; it must not rely on the image entrypoint's implicit
+  `MARIADB_DATABASE` creation path.
 - **Tests run against MariaDB**, in their own database in the same container. `queen-laravel` uses
   SQLite `:memory:` for tests; we do not, for the same reason. Cost: slower tests. Worth it.
 - **Uploads go directly into `public/`**, no `storage:link` — there is no terminal on the host to

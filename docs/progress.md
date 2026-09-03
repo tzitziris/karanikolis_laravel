@@ -303,3 +303,54 @@ The gap worth naming: the two new shell tests match source text (`toContain('<Si
 they record the intent but cannot prove it. The proof that the shell survives navigation exists
 only in the measurement above, which nothing re-runs. That is my prompt's fault — I asked Codex to
 tell me how it satisfied itself instead of asking for the property that must hold.
+
+## Prompt 13 — stylesheet corrections
+
+Two defects found by reading the compiled CSS instead of the source.
+
+`text-pewter-dim` compiled to nothing. Six labels in the header and footer — the footer column
+headings, the copyright line, and the mobile menu's label and contact block — were painted with a
+class Tailwind silently ignored, so they rendered in whatever colour they inherited. The token
+existed as a raw custom property but was never exposed to the utility layer. Root cause is prompt 2,
+which ported the tokens and missed this one.
+
+The fix is a comparison, not a patch: the suite now checks what the stylesheet defines against what
+the components ask for, in both directions. Verified by mutation — removing `--color-pewter-dim`
+from the theme failed two tests, and adding a `text-gunmetal` that nothing defines failed one.
+
+The `readable-fallback` rules were also removed, dead since prompt 10. 248 → 155 lines; compiled
+CSS 22.12 → 21.06 kB, gzip 5.25 → 5.02 kB. The line count fell by a third, the weight by 5 % —
+minification had already absorbed most of it.
+
+## Prompt 14 — the local database matches production
+
+The owner checked the cPanel host on 2026-09-03: **MariaDB 10.11.18-cll-lve, PHP 8.4.24,
+connection collation utf8mb4_unicode_ci, server default charset cp1252/latin1**.
+
+Two gaps, both now closed:
+
+1. The container ran MariaDB 11.8 against a 10.11 production. It had already produced a concrete
+   failure in waiting — the development database carried `utf8mb4_uca1400_ai_ci`, a collation
+   introduced in 11.4 and absent from 10.11, so a dump taken here could not be restored there.
+   Pinned to `mariadb:10.11`; the container now reports **10.11.19**, the same line as production.
+2. Only the test database declared its charset. The development database was created by the image
+   entrypoint and inherited the server default, which is how it acquired the unportable collation.
+   Both databases are now created by the init script with an explicit `utf8mb4` /
+   `utf8mb4_unicode_ci`, and the server itself is started with those defaults.
+
+Verified against the running container, not the config files: both schemas report
+`utf8mb4 / utf8mb4_unicode_ci`, all nine framework tables likewise, and Greek text round-trips
+exactly — `Μαχητές Ελευθερούπολης` returns 22 characters / 43 bytes, em dashes and accents intact.
+
+34 tests / 765 assertions, Pint clean.
+
+Worth carrying forward: `utf8mb4_unicode_ci` treats `ά` = `α`, `ς` = `σ` and ignores case. That is
+right for searching and **dangerous for a unique index** — two article titles differing only by
+accent or case would collide. The slug generator must expect collisions and disambiguate rather
+than assume uniqueness falls out of the transliteration.
+
+The weakness, and it is the second time: `DatabaseContainerTest` reads `docker-compose.yml`, not
+the running database. During this very step Codex ran the suite green while the 11.8 container was
+still up. A one-line query through the test connection would assert the real thing. Same shape as
+the shell tests in prompt 12 — the suite is accumulating tests that describe intent instead of
+checking it.

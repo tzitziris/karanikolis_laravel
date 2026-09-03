@@ -34,7 +34,8 @@ the same owner. Both `karanikolis_site` and `queen-laravel` are **read-only refe
 ## Status
 
 **Step 1 of 18 done (2026-09-01).** Laravel 13 skeleton, MariaDB in Docker, Pest 4 running against
-MariaDB, Pint clean. 2 tests pass. Nothing of the actual site exists yet.
+MariaDB, Pint clean. 2 tests pass. Nothing of the actual site exists yet. The local container is
+locked to MariaDB 10.11 to match cPanel production; see `decisions.md` before changing it.
 
 The roadmap is 18 Codex prompts: foundations (1-3), animation layer and image pipeline (4-5), the
 four static pages (6-9), news public side (10-13), admin (14-16), hardening and deploy packaging
@@ -50,7 +51,7 @@ the owner a command. The owner runs deploys himself.
 ## Local development
 
 ```bash
-docker compose up -d      # MariaDB on host port 33070
+docker compose up -d      # MariaDB 10.11 on host port 33070
 php artisan migrate:fresh
 php artisan serve
 ```

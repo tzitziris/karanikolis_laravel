@@ -6,7 +6,7 @@ Empty Laravel 13 skeleton for rebuilding the existing site as a Laravel applicat
 
 - PHP 8.3+; local machine is using PHP 8.4
 - Laravel 13
-- MariaDB in Docker for development and tests
+- MariaDB 10.11 in Docker for development and tests, matching cPanel production
 - Inertia + React 19 in the browser
 - Vite-built assets
 - Tailwind CSS v4, configured from CSS
@@ -49,6 +49,10 @@ php artisan key:generate
 docker compose up -d
 ```
 
+On a fresh Docker volume, the init script creates both `DB_DATABASE` and `DB_TEST_DATABASE` with
+`CHARACTER SET utf8mb4` and `COLLATE utf8mb4_unicode_ci`. The compose file deliberately does not use
+the image's `MARIADB_DATABASE` shortcut, because that path inherits server defaults.
+
 8. Run the application migrations:
 
 ```bash
@@ -81,19 +85,25 @@ php artisan test
 ./vendor/bin/pint --test
 ```
 
-Tests use the `karanikolis_test` database in the same MariaDB container. They do not use SQLite and do not read or write the development database.
+Tests use the `karanikolis_test` database in the same MariaDB 10.11 container. They do not use SQLite and do not read or write the development database.
 
 ## Database Configuration
+
+The Docker image is pinned to `mariadb:10.11` because production is MariaDB 10.11 on cPanel. Do not
+bump it to MariaDB 11.x: local dumps must restore on production, and 11.x can create collations that
+10.11 does not know.
 
 The development database connection has one source of truth: `.env`.
 
 - `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` are used by Artisan and the application.
 - `docker-compose.yml` reads the same `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` values when publishing and initializing MariaDB.
+- The init script creates `DB_DATABASE` explicitly with `CHARACTER SET utf8mb4` and `COLLATE utf8mb4_unicode_ci`.
 
 The test database name also has one source of truth: `DB_TEST_DATABASE` in `.env`.
 
 - `php artisan test` reads `DB_HOST`, `DB_PORT`, `DB_USERNAME`, and `DB_PASSWORD` from `.env`.
 - During tests only, Laravel uses `DB_TEST_DATABASE` instead of `DB_DATABASE`.
+- The init script creates `DB_TEST_DATABASE` explicitly with `CHARACTER SET utf8mb4` and `COLLATE utf8mb4_unicode_ci`.
 - `phpunit.xml` intentionally does not hardcode the host port or database name.
 - If the test runner cannot reach `DB_HOST:DB_PORT`, or if `DB_TEST_DATABASE` is empty or equals `DB_DATABASE`, the application fails before running migrations with a message naming the bad setting.
 

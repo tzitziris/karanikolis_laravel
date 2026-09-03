@@ -1,12 +1,15 @@
 services:
   mariadb:
-    image: mariadb:11.8
+    image: mariadb:10.11
     container_name: karanikolis_laravel_mariadb
     restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     ports:
       - "${DB_PORT:-33070}:3306"
     environment:
-      MARIADB_DATABASE: "${DB_DATABASE}"
+      MARIADB_APP_DATABASE: "${DB_DATABASE}"
       MARIADB_USER: "${DB_USERNAME}"
       MARIADB_PASSWORD: "${DB_PASSWORD}"
       MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
