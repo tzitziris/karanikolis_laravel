@@ -3,42 +3,38 @@ import { useRef } from 'react';
 import SiteImage from '../Components/SiteImage';
 import { useCoachesPageAnimation } from '../animation/useCoachesPageAnimation';
 
-const athletes = [
+const athletePlaceholders = [
     {
-        achievement: 'Αγωνιστικό τμήμα, τεχνική πυγμαχίας',
-        division: 'Senior',
+        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
         image: 'athlete-padwork',
         imageAlt: 'Αθλητής kickboxing εξασκεί γόνατο με στόχους',
-        initials: 'ΝΠ',
-        name: 'Νίκος Παπαδόπουλος',
-        weight: '−75kg',
+        marker: '01',
+        title: 'Θέση αθλητή',
+        trainingFocus: 'Στόχοι και τεχνική ακρίβεια',
     },
     {
-        achievement: 'Συμμετοχές σε διασυλλογικούς αγώνες',
-        division: 'Senior',
+        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
         image: 'athlete-bag',
         imageAlt: 'Αθλητής kickboxing προπονείται σε σάκο',
-        initials: 'ΜΓ',
-        name: 'Μαρία Γεωργίου',
-        weight: '−60kg',
+        marker: '02',
+        title: 'Θέση αθλήτριας',
+        trainingFocus: 'Σάκος και φυσική κατάσταση',
     },
     {
-        achievement: 'Προχωρημένο τμήμα, δυναμική προπόνηση',
-        division: 'Advanced',
+        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
         image: 'athlete-kick',
         imageAlt: 'Αθλητής kickboxing εκτελεί ψηλό λάκτισμα',
-        initials: 'ΓΙ',
-        name: 'Γιάννης Ιωαννίδης',
-        weight: '−85kg',
+        marker: '03',
+        title: 'Θέση αθλητή',
+        trainingFocus: 'Λακτίσματα και κινητικότητα',
     },
     {
-        achievement: 'Τμήμα νέων αθλητών, σταθερή εξέλιξη',
-        division: 'Junior',
+        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
         image: 'athlete-sparring',
         imageAlt: 'Δύο αθλητές kickboxing σε δυναμική προπόνηση',
-        initials: 'ΕΔ',
-        name: 'Ελένη Δημητρίου',
-        weight: '−55kg',
+        marker: '04',
+        title: 'Θέση αθλήτριας',
+        trainingFocus: 'Sparring και αγωνιστικός ρυθμός',
     },
 ];
 
@@ -267,25 +263,29 @@ function AthletesSection() {
         <section className="bg-ink-0 px-5 py-28 sm:px-8 sm:py-40 lg:px-12 lg:py-52">
             <div className="mx-auto max-w-[1500px]">
                 <div className="flex items-end justify-between gap-6">
-                    <h2
-                        className="max-w-[52rem] font-display text-[clamp(3.4rem,12vw,4rem)] font-black uppercase leading-[0.84] text-bone sm:text-[clamp(4rem,8vw,7.5rem)] sm:leading-[0.8]"
-                        data-coaches-reveal
-                    >
-                        Οι μαχητές μας
-                    </h2>
+                    <div data-coaches-reveal>
+                        <h2 className="max-w-[52rem] font-display text-[clamp(3.4rem,12vw,4rem)] font-black uppercase leading-[0.84] text-bone sm:text-[clamp(4rem,8vw,7.5rem)] sm:leading-[0.8]">
+                            Οι μαχητές μας
+                        </h2>
+                        <p className="mt-6 max-w-2xl text-sm leading-7 text-bone-dim sm:text-base">
+                            Η παρουσίαση των αθλητών είναι προσωρινή: μέχρι να
+                            δοθούν τα επίσημα στοιχεία, δεν εμφανίζονται
+                            ονόματα ή αγωνιστικές κατηγορίες.
+                        </p>
+                    </div>
                     <p className="hidden border-blood pl-4 text-[10px] uppercase leading-5 text-pewter sm:block sm:[border-left-width:1px]">
-                        Ενεργοί
+                        Προσωρινή
                         <br />
-                        {String(athletes.length).padStart(2, '0')} Αθλητές
+                        παρουσίαση
                     </p>
                 </div>
 
                 <div className="mt-14 grid grid-flow-dense grid-cols-1 gap-px bg-line-strong lg:grid-cols-12">
-                    {athletes.map((athlete, index) => (
+                    {athletePlaceholders.map((athlete, index) => (
                         <article
                             className={`group relative min-w-0 overflow-hidden bg-ink-1 ${cardSpans[index]}`}
                             data-coaches-reveal
-                            key={athlete.name}
+                            key={athlete.image}
                         >
                             <div className="relative min-h-[32rem] overflow-hidden sm:min-h-[38rem]">
                                 <SiteImage
@@ -293,28 +293,35 @@ function AthletesSection() {
                                     className="absolute inset-0 h-full w-full object-cover object-center grayscale contrast-125 transition-[filter,transform] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                                     data-athlete-image
                                     image={athlete.image}
-                                    slot={index === 0 || index === 3 ? 'full' : 'half'}
+                                    slot={
+                                        index === 0 || index === 3
+                                            ? 'full'
+                                            : 'half'
+                                    }
                                 />
                                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.06),rgba(5,5,5,.9)_90%)]" />
                                 <div className="absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
                                     <div className="flex items-center justify-between border-b border-white/25 pb-3 text-[9px] uppercase text-bone/75">
-                                        <span>{athlete.division}</span>
-                                        <span>{athlete.weight}</span>
+                                        <span>Προσωρινή θέση</span>
+                                        <span>Χωρίς κατηγορία</span>
                                     </div>
                                     <div className="mt-4 flex items-end justify-between gap-5">
                                         <div>
                                             <h3 className="max-w-full font-display text-[clamp(2.35rem,9vw,2.8rem)] font-black uppercase leading-[0.9] text-bone sm:text-[clamp(2.6rem,5.5vw,4.5rem)] sm:leading-[0.86]">
-                                                {athlete.name}
+                                                {athlete.title}
                                             </h3>
+                                            <p className="mt-3 text-[10px] uppercase leading-5 text-blood">
+                                                {athlete.trainingFocus}
+                                            </p>
                                             <p className="mt-3 max-w-[34rem] text-sm leading-6 text-bone/70">
-                                                {athlete.achievement}
+                                                {athlete.detail}
                                             </p>
                                         </div>
                                         <span
                                             aria-hidden="true"
                                             className="font-display text-5xl text-blood sm:text-7xl"
                                         >
-                                            {athlete.initials}
+                                            {athlete.marker}
                                         </span>
                                     </div>
                                 </div>

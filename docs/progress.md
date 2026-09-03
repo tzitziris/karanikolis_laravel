@@ -186,7 +186,8 @@ clamped to 1s in a background tab, which corrupted the first attempt's sample sp
 | what revealed the content | the 1800 ms watchdog | the render itself |
 
 Measured across three navigations between two genuinely different page components
-(`Placeholder` and the new `MotionDemo`). ScrollTrigger count stayed at 1 throughout — no leak.
+(`Placeholder` and the temporary motion demo page, since removed). ScrollTrigger count stayed at 1
+throughout — no leak.
 Full page load: 388 visible characters, 0 hidden, DOMContentLoaded 106 ms.
 
 The cause was that content was hidden with `autoAlpha: 0` and revealed by the animation. The fix

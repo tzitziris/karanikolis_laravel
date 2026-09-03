@@ -32,9 +32,3 @@ Route::get('/news', function () {
 Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
-
-Route::get('/dokimi-kinisis', function () {
-    return Inertia::render('MotionDemo', [
-        'message' => 'Η δοκιμαστική δεύτερη διαδρομή είναι έτοιμη.',
-    ]);
-})->name('motion-demo');

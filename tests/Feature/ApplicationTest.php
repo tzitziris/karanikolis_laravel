@@ -16,14 +16,6 @@ it('serves the home page through Inertia', function () {
         );
 });
 
-it('serves the motion demo as a separate Inertia page component', function () {
-    $this->get('/dokimi-kinisis')
-        ->assertInertia(fn (Assert $page) => $page
-            ->component('MotionDemo')
-            ->where('message', 'Η δοκιμαστική δεύτερη διαδρομή είναι έτοιμη.')
-        );
-});
-
 it('serves temporary public pages for unfinished shell navigation targets', function (string $path, string $title) {
     $this->get($path)
         ->assertInertia(fn (Assert $page) => $page
@@ -51,6 +43,23 @@ it('serves the about page through its finished Inertia component', function () {
         );
 });
 
+it('does not expose the temporary motion demo route', function () {
+    $this->get('/dokimi-kinisis')
+        ->assertNotFound();
+});
+
+it('keeps the coaches roster honest while athlete details are provisional', function () {
+    $coaches = File::get(resource_path('js/Pages/Coaches.jsx'));
+
+    expect($coaches)->toContain('Η παρουσίαση των αθλητών είναι προσωρινή')
+        ->and($coaches)->toContain('δεν εμφανίζονται')
+        ->and($coaches)->toContain('Χωρίς κατηγορία')
+        ->and($coaches)->not->toContain('Νίκος Παπαδόπουλος')
+        ->and($coaches)->not->toContain('Μαρία Γεωργίου')
+        ->and($coaches)->not->toContain('Γιάννης Ιωαννίδης')
+        ->and($coaches)->not->toContain('Ελένη Δημητρίου');
+});
+
 it('keeps the public shell outside the keyed Inertia page component', function () {
     $entry = File::get(resource_path('js/app.jsx'));
     $shell = File::get(resource_path('js/Layouts/SiteShell.jsx'));
@@ -76,7 +85,6 @@ it('does not leave unrendered page components behind', function () {
         'About.jsx',
         'Coaches.jsx',
         'Home.jsx',
-        'MotionDemo.jsx',
         'PublicPlaceholder.jsx',
     ]);
 });
