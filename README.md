@@ -7,6 +7,9 @@ Empty Laravel 13 skeleton for rebuilding the existing site as a Laravel applicat
 - PHP 8.3+; local machine is using PHP 8.4
 - Laravel 13
 - MariaDB in Docker for development and tests
+- Inertia + React 19 in the browser
+- Vite-built assets
+- Tailwind CSS v4, configured from CSS
 - Pest 4 for tests
 - Laravel Pint for code style
 - Database-backed sessions, cache, and queue
@@ -28,31 +31,44 @@ cp .env.example .env
 composer install
 ```
 
-5. Generate the application key if you did not set `APP_KEY` manually:
+5. Install frontend dependencies:
+
+```bash
+npm install
+```
+
+6. Generate the application key if you did not set `APP_KEY` manually:
 
 ```bash
 php artisan key:generate
 ```
 
-6. Start MariaDB:
+7. Start MariaDB:
 
 ```bash
 docker compose up -d
 ```
 
-7. Run the application migrations:
+8. Run the application migrations:
 
 ```bash
 php artisan migrate:fresh
 ```
 
-8. Start the local Laravel server:
+9. For day-to-day development, start the Laravel server and Vite dev server together:
 
 ```bash
-php artisan serve
+composer run dev
 ```
 
 The app will be available at http://localhost:8000.
+
+For a production-style local check, build the static assets first and then run only the PHP server:
+
+```bash
+npm run build
+php artisan serve
+```
 
 ## Verification
 
@@ -60,6 +76,7 @@ Use these commands before handing off changes:
 
 ```bash
 php artisan db:show
+npm run build
 php artisan test
 ./vendor/bin/pint --test
 ```

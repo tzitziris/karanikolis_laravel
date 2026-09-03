@@ -47,3 +47,18 @@ ADR-style log. Check here before asking "why is it done this way".
   computed once, at creation, and is then the only truth.
 - **`published` does not prove when something was published.** Ordering comes from the
   `published_at` timestamp only; the boolean says whether it is visible, nothing more.
+
+## Typography (2026-09-01)
+
+- **The display font is Roboto Condensed 900, not Bebas Neue.** Bebas Neue is served only in `latin`
+  and `latin-ext` — it contains no Greek glyphs. Verified twice: the live site's loaded `@font-face`
+  unicode ranges exclude U+0370–U+03FF, and the Google Fonts API refuses to emit a `greek` subset for
+  it. Every Greek heading on the old site, including the school's own name, is therefore drawn by the
+  CSS fallback chain (`Impact`, `Arial Narrow`, or whatever the OS provides), so headings look
+  different on macOS, Windows and Android and the intended condensed display voice never appears.
+  Roboto Condensed carries full `greek` and `greek-ext` subsets and is the closest match to that
+  intent. *Rejected:* Fira Sans Condensed (softer, less athletic); a single Inter family (loses the
+  contrast between headings and body); keeping Bebas (the bug is invisible to whoever built it and
+  permanent for everyone else).
+- **Fonts are self-hosted and must cover Greek.** A font that cannot render Greek may not be used as
+  a text face anywhere on this site.

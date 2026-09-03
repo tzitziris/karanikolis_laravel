@@ -8,11 +8,6 @@ use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
 
-it('serves the empty Greek application shell', function () {
-    $this->get('/')
-        ->assertOk();
-});
-
 it('serves the root page through Inertia', function () {
     $this->get('/')
         ->assertInertia(fn (Assert $page) => $page
@@ -59,4 +54,30 @@ it('keeps server-side rendering out of the frontend pipeline', function () {
         ->and($dependencies)->not->toContain('@inertiajs/server')
         ->and($devDependencies)->not->toContain('@inertiajs/server')
         ->and($ssrEntries)->toBe([]);
+});
+
+it('references only font files that exist in the public font directory', function () {
+    $css = File::get(resource_path('css/app.css'));
+    preg_match_all('/url\\("(?<path>\\/fonts\\/[^"]+\\.woff2)"\\)/', $css, $matches);
+
+    expect($matches['path'])->not->toBeEmpty();
+
+    foreach ($matches['path'] as $fontPath) {
+        expect(File::exists(public_path(ltrim($fontPath, '/'))))
+            ->toBeTrue("Missing font file referenced by stylesheet: {$fontPath}");
+    }
+});
+
+it('keeps fonts local, swappable, and independent from JavaScript readiness', function () {
+    $css = File::get(resource_path('css/app.css'));
+    $scripts = collect(File::allFiles(resource_path('js')))
+        ->map(fn (SplFileInfo $file) => File::get($file->getPathname()))
+        ->implode("\n");
+
+    expect($css)->toContain('font-display: swap')
+        ->and($css)->not->toContain('fonts.gstatic.com')
+        ->and($css)->not->toContain('fonts.googleapis.com')
+        ->and($css)->not->toContain('Bebas Neue')
+        ->and($scripts)->not->toContain('document.fonts')
+        ->and($scripts)->not->toContain('fonts.ready');
 });

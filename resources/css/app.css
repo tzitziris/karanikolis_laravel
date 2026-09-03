@@ -1,9 +1,120 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url("/fonts/inter/inter-greek-400-900.woff2") format("woff2");
+    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url("/fonts/inter/inter-latin-400-900.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    font-style: normal;
+    font-weight: 700 900;
+    font-display: swap;
+    src: url("/fonts/roboto-condensed/roboto-condensed-greek-700-900.woff2") format("woff2");
+    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
+@font-face {
+    font-family: "Roboto Condensed";
+    font-style: normal;
+    font-weight: 700 900;
+    font-display: swap;
+    src: url("/fonts/roboto-condensed/roboto-condensed-latin-700-900.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url("/fonts/jetbrains-mono/jetbrains-mono-greek-400-700.woff2") format("woff2");
+    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url("/fonts/jetbrains-mono/jetbrains-mono-latin-400-700.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+    --ink-0: #050505;
+    --ink-1: #090909;
+    --ink-2: #0f0f10;
+    --ink-3: #16161a;
+    --ink-4: #1e1e22;
+    --line: rgba(244, 239, 230, 0.08);
+    --line-strong: rgba(244, 239, 230, 0.18);
+    --bone: #f4efe6;
+    --bone-dim: #cbc6bd;
+    --pewter: #9a9388;
+    --pewter-dim: #6b665e;
+    --blood: #D4A142;
+    --blood-deep: #D4B366;
+    --blood-glow: rgba(212, 161, 66, 0.45);
+    --font-inter: "Inter";
+    --font-bebas: "Roboto Condensed";
+    --font-jetbrains: "JetBrains Mono";
+}
+
+@theme inline {
+    --color-background: var(--ink-1);
+    --color-foreground: var(--bone);
+    --color-bone: var(--bone);
+    --color-bone-dim: var(--bone-dim);
+    --color-pewter: var(--pewter);
+    --color-blood: var(--blood);
+    --color-blood-deep: var(--blood-deep);
+    --color-ink-0: var(--ink-0);
+    --color-ink-1: var(--ink-1);
+    --color-ink-2: var(--ink-2);
+    --color-ink-3: var(--ink-3);
+    --color-ink-4: var(--ink-4);
+    --color-line: var(--line);
+    --color-line-strong: var(--line-strong);
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-bebas), "Arial Narrow", ui-sans-serif, sans-serif;
+    --font-mono: var(--font-jetbrains), "SF Mono", Menlo, Consolas, monospace;
+}
+
+* {
+    border-radius: 0 !important;
+}
+
 html {
-    color-scheme: light;
+    background: var(--ink-1);
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
     margin: 0;
+    overflow-x: hidden;
+    background: var(--ink-1);
+    color: var(--bone);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+    background: var(--blood);
+    color: var(--bone);
 }
