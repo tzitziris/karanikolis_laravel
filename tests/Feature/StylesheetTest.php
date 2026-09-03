@@ -116,3 +116,49 @@ it('does not ship the deleted readable fallback stylesheet', function () {
 
     expect($stylesheet)->not->toContain('readable-fallback');
 });
+
+it('does not allow arbitrary mid-word text breaking in visitor components', function () {
+    $forbidden = [
+        'break-words',
+        'break-all',
+        '[overflow-wrap:anywhere]',
+        '[overflow-wrap:break-word]',
+        '[word-break:break-all]',
+        '[word-break:break-word]',
+        'hyphens-auto',
+        'overflow-wrap: anywhere',
+        'overflow-wrap:anywhere',
+        'overflow-wrap: break-word',
+        'overflow-wrap:break-word',
+        'word-break: break-all',
+        'word-break:break-all',
+        'word-break: break-word',
+        'word-break:break-word',
+        'hyphens: auto',
+        'hyphens:auto',
+    ];
+
+    collect([
+        ...File::allFiles(resource_path('js/Components')),
+        ...File::allFiles(resource_path('js/Layouts')),
+        ...File::allFiles(resource_path('js/Pages')),
+    ])->each(function (SplFileInfo $file) use ($forbidden) {
+        $source = File::get($file->getPathname());
+
+        foreach ($forbidden as $needle) {
+            expect($source)->not->toContain(
+                $needle,
+                "Visitor component [{$file->getRelativePathname()}] must not use arbitrary mid-word text breaking [{$needle}].",
+            );
+        }
+    });
+
+    $stylesheet = stylesheetSource();
+
+    foreach ($forbidden as $needle) {
+        expect($stylesheet)->not->toContain(
+            $needle,
+            "Stylesheet must not use arbitrary mid-word text breaking [{$needle}].",
+        );
+    }
+});

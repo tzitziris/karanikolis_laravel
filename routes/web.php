@@ -34,11 +34,7 @@ Route::get('/news', function () {
 })->name('news');
 
 Route::get('/about', function () {
-    return Inertia::render('PublicPlaceholder', [
-        'eyebrow' => 'Προσωρινή σελίδα',
-        'message' => 'Η πραγματική σελίδα σχετικά με τη σχολή θα προστεθεί σε επόμενο βήμα.',
-        'title' => 'Σχετικά',
-    ]);
+    return Inertia::render('About');
 })->name('about');
 
 Route::get('/dokimi-kinisis', function () {

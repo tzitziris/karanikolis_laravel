@@ -24,7 +24,7 @@ it('serves the motion demo as a separate Inertia page component', function () {
         );
 });
 
-it('serves temporary public pages for every shell navigation target', function (string $path, string $title) {
+it('serves temporary public pages for unfinished shell navigation targets', function (string $path, string $title) {
     $this->get($path)
         ->assertInertia(fn (Assert $page) => $page
             ->component('PublicPlaceholder')
@@ -36,8 +36,14 @@ it('serves temporary public pages for every shell navigation target', function (
     ['/coaches', 'Ομάδα'],
     ['/schedule', 'Πρόγραμμα'],
     ['/news', 'Νέα'],
-    ['/about', 'Σχετικά'],
 ]);
+
+it('serves the about page through its finished Inertia component', function () {
+    $this->get('/about')
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('About')
+        );
+});
 
 it('keeps the public shell outside the keyed Inertia page component', function () {
     $entry = File::get(resource_path('js/app.jsx'));
@@ -61,6 +67,7 @@ it('does not leave unrendered page components behind', function () {
         ->all();
 
     expect($pageComponents)->toBe([
+        'About.jsx',
         'Home.jsx',
         'MotionDemo.jsx',
         'PublicPlaceholder.jsx',

@@ -15,21 +15,24 @@ const chapters = [
         image: 'ring-training',
         imageAlt: 'Αθλητές kickboxing προπονούνται μέσα στο ρινγκ',
         number: '01',
-        title: 'Μάθε να στέκεσαι.',
+        titleAction: 'στέκεσαι.',
+        titleLead: 'Μάθε να',
     },
     {
         body: 'Η πειθαρχία μετατρέπει την επανάληψη σε αυτοπεποίθηση και την προσπάθεια σε πρόοδο.',
         image: 'pad-work',
         imageAlt: 'Αθλητής εξασκεί χτυπήματα με την προπονήτριά του',
         number: '02',
-        title: 'Μάθε να επιμένεις.',
+        titleAction: 'επιμένεις.',
+        titleLead: 'Μάθε να',
     },
     {
         body: 'Με έλεγχο, σεβασμό και καθαρό μυαλό. Μέσα στο ρινγκ και έξω από αυτό.',
         image: 'sparring',
         imageAlt: 'Δύο αθλητές εξασκούν τεχνικές kickboxing',
         number: '03',
-        title: 'Μάθε να μάχεσαι.',
+        titleAction: 'μάχεσαι.',
+        titleLead: 'Μάθε να',
     },
 ];
 
@@ -58,11 +61,11 @@ function HomeHero() {
                     Kickboxing · Ελευθερούπολη
                 </p>
                 <h1
-                    className="max-w-[13ch] font-display text-[clamp(4.7rem,15.4vw,14.8rem)] font-black uppercase leading-[0.73] text-blood [text-shadow:0_10px_60px_rgba(0,0,0,.55)]"
+                    className="max-w-[64rem] font-display text-[clamp(4.7rem,15.4vw,14.8rem)] font-black uppercase leading-[0.73] text-blood [text-shadow:0_10px_60px_rgba(0,0,0,.55)]"
                     data-home-reveal
                 >
                     Μαχητές
-                    <span className="block text-[clamp(2.65rem,8.3vw,8rem)] text-bone">
+                    <span className="block text-[clamp(2.4rem,8.3vw,8rem)] text-bone">
                         Ελευθερούπολης
                     </span>
                 </h1>
@@ -112,7 +115,7 @@ function ManifestoSection() {
                             className="mb-8 block h-px w-20 bg-blood"
                         />
                         <h2
-                            className="max-w-[13ch] font-display text-[clamp(3.2rem,13.2vw,4.25rem)] font-black uppercase leading-[0.84] text-bone lg:text-[clamp(4.25rem,5vw,6rem)]"
+                            className="max-w-[42rem] font-display text-[clamp(3.2rem,13.2vw,4.25rem)] font-black uppercase leading-[0.84] text-bone lg:text-[clamp(4.25rem,5vw,6rem)]"
                             data-home-reveal
                         >
                             <span className="text-blood">
@@ -182,7 +185,10 @@ function JourneySection() {
                                 {chapter.number}
                             </span>
                             <h2 className="mt-3 max-w-full font-display text-[clamp(3.45rem,15vw,4rem)] font-black uppercase leading-[0.84] text-bone">
-                                {chapter.title}
+                                {chapter.titleLead}
+                                <span className="block text-[clamp(2.45rem,11vw,3.25rem)]">
+                                    {chapter.titleAction}
+                                </span>
                             </h2>
                             <p className="mt-6 max-w-md text-sm leading-6 text-bone/75">
                                 {chapter.body}
@@ -225,8 +231,11 @@ function JourneySection() {
                                     <span className="font-display text-7xl font-black leading-none text-blood">
                                         {chapter.number}
                                     </span>
-                                    <h2 className="mt-3 max-w-[9ch] font-display text-[clamp(4rem,10vw,9rem)] font-black uppercase leading-[0.78] text-bone [text-shadow:0_8px_40px_rgba(0,0,0,.8)]">
-                                        {chapter.title}
+                                    <h2 className="mt-3 max-w-[52rem] font-display text-[clamp(4rem,10vw,9rem)] font-black uppercase leading-[0.78] text-bone [text-shadow:0_8px_40px_rgba(0,0,0,.8)]">
+                                        {chapter.titleLead}
+                                        <span className="block text-[clamp(3rem,7vw,6.25rem)]">
+                                            {chapter.titleAction}
+                                        </span>
                                     </h2>
                                     <p className="mt-6 max-w-md text-base leading-7 text-bone/80">
                                         {chapter.body}
@@ -269,7 +278,7 @@ function TestimonialSection() {
                     Η νοοτροπία μας
                 </p>
                 <blockquote
-                    className="mt-8 max-w-[18ch] font-display text-[clamp(3.1rem,14vw,3.6rem)] font-black uppercase leading-[0.9] sm:text-[clamp(3.6rem,7.5vw,7rem)] sm:leading-[0.84]"
+                    className="mt-8 max-w-[72rem] font-display text-[clamp(3.1rem,14vw,3.6rem)] font-black uppercase leading-[0.9] sm:text-[clamp(3.6rem,7.5vw,7rem)] sm:leading-[0.84]"
                     data-home-reveal
                 >
                     Δεν ψάχνουμε τον εύκολο δρόμο. Χτίζουμε τον δυνατό άνθρωπο.
@@ -389,7 +398,7 @@ function FinalCallSection() {
                 <p className="text-[10px] font-medium uppercase text-blood">
                     Η πρώτη προπόνηση ξεκινά εδώ
                 </p>
-                <h2 className="mt-5 max-w-[12ch] font-display text-[clamp(4.5rem,10vw,10rem)] font-black uppercase leading-[0.78] text-bone">
+                <h2 className="mt-5 max-w-[56rem] font-display text-[clamp(4.5rem,10vw,10rem)] font-black uppercase leading-[0.78] text-bone">
                     Μπες στο ρινγκ.
                 </h2>
                 <div className="mt-8 flex flex-wrap gap-4">

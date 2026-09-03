@@ -36,9 +36,9 @@ export default function Footer() {
                         <p className="text-[10px] font-medium uppercase text-blood">
                             Ελευθερούπολη · Καβάλα
                         </p>
-                        <h2 className="mt-5 max-w-full break-words font-display text-[clamp(2.75rem,11vw,4.5rem)] font-black uppercase leading-[0.82] text-bone">
+                        <h2 className="mt-5 max-w-full font-display text-[clamp(2.75rem,11vw,4.5rem)] font-black uppercase leading-[0.82] text-bone">
                             Μαχητές
-                            <span className="block text-blood">
+                            <span className="block text-[clamp(2rem,8vw,3.4rem)] text-blood">
                                 Ελευθερούπολης
                             </span>
                         </h2>
@@ -79,7 +79,7 @@ export default function Footer() {
                             <li>Τηλέφωνο</li>
                             <li className="text-bone">2510 000000</li>
                             <li className="pt-2">Email</li>
-                            <li className="break-all text-bone">
+                            <li className="text-bone">
                                 info@maxites-eleftheroupolis.gr
                             </li>
                             <li className="pt-2">Διεύθυνση</li>

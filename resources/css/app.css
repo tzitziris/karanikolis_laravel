@@ -292,6 +292,11 @@ body {
     .scroll-cue::before {
         animation: none;
     }
+
+    .about-sticky {
+        position: relative !important;
+        top: auto !important;
+    }
 }
 
 ::selection {
