@@ -2,11 +2,9 @@
 
 return [
     'static' => [
-        'source_dir' => env(
-            'STATIC_IMAGE_SOURCE_DIR',
-            base_path('../karanikolis_site/public/media'),
-        ),
+        'source_dir' => resource_path('images/static'),
         'output_dir' => 'images/static',
+        'manifest_path' => resource_path('js/images/staticImages.generated.json'),
         'quality' => 82,
         'widths' => [320, 480, 768, 1024, 1280, 1600, 1920, 2400],
         'limits' => [

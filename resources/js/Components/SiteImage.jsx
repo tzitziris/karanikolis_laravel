@@ -1,36 +1,44 @@
 import {
     STATIC_IMAGE_BASE_PATH,
+    STATIC_IMAGE_LOADING,
     STATIC_IMAGE_SLOTS,
-    STATIC_IMAGE_WIDTHS,
     STATIC_IMAGES,
 } from '../images/staticImages';
 
 function widthsFor(image) {
-    return STATIC_IMAGE_WIDTHS.filter((width) => width <= image.width);
+    return image.widths;
 }
 
 export default function SiteImage({
     alt,
     className = '',
     image,
-    loading = 'lazy',
+    loading,
     slot = 'full',
     ...props
 }) {
     const metadata = STATIC_IMAGES[image];
-
-    if (!metadata) {
-        throw new Error(`Unknown static image: ${image}`);
-    }
-
     const sizes = STATIC_IMAGE_SLOTS[slot];
 
-    if (!sizes) {
-        throw new Error(`Unknown static image slot: ${slot}`);
+    if (!metadata || !sizes) {
+        const label = alt || 'Η εικόνα δεν είναι διαθέσιμη.';
+
+        return (
+            <span
+                aria-label={label}
+                className={className}
+                data-missing-static-image={image}
+                role={alt ? 'img' : undefined}
+                {...props}
+            >
+                {alt}
+            </span>
+        );
     }
 
     const widths = widthsFor(metadata);
     const fallbackWidth = widths[widths.length - 1];
+    const loadingMode = loading ?? STATIC_IMAGE_LOADING[slot] ?? 'lazy';
 
     return (
         <img
@@ -38,7 +46,7 @@ export default function SiteImage({
             className={className}
             decoding="async"
             height={metadata.height}
-            loading={loading}
+            loading={loadingMode}
             sizes={sizes}
             src={`${STATIC_IMAGE_BASE_PATH}/${image}-${fallbackWidth}.webp`}
             srcSet={widths

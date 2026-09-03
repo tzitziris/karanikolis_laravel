@@ -62,3 +62,14 @@ ADR-style log. Check here before asking "why is it done this way".
   permanent for everyone else).
 - **Fonts are self-hosted and must cover Greek.** A font that cannot render Greek may not be used as
   a text face anywhere on this site.
+
+## Generated webp derivatives are build output, not source
+
+`resources/images/static` holds the 14 source photographs and is the only copy that matters.
+`public/images/static` holds the 84 derivatives, which `php artisan images:build-static` reproduces
+byte-for-byte from those sources — the command is deterministic and idempotent, and a test fails if
+any derivative is missing. They are therefore treated exactly like `public/build`: generated
+locally, kept out of git, and included in the deployment archive.
+
+*Consequence to remember:* `scripts/pack-deploy.sh` must include `public/images/static` alongside
+`public/build`, and a fresh clone must run `images:build-static` before the suite passes.

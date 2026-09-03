@@ -33,6 +33,7 @@ class BuildStaticImages extends Command
         $outputBytes = 0;
         $written = 0;
         $skipped = 0;
+        $convertedImages = [];
 
         foreach ($photos as $name => $filename) {
             if (! is_string($name) || ! is_string($filename)) {
@@ -42,6 +43,7 @@ class BuildStaticImages extends Command
             }
 
             $result = $images->convert($name, $sourceDir.DIRECTORY_SEPARATOR.$filename, $force);
+            $convertedImages[] = $result;
             $sourceBytes += $result['source_bytes'];
 
             foreach ($result['derivatives'] as $derivative) {
@@ -62,6 +64,9 @@ class BuildStaticImages extends Command
                 count($result['derivatives']),
             ));
         }
+
+        $manifestPath = $images->writeManifest($convertedImages);
+        $this->line("Manifest: {$manifestPath}");
 
         $this->info(sprintf(
             'Done. %d source bytes, %d output bytes, %d written, %d skipped.',

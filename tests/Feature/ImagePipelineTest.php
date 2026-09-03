@@ -28,15 +28,18 @@ function writeImagePipelineTestJpeg(string $path, int $width = 640, int $height 
 
 it('converts static images through an idempotent local command', function () {
     $sourceDir = storage_path('framework/testing/static-image-source');
+    $manifestPath = storage_path('framework/testing/static-image-manifest.json');
     $outputDir = 'images/testing-static';
 
     File::deleteDirectory($sourceDir);
     File::deleteDirectory(public_path($outputDir));
+    File::delete($manifestPath);
 
     writeImagePipelineTestJpeg("{$sourceDir}/demo.jpg");
 
     config()->set('images.static.source_dir', $sourceDir);
     config()->set('images.static.output_dir', $outputDir);
+    config()->set('images.static.manifest_path', $manifestPath);
     config()->set('images.static.photos', ['demo' => 'demo.jpg']);
     config()->set('images.static.widths', [320, 480, 768]);
 
@@ -57,7 +60,7 @@ it('converts static images through an idempotent local command', function () {
 
         $firstHashes = $files->mapWithKeys(fn (string $path): array => [
             basename($path) => hash_file('sha256', $path),
-        ])->all();
+        ])->put('manifest', hash_file('sha256', $manifestPath))->all();
 
         $this->artisan('images:build-static')
             ->assertExitCode(0);
@@ -68,14 +71,25 @@ it('converts static images through an idempotent local command', function () {
             ->values();
         $secondHashes = $secondFiles->mapWithKeys(fn (string $path): array => [
             basename($path) => hash_file('sha256', $path),
-        ])->all();
+        ])->put('manifest', hash_file('sha256', $manifestPath))->all();
 
         expect($secondFiles)->toHaveCount(2)
             ->and($secondHashes)->toBe($firstHashes);
     } finally {
         File::deleteDirectory($sourceDir);
         File::deleteDirectory(public_path($outputDir));
+        File::delete($manifestPath);
     }
+});
+
+it('keeps static source photographs inside this repository and outside public paths', function () {
+    $sourceDir = realpath(config('images.static.source_dir'));
+
+    expect($sourceDir)->not->toBeFalse()
+        ->and($sourceDir)->toStartWith(base_path())
+        ->and($sourceDir)->not->toStartWith(public_path())
+        ->and(config('images.static.source_dir'))->not->toContain('karanikolis_site')
+        ->and(File::allFiles($sourceDir))->toHaveCount(14);
 });
 
 it('has generated webp derivatives for every configured static photograph', function () {
@@ -148,17 +162,43 @@ it('keeps bitmap URLs out of stylesheets', function () {
     expect($stylesheet)->not->toMatch('/url\\([^)]*\\.(jpe?g|png|gif|webp|avif)/i');
 });
 
-it('keeps the JavaScript static image manifest aligned with PHP configuration', function () {
-    $componentManifest = File::get(resource_path('js/images/staticImages.js'));
+it('keeps the generated JavaScript static image manifest exactly aligned with local sources', function () {
+    $manifest = json_decode(
+        File::get(resource_path('js/images/staticImages.generated.json')),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
     $photos = config('images.static.photos');
-
-    expect($componentManifest)->toContain('STATIC_IMAGE_WIDTHS = [320, 480, 768, 1024, 1280, 1600, 1920, 2400]');
+    $expectedImages = [];
 
     foreach ($photos as $name => $filename) {
         $info = getimagesize(config('images.static.source_dir')."/{$filename}");
 
-        expect($componentManifest)->toContain("'{$name}':")
-            ->and($componentManifest)->toContain("height: {$info[1]}")
-            ->and($componentManifest)->toContain("width: {$info[0]}");
+        $expectedImages[$name] = [
+            'height' => $info[1],
+            'width' => $info[0],
+            'widths' => array_values(array_filter(
+                config('images.static.widths'),
+                fn (int $width): bool => $width <= $info[0],
+            )),
+        ];
     }
+
+    ksort($expectedImages);
+
+    expect($manifest)->toBe([
+        'basePath' => '/images/static',
+        'images' => $expectedImages,
+        'widths' => config('images.static.widths'),
+    ]);
+});
+
+it('keeps SiteImage from throwing away the page on bad image input', function () {
+    $source = File::get(resource_path('js/Components/SiteImage.jsx'));
+    $manifestBridge = File::get(resource_path('js/images/staticImages.js'));
+
+    expect($source)->not->toContain('throw new Error')
+        ->and($source)->toContain('data-missing-static-image')
+        ->and($source)->toContain('STATIC_IMAGE_LOADING[slot]')
+        ->and($manifestBridge)->toContain("hero: 'eager'");
 });

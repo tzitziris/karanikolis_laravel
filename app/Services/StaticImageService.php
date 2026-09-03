@@ -95,6 +95,58 @@ class StaticImageService
     }
 
     /**
+     * @param  array<int, array{name: string, source_bytes: int, original_width: int, original_height: int, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}>  $convertedImages
+     */
+    public function writeManifest(array $convertedImages): string
+    {
+        $images = [];
+
+        foreach ($convertedImages as $image) {
+            $name = $image['name'];
+            $this->validateName($name);
+
+            $images[$name] = [
+                'height' => (int) $image['original_height'],
+                'width' => (int) $image['original_width'],
+                'widths' => array_values(array_map(
+                    fn (array $derivative): int => (int) $derivative['width'],
+                    $image['derivatives'],
+                )),
+            ];
+        }
+
+        ksort($images);
+
+        $manifest = [
+            'basePath' => '/'.trim($this->outputDir(), '/'),
+            'images' => $images,
+            'widths' => $this->configuredWidths(),
+        ];
+        $json = json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES).PHP_EOL;
+
+        if (! is_string($json)) {
+            throw new RuntimeException('Unable to encode static image manifest.');
+        }
+
+        $path = $this->manifestPath();
+        $directory = dirname($path);
+
+        if (! is_dir($directory) && ! @mkdir($directory, 0755, true) && ! is_dir($directory)) {
+            throw new RuntimeException('Unable to create static image manifest directory.');
+        }
+
+        if (is_file($path) && file_get_contents($path) === $json) {
+            return $path;
+        }
+
+        if (@file_put_contents($path, $json) === false) {
+            throw new RuntimeException('Unable to write static image manifest.');
+        }
+
+        return $path;
+    }
+
+    /**
      * @return array<int, int>
      */
     public function targetWidths(int $sourceWidth): array
@@ -298,6 +350,17 @@ class StaticImageService
         }
 
         return trim($directory, '/');
+    }
+
+    private function manifestPath(): string
+    {
+        $path = config('images.static.manifest_path');
+
+        if (! is_string($path) || trim($path) === '') {
+            throw new RuntimeException('Static image manifest path is invalid.');
+        }
+
+        return $path;
     }
 
     /**
