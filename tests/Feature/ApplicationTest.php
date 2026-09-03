@@ -68,14 +68,15 @@ it('references only font files that exist in the public font directory', functio
     }
 });
 
-it('keeps fonts local, swappable, and independent from JavaScript readiness', function () {
+it('keeps fonts local, optional, and independent from JavaScript readiness', function () {
     $css = File::get(resource_path('css/app.css'));
     $scripts = collect(File::allFiles(resource_path('js')))
         ->map(fn (SplFileInfo $file) => File::get($file->getPathname()))
         ->implode("\n");
     $lowercaseCss = strtolower($css);
 
-    expect($css)->toContain('font-display: swap')
+    expect($css)->toContain('font-display: optional')
+        ->and($css)->not->toContain('font-display: swap')
         ->and($css)->not->toContain('fonts.gstatic.com')
         ->and($css)->not->toContain('fonts.googleapis.com')
         ->and($css)->not->toContain('Bebas Neue')
@@ -132,4 +133,79 @@ it('requires every shipped font family to have a metric-matched fallback face', 
                 ->toBeTrue("Missing {$metricDescriptor} on {$fallback['family']}.");
         }
     }
+});
+
+it('keeps font preloads family-complete and aligned with shipped font files', function () {
+    $css = File::get(resource_path('css/app.css'));
+    $blade = File::get(resource_path('views/app.blade.php'));
+
+    preg_match_all('/@font-face\s*\{(?<body>.*?)\}/s', $css, $fontFaceMatches);
+    preg_match_all('/<link\s+(?<attributes>[^>]+)>/i', $blade, $linkMatches);
+
+    $fontFaces = collect($fontFaceMatches['body'])
+        ->map(function (string $body) {
+            preg_match_all('/(?<property>[-a-z]+)\s*:\s*(?<value>[^;]+);/i', $body, $declarations);
+
+            $properties = collect($declarations['property'])
+                ->mapWithKeys(fn (string $property, int $index) => [
+                    strtolower($property) => trim($declarations['value'][$index]),
+                ]);
+
+            preg_match('/url\("(?<path>\/fonts\/[^"]+\.woff2)"\)/', $properties->get('src', ''), $pathMatch);
+
+            return [
+                'family' => trim($properties->get('font-family', ''), " \t\n\r\0\x0B\"'"),
+                'display' => $properties->get('font-display'),
+                'path' => $pathMatch['path'] ?? null,
+                'unicodeRange' => $properties->get('unicode-range', ''),
+            ];
+        })
+        ->filter(fn (array $face) => $face['path'] !== null);
+
+    $fontFaces->each(fn (array $face) => expect($face['display'] ?? null)
+        ->toBe('optional', "Shipped font must not swap after first paint: {$face['path']}."));
+
+    $preloadedFontPaths = collect($linkMatches['attributes'])
+        ->map(function (string $tag) {
+            preg_match_all('/(?<name>[-:a-z]+)(?:\s*=\s*(?:"(?<double>[^"]*)"|\'(?<single>[^\']*)\'|(?<bare>[^\s"\'=<>`]+)))?/i', $tag, $attributeMatches, PREG_SET_ORDER);
+
+            return collect($attributeMatches)
+                ->mapWithKeys(fn (array $attribute) => [
+                    strtolower($attribute['name']) => ($attribute['double'] ?? '') ?: (($attribute['single'] ?? '') ?: (($attribute['bare'] ?? '') ?: true)),
+                ]);
+        })
+        ->filter(fn ($attributes) => ($attributes->get('rel') === 'preload') && ($attributes->get('as') === 'font'))
+        ->map(function ($attributes) {
+            expect($attributes->get('type'))->toBe('font/woff2')
+                ->and($attributes->has('crossorigin'))->toBeTrue();
+
+            return $attributes->get('href');
+        })
+        ->filter(fn ($href) => is_string($href) && str_starts_with($href, '/fonts/') && str_ends_with($href, '.woff2'))
+        ->unique()
+        ->filter()
+        ->sort()
+        ->values()
+        ->all();
+
+    $shippedFontPaths = $fontFaces
+        ->pluck('path')
+        ->sort()
+        ->values()
+        ->all();
+
+    expect($preloadedFontPaths)->toBe($shippedFontPaths);
+
+    $fontFaces
+        ->groupBy('family')
+        ->each(function ($familyFaces, string $family) use ($preloadedFontPaths) {
+            $fontDisplays = $familyFaces->pluck('display')->unique()->values();
+            $criticalStates = $familyFaces
+                ->map(fn (array $face) => in_array($face['path'], $preloadedFontPaths, true))
+                ->unique()
+                ->values();
+
+            expect($fontDisplays)->toHaveCount(1, "Font-display differs between slices of {$family}.")
+                ->and($criticalStates)->toHaveCount(1, "Only part of {$family}'s coverage is fetched early.");
+        });
 });

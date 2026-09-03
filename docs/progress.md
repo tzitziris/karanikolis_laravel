@@ -120,3 +120,54 @@ second environment to be confused by.
 **Also found while checking fonts (unrelated to the port, see `decisions.md`):** the display font has
 no Greek glyphs, so every Greek heading on the live site is drawn by the OS fallback. Owner chose
 Roboto Condensed 900 as the replacement.
+
+---
+
+## Steps 4-7 — typography foundation (2026-09-01)
+
+Four prompts, because each fix exposed the next problem. Final state: 8 tests, 114 assertions, Pint
+clean, build 306 KB JS + 8.4 KB CSS.
+
+**Step 4 — self-hosted Greek fonts + design tokens.** Inter, Roboto Condensed, JetBrains Mono, greek
+and latin slices only, with licences. Verified in the browser that Greek glyphs come from our files
+(both Roboto Condensed slices load; Greek width 196px matches a condensed face, not generic sans at
+235px). *Found:* no metric-matched fallback at all, which made us **worse than the site we replace** —
+its framework generated those automatically. Also `--font-bebas` was left holding Roboto Condensed,
+a name that lies in the compiled CSS. **That one was my prompt's fault**: I said "keep the original
+names so the codebases stay comparable", which is right for the colour tokens and wrong for a font we
+deliberately changed. I no longer give blanket "keep the names" instructions — I name the specific
+tokens to preserve.
+
+**Step 5 — metric-matched fallbacks + honest token names.** Measured afterwards: **height delta 0%**
+on every sample, so the vertical layout shift is gone. Width still differs.
+
+**Step 6 — close the swap window.** Codex chose `font-display: optional` plus preloading the Greek
+slices. Codex's review agent then filed a P1 saying the single fallback face cannot match both the
+Greek and Latin slices and demanded per-subset fallbacks. **I measured and rejected it.** Real
+numbers: Greek capitals +8.2%, Greek sentence −5.6%, Latin capitals +10.0%. Latin is *worse* than
+Greek, so it is not a Greek-vs-Latin problem; and inside Greek alone the error spans 13.8 points,
+which no single `size-adjust` per range can absorb. The error tracks which glyphs are typed, not which
+subset they belong to. Per-subset fallbacks would add four faces and fix almost nothing.
+
+**Step 7 — the trap that combination created.** `optional` means a font that misses its window is
+never applied for that page view. Only the Greek slices were preloaded. **Digits live in the Latin
+slice.** So a cold slow first visit rendered Greek words in Roboto Condensed and every number beside
+them in Arial, permanently for that view — on a design built around 15+, 240, 18, 01/02/03. Verified
+in the browser: the Greek slice does not cover U+0032, the Latin slice does, only Greek was
+preloaded. Neither `optional` nor Greek-only preloading causes this alone; only the combination does.
+
+The first attempt at step 7 **produced no edits at all** — Codex ran only its review agent. Confirmed
+by file mtimes and an unchanged build hash. Re-issued the prompt leading with the change to make.
+
+**Open items (deliberately deferred, not forgotten):**
+
+1. **166 KB of fonts now sit on the critical path** — all six files are preloaded. Measured
+   alternative: the Latin slice of the display font is 45.0 KB, but a subset covering digits, ASCII
+   and punctuation at one weight is **8.0 KB**; JetBrains Mono Latin goes 30.6 KB → 7.2 KB. That is
+   roughly 40% off the critical path. **Deferred on purpose:** trimming Latin coverage correctly
+   requires knowing which Latin characters and weights the finished pages actually render. Doing it
+   now is guessing. Revisit once the four static pages exist.
+2. **The guard test encodes the wrong rule.** It asserts preloaded paths equal shipped paths exactly,
+   i.e. "preload everything", rather than the rule I asked for ("a family is either fully in use or
+   not in use"). It is correct for today's code but will block item 1 for the wrong reason. Fold the
+   correction into that step.
