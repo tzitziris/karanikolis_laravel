@@ -24,6 +24,51 @@ it('serves the motion demo as a separate Inertia page component', function () {
         );
 });
 
+it('serves temporary public pages for every shell navigation target', function (string $path, string $title) {
+    $this->get($path)
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('PublicPlaceholder')
+            ->where('eyebrow', 'Προσωρινή σελίδα')
+            ->where('title', $title)
+            ->has('message')
+        );
+})->with([
+    ['/coaches', 'Ομάδα'],
+    ['/schedule', 'Πρόγραμμα'],
+    ['/news', 'Νέα'],
+    ['/about', 'Σχετικά'],
+]);
+
+it('keeps the public shell outside the keyed Inertia page component', function () {
+    $entry = File::get(resource_path('js/app.jsx'));
+    $shell = File::get(resource_path('js/Layouts/SiteShell.jsx'));
+    $navbar = File::get(resource_path('js/Components/Navbar.jsx'));
+
+    expect($entry)->toContain('<SiteShell>')
+        ->and($entry)->toContain('<Component key={key} {...props} />')
+        ->and($shell)->toContain('<Navbar />')
+        ->and($shell)->toContain('<main id="site-content">{children}</main>')
+        ->and($shell)->toContain('<Footer />')
+        ->and($navbar)->toContain("window.addEventListener('scroll', onScroll")
+        ->and($navbar)->toContain('data-site-header');
+});
+
+it('makes the mobile navigation a real dialog with inert page content and resilient animation', function () {
+    $navbar = File::get(resource_path('js/Components/Navbar.jsx'));
+    $animation = File::get(resource_path('js/animation/pageAnimation.js'));
+
+    expect($navbar)->toContain('role="dialog"')
+        ->and($navbar)->toContain('aria-modal="true"')
+        ->and($navbar)->toContain("appRoot?.setAttribute('inert', '')")
+        ->and($navbar)->toContain("appRoot?.removeAttribute('inert')")
+        ->and($navbar)->toContain("event.key === 'Escape'")
+        ->and($navbar)->toContain("event.key !== 'Tab'")
+        ->and($navbar)->toContain('opener?.focus({ preventScroll: true })')
+        ->and($animation)->toContain('export function animateMobileMenuOpen')
+        ->and($animation)->toContain('catch (error)')
+        ->and($animation)->toContain('return () => {}');
+});
+
 it('runs the test suite against the dedicated MariaDB database', function () {
     $connection = DB::connection();
     $testDatabase = config('database.connections.mariadb.database');

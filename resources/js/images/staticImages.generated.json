@@ -157,6 +157,17 @@
                 1024
             ]
         },
+        "site-logo": {
+            "height": 1536,
+            "width": 1024,
+            "widths": [
+                32,
+                48,
+                64,
+                96,
+                128
+            ]
+        },
         "sparring": {
             "height": 1067,
             "width": 1600,

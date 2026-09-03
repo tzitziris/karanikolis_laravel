@@ -258,3 +258,48 @@ All three fixed, each verified independently rather than by the tests that claim
 
 Minor, not worth a round trip: the `hero` slot is eager but sets no `fetchpriority`, and
 `widthsFor()` is a wrapper that returns its argument's property unchanged.
+
+## Prompt 12 — the site shell
+
+Navbar and Footer now live in `resources/js/Layouts/SiteShell.jsx`, rendered by `app.jsx` *around*
+the keyed page component. Four temporary routes (`/coaches`, `/schedule`, `/news`, `/about`) exist
+so the shell can actually be navigated; they render `PublicPlaceholder` and get replaced one at a
+time.
+
+29 tests / 714 assertions, Pint clean, build clean (app chunk 448.50 kB, 150.86 kB gzip).
+
+Verified independently, not by the tests that claim it:
+
+- **The shell does not remount.** Tagged the live `[data-site-header]` and `[data-site-footer]`
+  DOM nodes with expando properties, then navigated five times. Both properties survived every
+  visit, so React is reusing the same nodes rather than rebuilding them.
+- **Navigation costs 22–42 ms** and issues exactly one request — the Inertia JSON for the new page.
+  No asset, chunk or shell refetch.
+- **Prefetch works.** All five destinations are fetched ~105 ms after first paint, before any click.
+- **The logo keeps its transparency.** 2.29 MB PNG source becomes five webp derivatives; corner
+  pixels read alpha 127 (fully transparent), centre 0 (opaque). At DPR 2 the browser picks
+  `site-logo-64.webp` — 2.1 kB, against 17.9 kB for the old site's single `logo-nav.webp`.
+- **The mobile menu is a real dialog.** Portalled to `document.body`, `role="dialog"` +
+  `aria-modal`, `#app` given `inert` and `aria-hidden`, both `body` and `html` overflow locked,
+  focus lands on the close button, Tab wraps in both directions, Escape closes, focus returns to
+  the opener, and every lock is released on close — including when the menu is closed by following
+  one of its own links.
+- **Nothing in the menu is hidden waiting for animation.** The panel measures opacity 1 and
+  transform none, and `animateMobileMenuOpen` only offsets `y`. A thrown animation leaves a fully
+  usable menu.
+
+Open, small:
+
+1. **No skip link.** `<main id="site-content">` has the id but nothing targets it, so a keyboard
+   user tabs through the logo and five links on every page. The old site had the same gap.
+2. **`isActivePath` uses a bare `startsWith`**, so a future `/about-us` would mark `/about` as the
+   current page.
+3. **`STATIC_IMAGE_WIDTHS` now describes only the photograph widths**, not the mark widths, while
+   claiming to describe the manifest. Nothing consumes it — dead and misleading, like `widthsFor()`.
+4. **The `logo` slot hard-codes `sizes: '32px'`** to match today's `h-12` styling. If the logo is
+   ever resized, that number silently lies.
+
+The gap worth naming: the two new shell tests match source text (`toContain('<SiteShell>')`), so
+they record the intent but cannot prove it. The proof that the shell survives navigation exists
+only in the measurement above, which nothing re-runs. That is my prompt's fault — I asked Codex to
+tell me how it satisfied itself instead of asking for the property that must hold.

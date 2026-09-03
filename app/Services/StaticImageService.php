@@ -11,7 +11,7 @@ class StaticImageService
     /**
      * @return array{name: string, source_bytes: int, original_width: int, original_height: int, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}
      */
-    public function convert(string $name, string $sourcePath, bool $force = false): array
+    public function convert(string $name, string $sourcePath, bool $force = false, ?array $widths = null): array
     {
         $this->validateName($name);
         $this->ensureOutputDirectory();
@@ -23,13 +23,13 @@ class StaticImageService
         try {
             $source = $this->createSource($sourcePath, $info['mime']);
 
-            foreach ($this->targetWidths((int) $info['width']) as $targetWidth) {
+            foreach ($this->targetWidths((int) $info['width'], $widths) as $targetWidth) {
                 $targetHeight = $this->proportionalHeight(
                     (int) $info['width'],
                     (int) $info['height'],
                     $targetWidth,
                 );
-                $destination = $this->publicPathFor($name, $targetWidth);
+                $destination = $this->publicPathFor($name, $targetWidth, $widths);
 
                 $status = 'skipped';
 
@@ -70,14 +70,23 @@ class StaticImageService
     /**
      * @return array<int, int>
      */
-    public function configuredWidths(): array
+    public function configuredWidths(?array $widths = null): array
     {
-        $widths = config('images.static.widths', []);
+        $widths ??= config('images.static.widths', []);
 
         if (! is_array($widths)) {
             throw new RuntimeException('Static image widths must be configured as an array.');
         }
 
+        return $this->validateWidths($widths);
+    }
+
+    /**
+     * @param  array<int, int|string>  $widths
+     * @return array<int, int>
+     */
+    public function validateWidths(array $widths): array
+    {
         $widths = array_values(array_unique(array_map('intval', $widths)));
         sort($widths);
 
@@ -149,19 +158,19 @@ class StaticImageService
     /**
      * @return array<int, int>
      */
-    public function targetWidths(int $sourceWidth): array
+    public function targetWidths(int $sourceWidth, ?array $widths = null): array
     {
         return array_values(array_filter(
-            $this->configuredWidths(),
+            $this->configuredWidths($widths),
             fn (int $width): bool => $width <= $sourceWidth,
         ));
     }
 
-    public function relativePathFor(string $name, int $width): string
+    public function relativePathFor(string $name, int $width, ?array $widths = null): string
     {
         $this->validateName($name);
 
-        if (! in_array($width, $this->configuredWidths(), true)) {
+        if (! in_array($width, $this->configuredWidths($widths), true)) {
             throw new RuntimeException('Static image width is not configured.');
         }
 
@@ -286,15 +295,16 @@ class StaticImageService
         }
     }
 
-    protected function publicPathFor(string $name, int $width): string
+    protected function publicPathFor(string $name, int $width, ?array $widths = null): string
     {
-        return public_path($this->relativePathFor($name, $width));
+        return public_path($this->relativePathFor($name, $width, $widths));
     }
 
     private function createSource(string $sourcePath, string $mime): GdImage
     {
         $source = match ($mime) {
             'image/jpeg' => @imagecreatefromjpeg($sourcePath),
+            'image/png' => @imagecreatefrompng($sourcePath),
             default => null,
         };
 

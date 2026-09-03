@@ -9,6 +9,7 @@ export const STATIC_IMAGE_SLOTS = {
     full: '100vw',
     half: '(min-width: 768px) 50vw, 100vw',
     hero: '100vw',
+    logo: '32px',
     portrait: '(min-width: 1024px) 40vw, 100vw',
 };
 
@@ -17,6 +18,7 @@ export const STATIC_IMAGE_LOADING = {
     full: 'lazy',
     half: 'lazy',
     hero: 'eager',
+    logo: 'eager',
     portrait: 'lazy',
 };
 

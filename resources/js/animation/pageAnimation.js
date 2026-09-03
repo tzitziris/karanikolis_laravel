@@ -89,3 +89,45 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
         };
     }, dependencies);
 }
+
+export function animateMobileMenuOpen(panel) {
+    if (!panel || typeof window === 'undefined' || getReducedMotionPreference()) {
+        return () => {};
+    }
+
+    let context;
+
+    try {
+        context = gsap.context(() => {
+            const links = panel.querySelectorAll('[data-mobile-menu-link]');
+            const footer = panel.querySelector('[data-mobile-menu-footer]');
+
+            gsap.fromTo(
+                panel,
+                { y: -16 },
+                {
+                    duration: 0.32,
+                    ease: 'power3.out',
+                    y: 0,
+                },
+            );
+
+            gsap.fromTo(
+                [...links, footer].filter(Boolean),
+                { y: 18 },
+                {
+                    duration: 0.42,
+                    ease: 'power3.out',
+                    stagger: 0.055,
+                    y: 0,
+                },
+            );
+        }, panel);
+    } catch (error) {
+        console.error('Η κίνηση του μενού δεν ολοκληρώθηκε.', error);
+
+        return () => {};
+    }
+
+    return () => context?.revert();
+}
