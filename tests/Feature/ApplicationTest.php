@@ -33,10 +33,16 @@ it('serves temporary public pages for unfinished shell navigation targets', func
             ->has('message')
         );
 })->with([
-    ['/coaches', 'Ομάδα'],
     ['/schedule', 'Πρόγραμμα'],
     ['/news', 'Νέα'],
 ]);
+
+it('serves the coaches page through its finished Inertia component', function () {
+    $this->get('/coaches')
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('Coaches')
+        );
+});
 
 it('serves the about page through its finished Inertia component', function () {
     $this->get('/about')
@@ -68,6 +74,7 @@ it('does not leave unrendered page components behind', function () {
 
     expect($pageComponents)->toBe([
         'About.jsx',
+        'Coaches.jsx',
         'Home.jsx',
         'MotionDemo.jsx',
         'PublicPlaceholder.jsx',

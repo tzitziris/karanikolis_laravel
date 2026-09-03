@@ -297,6 +297,11 @@ body {
         position: relative !important;
         top: auto !important;
     }
+
+    .coaches-sticky {
+        position: relative !important;
+        top: auto !important;
+    }
 }
 
 ::selection {

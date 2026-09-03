@@ -10,11 +10,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/coaches', function () {
-    return Inertia::render('PublicPlaceholder', [
-        'eyebrow' => 'Προσωρινή σελίδα',
-        'message' => 'Η πραγματική σελίδα της ομάδας θα προστεθεί σε επόμενο βήμα.',
-        'title' => 'Ομάδα',
-    ]);
+    return Inertia::render('Coaches');
 })->name('coaches');
 
 Route::get('/schedule', function () {
