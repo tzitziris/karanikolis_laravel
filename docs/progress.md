@@ -171,3 +171,34 @@ by file mtimes and an unchanged build hash. Re-issued the prompt leading with th
    i.e. "preload everything", rather than the rule I asked for ("a family is either fully in use or
    not in use"). It is correct for today's code but will block item 1 for the wrong reason. Fold the
    correction into that step.
+
+## Prompt 9 — blank page on client-side navigation + removal of double-authored content
+
+**Both problems fixed and independently verified.**
+
+Client-side navigation, measured at 1280x800 with a MutationObserver recorder (setTimeout is
+clamped to 1s in a background tab, which corrupted the first attempt's sample spacing):
+
+| | before | after |
+|---|---|---|
+| destination content visible | ~2750 ms | **11 ms** |
+| elements hidden at any moment | 8 | **0** |
+| what revealed the content | the 1800 ms watchdog | the render itself |
+
+Measured across three navigations between two genuinely different page components
+(`Placeholder` and the new `MotionDemo`). ScrollTrigger count stayed at 1 throughout — no leak.
+Full page load: 388 visible characters, 0 hidden, DOMContentLoaded 106 ms.
+
+The cause was that content was hidden with `autoAlpha: 0` and revealed by the animation. The fix
+removes hiding entirely: `animateFromVisible` now only offsets elements (`y: 10`/`y: 16`) and
+animates them back to zero, so content is readable at every instant and motion is pure transform.
+`AnimationInvariantTest` now asserts `autoAlpha: 0` never appears in the animation source.
+
+`ReadablePage`, `partials/readable-fallback.blade.php` and the fallback arrays are gone.
+`routes/web.php` is back to 17 lines. Content lives in exactly one place.
+
+**Open, carried forward:** the watchdog is now dead code — nothing sets `data-animation-hidden`,
+so `forceRevealAll()` matches zero elements and the 1800 ms timer does nothing, while the test
+still asserts the watchdog exists. `data-animation-managed` is written and never read. Decide
+before the real pages land: either delete the machinery, or route all hiding through a helper
+that sets the attribute so the net is real again.

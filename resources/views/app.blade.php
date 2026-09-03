@@ -18,6 +18,5 @@
     </head>
     <body>
         @inertia
-        @include('partials.readable-fallback')
     </body>
 </html>

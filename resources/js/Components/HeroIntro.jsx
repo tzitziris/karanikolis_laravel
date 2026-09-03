@@ -43,6 +43,7 @@ export default function HeroIntro({ actions = [], eyebrow, summary, title }) {
                                 className="border border-line-strong px-4 py-3 font-mono text-xs font-bold uppercase text-bone transition hover:border-blood hover:text-blood"
                                 href={action.href}
                                 key={action.href}
+                                prefetch={['mount', 'hover']}
                             >
                                 {action.label}
                             </Link>

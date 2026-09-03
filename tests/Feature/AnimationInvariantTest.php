@@ -22,43 +22,17 @@ it('uses GSAP as the only animation runtime dependency', function () {
         ->and($allDependencies)->not->toContain('@motionone/react');
 });
 
-it('renders readable fallback content outside JavaScript bootstrapping', function () {
-    $response = $this->get('/');
+it('does not ship stylesheet rules that hide JavaScript-revealed content', function () {
+    $stylesheet = File::get(resource_path('css/app.css'));
 
-    $response->assertOk()
-        ->assertSee('id="readable-fallback"', false)
-        ->assertSee('Προσωρινή σελίδα')
-        ->assertSee('Η εφαρμογή Laravel είναι έτοιμη.')
-        ->assertSee('Πρώτη ανάγνωση')
-        ->assertSee('Κύλιση')
-        ->assertSee('Καθαρό κλείσιμο');
-
-    $html = $response->getContent();
-
-    expect($html)->not->toContain('<noscript')
-        ->and($html)->not->toContain('readable-fallback hidden')
-        ->and($html)->not->toContain('readable-fallback opacity-0')
-        ->and($html)->not->toContain('readable-fallback invisible')
-        ->and($html)->not->toContain('aria-hidden="true"');
-});
-
-it('requires Inertia pages to provide server-readable fallback content', function () {
-    $phpFiles = collect([
-        ...File::allFiles(app_path('Http/Controllers')),
-        ...File::allFiles(base_path('routes')),
-    ]);
-
-    foreach ($phpFiles as $file) {
-        $source = File::get($file->getPathname());
-
-        expect($source)->not->toContain('Inertia::render(')
-            ->and($source)->not->toContain('inertia(');
-    }
-
-    $supportSource = File::get(app_path('Support/ReadablePage.php'));
-
-    expect($supportSource)->toContain("'readableFallback' => \$fallback")
-        ->and($supportSource)->toContain('throw new InvalidArgumentException');
+    expect($stylesheet)->not->toContain('data-animation-hidden')
+        ->and($stylesheet)->not->toContain('data-animation-managed')
+        ->and($stylesheet)->not->toContain('data-reveal-item')
+        ->and($stylesheet)->not->toContain('data-page-hero')
+        ->and($stylesheet)->not->toContain('opacity: 0')
+        ->and($stylesheet)->not->toContain('visibility: hidden')
+        ->and($stylesheet)->not->toContain('display: none')
+        ->and($stylesheet)->not->toContain('content-visibility: hidden');
 });
 
 it('keeps animation setup independent from font readiness and protected by a watchdog reveal', function () {
@@ -70,6 +44,7 @@ it('keeps animation setup independent from font readiness and protected by a wat
         ->and($animationSource)->toContain('forceRevealAll(root)')
         ->and($animationSource)->not->toContain('document.fonts')
         ->and($animationSource)->not->toContain('fonts.ready')
+        ->and($animationSource)->not->toContain('autoAlpha: 0')
         ->and($stylesheet)->not->toContain('[data-reveal-item] {')
         ->and($stylesheet)->not->toContain('opacity: 0')
         ->and($stylesheet)->not->toContain('visibility: hidden');

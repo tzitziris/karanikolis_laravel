@@ -1,20 +1,19 @@
 import { usePageAnimation } from './pageAnimation';
 
 export function useRevealOnScroll(scopeRef) {
-    usePageAnimation(scopeRef, ({ gsap, hideForAnimation, root }) => {
+    usePageAnimation(scopeRef, ({ animateFromVisible, gsap, root }) => {
         const items = root.querySelectorAll('[data-reveal-item]');
 
         if (!items.length) {
             return;
         }
 
-        hideForAnimation(items, {
-            y: 32,
+        animateFromVisible(items, {
+            y: 16,
         });
 
         gsap.to(items, {
-            autoAlpha: 1,
-            duration: 0.65,
+            duration: 0.5,
             ease: 'power3.out',
             scrollTrigger: {
                 end: 'bottom 15%',

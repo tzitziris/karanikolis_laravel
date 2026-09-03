@@ -16,6 +16,14 @@ it('serves the root page through Inertia', function () {
         );
 });
 
+it('serves the motion demo as a separate Inertia page component', function () {
+    $this->get('/dokimi-kinisis')
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('MotionDemo')
+            ->where('message', 'Η δοκιμαστική δεύτερη διαδρομή είναι έτοιμη.')
+        );
+});
+
 it('runs the test suite against the dedicated MariaDB database', function () {
     $connection = DB::connection();
     $testDatabase = config('database.connections.mariadb.database');

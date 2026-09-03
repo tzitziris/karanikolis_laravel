@@ -9,6 +9,7 @@ export const REVEAL_WATCHDOG_MS = 1800;
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 const HIDDEN_ATTRIBUTE = 'data-animation-hidden';
+const ANIMATED_ATTRIBUTE = 'data-animation-managed';
 
 function getReducedMotionPreference() {
     return (
@@ -69,17 +70,14 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
         const splitInstances = [];
         let context;
 
-        const hideForAnimation = (targets, vars = {}) => {
+        const animateFromVisible = (targets, vars = {}) => {
             const elements = gsap.utils.toArray(targets, root);
 
             elements.forEach((element) => {
-                element.setAttribute(HIDDEN_ATTRIBUTE, '');
+                element.setAttribute(ANIMATED_ATTRIBUTE, '');
             });
 
-            gsap.set(elements, {
-                autoAlpha: 0,
-                ...vars,
-            });
+            gsap.set(elements, vars);
 
             return elements;
         };
@@ -97,8 +95,8 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
                     gsap,
                     ScrollTrigger,
                     SplitText,
+                    animateFromVisible,
                     forceRevealAll: () => forceRevealAll(root),
-                    hideForAnimation,
                     root,
                     splitText,
                 });

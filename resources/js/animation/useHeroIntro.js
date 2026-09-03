@@ -1,7 +1,7 @@
 import { usePageAnimation } from './pageAnimation';
 
 export function useHeroIntro(scopeRef) {
-    usePageAnimation(scopeRef, ({ gsap, hideForAnimation, root, splitText }) => {
+    usePageAnimation(scopeRef, ({ animateFromVisible, gsap, root, splitText }) => {
         const eyebrow = root.querySelector('[data-hero-eyebrow]');
         const title = root.querySelector('[data-hero-title]');
         const summary = root.querySelector('[data-hero-summary]');
@@ -16,27 +16,25 @@ export function useHeroIntro(scopeRef) {
 
         const titleTargets = split?.words?.length ? split.words : title;
 
-        hideForAnimation([eyebrow, summary, ...details].filter(Boolean), {
-            y: 18,
+        animateFromVisible([eyebrow, summary, ...details].filter(Boolean), {
+            y: 10,
         });
-        hideForAnimation(titleTargets, {
-            y: 28,
+        animateFromVisible(titleTargets, {
+            y: 12,
         });
 
         gsap.timeline({
             defaults: {
-                duration: 0.7,
+                duration: 0.5,
                 ease: 'power3.out',
             },
         })
             .to(eyebrow, {
-                autoAlpha: 1,
                 y: 0,
             })
             .to(
                 titleTargets,
                 {
-                    autoAlpha: 1,
                     stagger: 0.018,
                     y: 0,
                 },
@@ -45,7 +43,6 @@ export function useHeroIntro(scopeRef) {
             .to(
                 [summary, ...details].filter(Boolean),
                 {
-                    autoAlpha: 1,
                     stagger: 0.08,
                     y: 0,
                 },
