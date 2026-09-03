@@ -5,10 +5,7 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-export const REVEAL_WATCHDOG_MS = 1800;
-
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-const HIDDEN_ATTRIBUTE = 'data-animation-hidden';
 const ANIMATED_ATTRIBUTE = 'data-animation-managed';
 
 function getReducedMotionPreference() {
@@ -28,23 +25,6 @@ function updateScrollTriggerCount() {
     );
 }
 
-export function forceRevealAll(root = document) {
-    if (!root?.querySelectorAll) {
-        return;
-    }
-
-    const hiddenElements = root.querySelectorAll(`[${HIDDEN_ATTRIBUTE}]`);
-
-    hiddenElements.forEach((element) => {
-        gsap.set(element, {
-            clearProps: 'opacity,visibility,transform,filter,clipPath',
-        });
-        element.removeAttribute(HIDDEN_ATTRIBUTE);
-    });
-
-    updateScrollTriggerCount();
-}
-
 export function usePageAnimation(scopeRef, setup, dependencies = []) {
     useEffect(() => {
         const root = scopeRef.current;
@@ -53,17 +33,11 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
             return undefined;
         }
 
-        const watchdogId = window.setTimeout(
-            () => forceRevealAll(root),
-            REVEAL_WATCHDOG_MS,
-        );
-
         if (getReducedMotionPreference()) {
-            forceRevealAll(root);
+            updateScrollTriggerCount();
 
             return () => {
-                window.clearTimeout(watchdogId);
-                forceRevealAll(root);
+                updateScrollTriggerCount();
             };
         }
 
@@ -96,22 +70,21 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
                     ScrollTrigger,
                     SplitText,
                     animateFromVisible,
-                    forceRevealAll: () => forceRevealAll(root),
                     root,
                     splitText,
                 });
             }, root);
             updateScrollTriggerCount();
         } catch (error) {
-            forceRevealAll(root);
+            context?.revert();
+            splitInstances.forEach((split) => split.revert());
+            updateScrollTriggerCount();
             throw error;
         }
 
         return () => {
-            window.clearTimeout(watchdogId);
             splitInstances.forEach((split) => split.revert());
             context?.revert();
-            forceRevealAll(root);
             updateScrollTriggerCount();
         };
     }, dependencies);

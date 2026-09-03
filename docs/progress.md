@@ -202,3 +202,38 @@ so `forceRevealAll()` matches zero elements and the 1800 ms timer does nothing, 
 still asserts the watchdog exists. `data-animation-managed` is written and never read. Decide
 before the real pages land: either delete the machinery, or route all hiding through a helper
 that sets the attribute so the net is real again.
+
+## Prompt 10 — webp image pipeline + removal of the dead watchdog
+
+`config/images.php`, `StaticImageService`, `images:build-static`, and one `SiteImage` component.
+84 derivatives written for 14 photographs across 8 widths, with no upscaling — an image only gets
+widths up to its own. 19 tests / 606 assertions, Pint clean, build unchanged. `curl` confirms
+`Content-Type: image/webp` off the real server.
+
+Measured saving (the originals were 2.76 MB and Vercel's optimizer, which resized them per device,
+does not exist on the target host):
+
+| | before | after |
+|---|---|---|
+| all 14 photos at phone width (320) | 2.76 MB | **236 KB** |
+| largest single photo at 2400px | 341 KB | **275 KB** |
+
+The watchdog was removed rather than rewired — the honest choice, since nothing hides content any
+more. The test now asserts the *absence* of hiding instead of the presence of a safety net.
+
+**Three defects found in review, to fix before any page is built:**
+
+1. **The source photographs are not in this repository.** `config/images.php` defaults the source
+   directory to `../karanikolis_site/public/media`, and two tests call `getimagesize()` on that path
+   at run time. Verified: with the source directory absent, `ImagePipelineTest` fails 2 of 6. The
+   test suite of this project cannot run without the read-only Next.js project sitting beside it,
+   and the images cannot be rebuilt on any other machine.
+2. **The manifest alignment test does not detect a mismatch.** It asserts each dimension appears
+   *somewhere* in the file, not that it belongs to the right image. Verified by swapping the
+   dimensions of `about-story` and `pad-work`: the test still passed. Dimensions are the one thing
+   in that file that prevents layout shift.
+3. **`SiteImage` throws during render for an unknown image name**, which takes down the whole page
+   instead of one picture — a direct violation of invariant 1.
+
+Minor, carried forward: `SiteImage` defaults to `loading="lazy"`, which is wrong for a hero image
+and will need overriding per slot.

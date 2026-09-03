@@ -35,16 +35,17 @@ it('does not ship stylesheet rules that hide JavaScript-revealed content', funct
         ->and($stylesheet)->not->toContain('content-visibility: hidden');
 });
 
-it('keeps animation setup independent from font readiness and protected by a watchdog reveal', function () {
+it('keeps animation setup independent from font readiness and hidden waiting states', function () {
     $animationSource = File::get(resource_path('js/animation/pageAnimation.js'));
     $stylesheet = File::get(resource_path('css/app.css'));
 
-    expect($animationSource)->toContain('REVEAL_WATCHDOG_MS')
-        ->and($animationSource)->toContain('window.setTimeout')
-        ->and($animationSource)->toContain('forceRevealAll(root)')
+    expect($animationSource)->not->toContain('window.setTimeout')
+        ->and($animationSource)->not->toContain('forceRevealAll')
         ->and($animationSource)->not->toContain('document.fonts')
         ->and($animationSource)->not->toContain('fonts.ready')
         ->and($animationSource)->not->toContain('autoAlpha: 0')
+        ->and($animationSource)->not->toContain('opacity: 0')
+        ->and($animationSource)->not->toContain('visibility: hidden')
         ->and($stylesheet)->not->toContain('[data-reveal-item] {')
         ->and($stylesheet)->not->toContain('opacity: 0')
         ->and($stylesheet)->not->toContain('visibility: hidden');
