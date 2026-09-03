@@ -300,3 +300,15 @@ it('keeps SiteImage from throwing away the page on bad image input', function ()
         ->and($source)->toContain('STATIC_IMAGE_LOADING[slot]')
         ->and($manifestBridge)->toContain("hero: 'eager'");
 });
+
+it('lets exactly one home page photograph ask for priority loading', function () {
+    $source = File::get(resource_path('js/Components/SiteImage.jsx'));
+    $home = File::get(resource_path('js/Pages/Home.jsx'));
+
+    expect($source)->toContain('priority = false')
+        ->and($source)->toContain('fetchPriority={fetchPriority}')
+        ->and($source)->toContain('const loadingMode = priority')
+        ->and(substr_count($home, 'priority'))->toBe(1)
+        ->and($home)->toContain('data-home-hero-image')
+        ->and($home)->toContain('image="hero-kickboxing"');
+});

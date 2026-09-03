@@ -14,6 +14,7 @@ export default function SiteImage({
     className = '',
     image,
     loading,
+    priority = false,
     slot = 'full',
     ...props
 }) {
@@ -38,13 +39,17 @@ export default function SiteImage({
 
     const widths = widthsFor(metadata);
     const fallbackWidth = widths[widths.length - 1];
-    const loadingMode = loading ?? STATIC_IMAGE_LOADING[slot] ?? 'lazy';
+    const loadingMode = priority
+        ? 'eager'
+        : (loading ?? STATIC_IMAGE_LOADING[slot] ?? 'lazy');
+    const fetchPriority = priority ? 'high' : (props.fetchPriority ?? 'auto');
 
     return (
         <img
             alt={alt}
             className={className}
             decoding="async"
+            fetchPriority={fetchPriority}
             height={metadata.height}
             loading={loadingMode}
             sizes={sizes}

@@ -149,6 +149,151 @@ body {
     font-feature-settings: "ss01", "cv11";
 }
 
+.cinematic-link {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--blood);
+    color: var(--bone);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition:
+        color 250ms ease,
+        border-color 250ms ease;
+}
+
+.cinematic-link span {
+    color: var(--blood);
+    transition: transform 250ms ease;
+}
+
+.cinematic-link:hover {
+    border-color: var(--bone);
+    color: var(--blood);
+}
+
+.cinematic-link:hover span {
+    transform: translate(0.2rem, -0.2rem);
+}
+
+.scroll-cue::before {
+    display: inline-block;
+    width: 2.5rem;
+    height: 1px;
+    margin-right: 0.75rem;
+    animation: scroll-cue 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    background: var(--blood);
+    content: "";
+    transform-origin: left;
+    vertical-align: middle;
+}
+
+@keyframes scroll-cue {
+    0%,
+    100% {
+        opacity: .45;
+        transform: scaleX(0.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+.grain::before {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    contain: paint;
+    content: "";
+    isolation: isolate;
+    opacity: .05;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.btn-sweep {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    overflow: hidden;
+    padding: 1rem 1.75rem;
+    border: 1px solid currentColor;
+    font-family: var(--font-display-face), sans-serif;
+    font-size: 1.125rem;
+    font-weight: 900;
+    isolation: isolate;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
+}
+
+.btn-sweep::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: currentColor;
+    content: "";
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.btn-sweep:hover::before {
+    transform: translateX(0);
+}
+
+.btn-sweep .btn-label {
+    transition: color 0.4s ease 0.1s;
+}
+
+.btn-sweep .btn-arrow {
+    transition: transform 0.4s ease;
+}
+
+.btn-sweep:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.btn-blood {
+    color: var(--blood);
+}
+
+.btn-blood .btn-label,
+.btn-blood:hover .btn-label {
+    color: var(--bone);
+}
+
+.btn-blood::before {
+    background: var(--blood);
+}
+
+.btn-bone {
+    color: var(--bone);
+}
+
+.btn-bone .btn-label {
+    color: var(--bone);
+}
+
+.btn-bone::before {
+    background: var(--bone);
+}
+
+.btn-bone:hover .btn-label {
+    color: var(--ink-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-cue::before {
+        animation: none;
+    }
+}
+
 ::selection {
     background: var(--blood);
     color: var(--bone);

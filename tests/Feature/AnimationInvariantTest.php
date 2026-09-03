@@ -71,3 +71,18 @@ it('forces scroll-trigger animations through a page-scoped cleanup helper', func
                 ->and($source)->not->toContain('scrollTrigger:');
         });
 });
+
+it('keeps the home journey pin inside page-scoped animation cleanup', function () {
+    $home = File::get(resource_path('js/Pages/Home.jsx'));
+    $homeAnimation = File::get(resource_path('js/animation/useHomePageAnimation.js'));
+    $pageAnimation = File::get(resource_path('js/animation/pageAnimation.js'));
+
+    expect($home)->toContain('useHomePageAnimation(pageRef)')
+        ->and($home)->not->toContain("from 'gsap'")
+        ->and($home)->not->toContain('scrollTrigger:')
+        ->and($homeAnimation)->toContain('pin: true')
+        ->and($homeAnimation)->toContain('gsap.matchMedia()')
+        ->and($homeAnimation)->toContain('return () => media.revert()')
+        ->and($pageAnimation)->toContain('setupCleanup?.()')
+        ->and($pageAnimation)->toContain('context?.revert()');
+});

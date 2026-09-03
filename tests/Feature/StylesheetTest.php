@@ -74,9 +74,21 @@ it('only uses project colour utilities that are exposed by the theme', function 
         ...File::allFiles(resource_path('js/Pages')),
     ])
         ->flatMap(function (SplFileInfo $file) {
+            $source = File::get($file->getPathname());
+            preg_match_all(
+                '/className\s*=\s*(?:"(?<double>[^"]*)"|\'(?<single>[^\']*)\'|\{`(?<template>.*?)`\})/s',
+                $source,
+                $classNameMatches,
+                PREG_SET_ORDER,
+            );
+            $classNames = collect($classNameMatches)
+                ->map(fn (array $match): string => $match['double'] ?: ($match['single'] ?: ($match['template'] ?? '')))
+                ->implode(' ');
+            $classNames = preg_replace('/\[[^\]]+\]/', ' ', $classNames) ?? $classNames;
+
             preg_match_all(
                 '/(?<![A-Za-z0-9_-])(?<utility>(?:[a-z-]+:)*(?:text|bg|border|outline|ring|decoration|divide|accent|caret|fill|stroke)-(?<token>[a-z][a-z0-9-]*)(?:\/\d+)?)(?![A-Za-z0-9_-])/',
-                File::get($file->getPathname()),
+                $classNames,
                 $matches,
                 PREG_SET_ORDER,
             );

@@ -8,11 +8,11 @@ use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
 
-it('serves the root page through Inertia', function () {
+it('serves the home page through Inertia', function () {
     $this->get('/')
         ->assertInertia(fn (Assert $page) => $page
-            ->component('Placeholder')
-            ->where('message', 'Η εφαρμογή Laravel είναι έτοιμη.')
+            ->component('Home')
+            ->where('articles', [])
         );
 });
 
@@ -51,6 +51,20 @@ it('keeps the public shell outside the keyed Inertia page component', function (
         ->and($shell)->toContain('<Footer />')
         ->and($navbar)->toContain("window.addEventListener('scroll', onScroll")
         ->and($navbar)->toContain('data-site-header');
+});
+
+it('does not leave unrendered page components behind', function () {
+    $pageComponents = collect(File::files(resource_path('js/Pages')))
+        ->map(fn (SplFileInfo $file): string => $file->getFilename())
+        ->sort()
+        ->values()
+        ->all();
+
+    expect($pageComponents)->toBe([
+        'Home.jsx',
+        'MotionDemo.jsx',
+        'PublicPlaceholder.jsx',
+    ]);
 });
 
 it('makes the mobile navigation a real dialog with inert page content and resilient animation', function () {

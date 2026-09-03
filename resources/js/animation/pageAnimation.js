@@ -42,6 +42,7 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
         }
 
         const splitInstances = [];
+        let setupCleanup;
         let context;
 
         const animateFromVisible = (targets, vars = {}) => {
@@ -65,7 +66,7 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
 
         try {
             context = gsap.context(() => {
-                setup({
+                setupCleanup = setup({
                     gsap,
                     ScrollTrigger,
                     SplitText,
@@ -76,6 +77,7 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
             }, root);
             updateScrollTriggerCount();
         } catch (error) {
+            setupCleanup?.();
             context?.revert();
             splitInstances.forEach((split) => split.revert());
             updateScrollTriggerCount();
@@ -83,6 +85,7 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
         }
 
         return () => {
+            setupCleanup?.();
             splitInstances.forEach((split) => split.revert());
             context?.revert();
             updateScrollTriggerCount();
