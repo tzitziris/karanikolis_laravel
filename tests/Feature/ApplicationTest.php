@@ -16,18 +16,15 @@ it('serves the home page through Inertia', function () {
         );
 });
 
-it('serves temporary public pages for unfinished shell navigation targets', function (string $path, string $title) {
-    $this->get($path)
+it('serves the temporary news page for the unfinished shell navigation target', function () {
+    $this->get('/news')
         ->assertInertia(fn (Assert $page) => $page
             ->component('PublicPlaceholder')
             ->where('eyebrow', 'Προσωρινή σελίδα')
-            ->where('title', $title)
+            ->where('title', 'Νέα')
             ->has('message')
         );
-})->with([
-    ['/schedule', 'Πρόγραμμα'],
-    ['/news', 'Νέα'],
-]);
+});
 
 it('serves the coaches page through its finished Inertia component', function () {
     $this->get('/coaches')
@@ -41,6 +38,51 @@ it('serves the about page through its finished Inertia component', function () {
         ->assertInertia(fn (Assert $page) => $page
             ->component('About')
         );
+});
+
+it('serves the schedule page through its finished Inertia component', function () {
+    $this->get('/schedule')
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('Schedule')
+        );
+});
+
+it('keeps the schedule hours visibly provisional until the owner supplies real data', function () {
+    $schedule = File::get(resource_path('js/Pages/Schedule.jsx'));
+
+    expect($schedule)->toContain('ενδεικτικές')
+        ->and($schedule)->toContain('δεν αποτελούν ακόμη το επίσημο πρόγραμμα')
+        ->and($schedule)->toContain('Μην ξεκινήσεις χωρίς επιβεβαίωση')
+        ->and($schedule)->toContain('Το πρόγραμμα αυτής της σελίδας είναι προσωρινό')
+        ->and(substr_count($schedule, 'ενδεικτικές'))->toBe(1)
+        ->and(substr_count($schedule, 'δεν αποτελούν ακόμη το επίσημο πρόγραμμα'))->toBe(1)
+        ->and($schedule)->not->toContain('Προσωρινό πρόγραμμα')
+        ->and($schedule)->not->toContain('Ενδεικτική ώρα')
+        ->and($schedule)->toContain('Δευτέρα')
+        ->and($schedule)->toContain('Σάββατο')
+        ->and($schedule)->toContain('Αρχάριοι')
+        ->and($schedule)->toContain('Προχωρημένοι')
+        ->and($schedule)->toContain('Παιδικό')
+        ->and($schedule)->toContain('Αγωνιστικό')
+        ->and($schedule)->toContain('Ομαδική');
+});
+
+it('keeps schedule class names sized to their timetable cells', function () {
+    $schedule = File::get(resource_path('js/Pages/Schedule.jsx'));
+
+    expect($schedule)->toContain('text-[clamp(1.55rem,6vw,2.1rem)]')
+        ->and($schedule)->toContain('md:text-[clamp(1.65rem,2.7vw,2.35rem)]')
+        ->and($schedule)->not->toContain('md:text-[clamp(2.15rem,4vw,3.4rem)]');
+});
+
+it('loads schedule photographs through SiteImage with only the hero prioritized', function () {
+    $schedule = File::get(resource_path('js/Pages/Schedule.jsx'));
+
+    expect($schedule)->toContain('image="schedule-hero"')
+        ->and($schedule)->toContain('image="schedule-rhythm"')
+        ->and(substr_count($schedule, 'priority'))->toBe(1)
+        ->and($schedule)->not->toContain('.jpg')
+        ->and($schedule)->not->toContain('.png');
 });
 
 it('does not expose the temporary motion demo route', function () {
@@ -86,6 +128,7 @@ it('does not leave unrendered page components behind', function () {
         'Coaches.jsx',
         'Home.jsx',
         'PublicPlaceholder.jsx',
+        'Schedule.jsx',
     ]);
 });
 

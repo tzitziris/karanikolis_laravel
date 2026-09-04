@@ -190,6 +190,12 @@ body {
     vertical-align: middle;
 }
 
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 34s linear infinite;
+}
+
 @keyframes scroll-cue {
     0%,
     100% {
@@ -200,6 +206,16 @@ body {
     50% {
         opacity: 1;
         transform: scaleX(1);
+    }
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
     }
 }
 
@@ -289,6 +305,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+        animation: none;
+    }
+
     .scroll-cue::before {
         animation: none;
     }
@@ -299,6 +319,11 @@ body {
     }
 
     .coaches-sticky {
+        position: relative !important;
+        top: auto !important;
+    }
+
+    .schedule-sticky {
         position: relative !important;
         top: auto !important;
     }

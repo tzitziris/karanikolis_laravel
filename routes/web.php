@@ -14,11 +14,7 @@ Route::get('/coaches', function () {
 })->name('coaches');
 
 Route::get('/schedule', function () {
-    return Inertia::render('PublicPlaceholder', [
-        'eyebrow' => 'Προσωρινή σελίδα',
-        'message' => 'Το πραγματικό πρόγραμμα προπονήσεων θα προστεθεί σε επόμενο βήμα.',
-        'title' => 'Πρόγραμμα',
-    ]);
+    return Inertia::render('Schedule');
 })->name('schedule');
 
 Route::get('/news', function () {

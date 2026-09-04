@@ -355,3 +355,40 @@ the running database. During this very step Codex ran the suite green while the 
 still up. A one-line query through the test connection would assert the real thing. Same shape as
 the shell tests in prompt 12 — the suite is accumulating tests that describe intent instead of
 checking it.
+
+## Prompts 15–19 — the four static pages
+
+Home, About, Coaches and Schedule now render at `/`, `/about`, `/coaches` and `/schedule`. The
+temporary `/dokimi-kinisis` route and its page component are gone. 42 tests / 1023 assertions,
+Pint clean.
+
+Verified by measurement rather than by the tests that claim it:
+
+- **The pinned journey section leaves nothing behind.** Home carries one pin-spacer and a document
+  height of 5669px; navigating to About and Coaches drops it to zero spacers with no leftover style
+  on `html` or `body`; returning to Home restores exactly one spacer and exactly 5669px. Nothing
+  accumulates across visits, and the header stayed the same DOM node throughout — invariant 3 holds
+  in practice, not just in the code.
+- **No page scrolls horizontally** at any width from 375 to 2200px, on any of the four pages.
+- **No content is hidden waiting for animation** on any page; every reveal offsets from a readable
+  state.
+- Each page marks exactly one image as priority (eager + `fetchpriority="high"`); the rest stay lazy.
+
+Two honesty problems were caught and fixed, both the same shape — invented data presented as real:
+
+1. The Coaches roster listed four fictional athletes by name with weight class and division. Names
+   and categories were removed entirely rather than labelled; the section now says in Greek that
+   they are withheld until official details exist.
+2. The Schedule's hours are placeholder. The page says so — twice, after an over-correction that
+   said it six times and read like an apology in every section.
+
+**Greek uppercase headings overflowed four separate times** across these pages: `max-w-[Nch]` caps
+(a `ch` is the width of "0", far narrower than condensed Greek capitals), then a `break-words`
+"fix" that split words mid-word, then sizes left too large after that was removed, then timetable
+cells. All measured and closed except one, below. This is now recorded as a standing rule for any
+future page.
+
+Known and accepted, not fixed: in the Schedule's level legend, "Προχωρημένοι" — the longest of the
+five labels — is 34–38px wider than its cell at 1280px and 1920px (it fits at 1024 and 1440). It
+touches nothing, leaves no gap, and causes no horizontal scroll; it simply crosses an invisible
+cell boundary. Deferred to a final polish pass rather than a fifth typography round-trip.
