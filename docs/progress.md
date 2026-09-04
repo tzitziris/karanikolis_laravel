@@ -436,3 +436,43 @@ with headings, both list kinds, a blockquote, links, bold and italic, images, on
 never published, and one article pasted from Facebook whose emoji arrive as inline images from
 **two** different hosts (`static.xx.fbcdn.net` and `www.facebook.com`) — the renderer will have to
 recognise both.
+
+## Prompt 21 — the article body renderer
+
+`ArticleBodyRenderer` turns stored article JSON into HTML in PHP, so the editor never reaches a
+visitor. 62 tests / 1134 assertions, Pint clean.
+
+This function is the trust boundary of the site: its input is pasted from Facebook by the owner, its
+output is inserted as raw markup. I attacked it with twenty-three inputs written for this review,
+none of which appear in its own test suite:
+
+| Attack | Result |
+|---|---|
+| `javascript:` link, plus mixed-case, embedded tab, leading control characters | link dropped, text kept |
+| `data:text/html;base64,…` and `vbscript:` links | dropped |
+| `href` closing the attribute early to inject `onmouseover` | dropped entirely, not merely escaped |
+| `<script>` and `<img onerror>` written as article text | escaped |
+| `onerror` supplied as an image attribute | ignored |
+| `textAlign` carrying `;background:url(…)` | no style emitted at all |
+| `heading` at level 99 | clamped |
+| unknown mark types | ignored, text preserved |
+
+The reference's own approach — escaping a link for HTML and writing it into an `href` — does not stop
+any of the first three. This implementation rejects addresses rather than escaping them.
+
+Invariant 2 holds through pasted content: a remote `<img>` becomes
+`<span class="article-removed-image">Εικόνα: …</span>`, so no visitor's browser is made to fetch a
+bitmap from someone else's server. Facebook emoji are recognised from **both** hosts that occur in
+reality — the reference only handled one — and become real characters.
+
+The real seeded Facebook article renders with zero occurrences of `fbcdn`, `facebook.com`, `http://`,
+`https://`, `<img`, `<script`, `onerror`, `javascript:` or `emoji.php`.
+
+YouTube and iframe nodes render as nothing, as intended; videos have their own place in the data and
+will be presented later without contacting Google until asked.
+
+No stack or time problems: 5000 levels of nesting renders in 28 ms, 20000 sibling paragraphs in
+32 ms. There is no explicit depth limit, which is acceptable while the only author is the owner.
+
+Minor, noted not fixed: content inside an unrecognised node comes out as a bare text run with no
+paragraph around it. The words survive, which was the requirement, but they land outside any block.
