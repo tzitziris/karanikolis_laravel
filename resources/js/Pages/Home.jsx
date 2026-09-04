@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { useRef } from 'react';
+import ArticleGrid from '../Components/News/ArticleGrid';
 import SiteImage from '../Components/SiteImage';
 import { useHomePageAnimation } from '../animation/useHomePageAnimation';
 
@@ -322,27 +323,10 @@ function LatestNewsSection({ articles = [] }) {
                 </div>
 
                 {hasArticles ? (
-                    <div className="grid gap-4 md:grid-cols-3">
-                        {articles.slice(0, 3).map((article) => (
-                            <article
-                                className="border border-line-strong bg-ink-2 p-5"
-                                data-home-reveal
-                                key={article.href ?? article.slug ?? article.title}
-                            >
-                                <p className="font-mono text-[10px] uppercase text-pewter-dim">
-                                    {article.date ?? 'Νέα σχολής'}
-                                </p>
-                                <h3 className="mt-4 font-display text-3xl font-black uppercase leading-none text-bone">
-                                    {article.title}
-                                </h3>
-                                {article.excerpt ? (
-                                    <p className="mt-4 text-sm leading-6 text-bone-dim">
-                                        {article.excerpt}
-                                    </p>
-                                ) : null}
-                            </article>
-                        ))}
-                    </div>
+                    <ArticleGrid
+                        articles={articles.slice(0, 3)}
+                        revealAttribute="data-home-reveal"
+                    />
                 ) : (
                     <div
                         className="border border-line-strong bg-ink-2 px-5 py-8 sm:px-8"

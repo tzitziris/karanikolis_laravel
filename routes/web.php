@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsArchiveController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'articles' => [],
-    ]);
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/coaches', function () {
     return Inertia::render('Coaches');
@@ -17,13 +15,7 @@ Route::get('/schedule', function () {
     return Inertia::render('Schedule');
 })->name('schedule');
 
-Route::get('/news', function () {
-    return Inertia::render('PublicPlaceholder', [
-        'eyebrow' => 'Προσωρινή σελίδα',
-        'message' => 'Η πραγματική σελίδα νέων θα προστεθεί σε επόμενο βήμα.',
-        'title' => 'Νέα',
-    ]);
-})->name('news');
+Route::get('/news', NewsArchiveController::class)->name('news');
 
 Route::get('/about', function () {
     return Inertia::render('About');

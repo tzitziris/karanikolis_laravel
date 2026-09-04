@@ -476,3 +476,32 @@ No stack or time problems: 5000 levels of nesting renders in 28 ms, 20000 siblin
 
 Minor, noted not fixed: content inside an unrecognised node comes out as a bare text run with no
 paragraph around it. The words survive, which was the requirement, but they land outside any block.
+
+## Prompt 22 — the news archive
+
+`/news` reads from the database through `ArticleFeed`, and the home page's latest-news strip now
+uses the same source. 69 tests / 1308 assertions, Pint clean.
+
+**The definition of "published" lives in exactly one place** — `Article::scopeReadyForPublic()` —
+and applies three conditions together: visible, has a publication date, and that date has passed.
+Nothing else in the application expresses the rule; the only other mentions of `is_visible` are
+factories and the seeder, which are data rather than policy.
+
+Verified against MariaDB directly rather than through the code that wrote it. The database says 16
+of the 18 seeded articles qualify; the feed returns exactly 16, over two pages of nine. Both
+excluded articles stay excluded:
+
+- «Ορατό χωρίς ημερομηνία δημοσίευσης» — visible, but never dated
+- «Προσχέδιο ανακοίνωσης για αγώνες» — hidden draft
+
+I also created a visible article dated a week ahead: the public count stayed at 16, so a future date
+does not leak. Removed afterwards.
+
+Query behaviour on one visit to `/news`: two queries for the articles — a count and a select — plus
+the session reads every request makes. **No N+1**, and the select names its columns, so the large
+`body` column is never loaded for a list that does not display it. The card payload confirms it:
+no `body` key reaches the browser.
+
+Bad page numbers behave sensibly. `?page=99` redirects to `?page=2`, the last page that exists, so a
+reader who overshoots lands on articles rather than on emptiness; `?page=abc`, `?page=0` and
+`?page=-1` all serve the first page.

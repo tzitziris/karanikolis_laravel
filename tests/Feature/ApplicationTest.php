@@ -16,13 +16,12 @@ it('serves the home page through Inertia', function () {
         );
 });
 
-it('serves the temporary news page for the unfinished shell navigation target', function () {
+it('serves the news archive page through its finished Inertia component', function () {
     $this->get('/news')
         ->assertInertia(fn (Assert $page) => $page
-            ->component('PublicPlaceholder')
-            ->where('eyebrow', 'Προσωρινή σελίδα')
-            ->where('title', 'Νέα')
-            ->has('message')
+            ->component('News')
+            ->where('articles', [])
+            ->where('pagination.total', 0)
         );
 });
 
@@ -127,6 +126,7 @@ it('does not leave unrendered page components behind', function () {
         'About.jsx',
         'Coaches.jsx',
         'Home.jsx',
+        'News.jsx',
         'PublicPlaceholder.jsx',
         'Schedule.jsx',
     ]);
