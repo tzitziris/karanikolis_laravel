@@ -392,3 +392,47 @@ Known and accepted, not fixed: in the Schedule's level legend, "Προχωρημ
 five labels — is 34–38px wider than its cell at 1280px and 1920px (it fits at 1024 and 1440). It
 touches nothing, leaves no gap, and causes no horizontal scroll; it simply crosses an invisible
 cell boundary. Deferred to a final polish pass rather than a fifth typography round-trip.
+
+## Prompt 20 — the news database layer
+
+Three tables (`articles`, `article_images`, `article_videos`), models, factories and a local seeder.
+50 tests / 1076 assertions, Pint clean.
+
+Verified by querying MariaDB directly, not through the code that wrote it:
+
+- **Cascade works at the database level.** Deleted an article with raw SQL, bypassing Eloquent
+  entirely; its three images and two videos went with it.
+- **The body is guaranteed valid JSON** by a `CHECK (json_valid(body))` constraint on the table, not
+  merely by a cast in the model.
+- **The slug is decided once.** Renaming an article from "Αρχικός τίτλος" to "Εντελώς διαφορετικός
+  τίτλος" left the slug untouched — the old site's habit of recomputing it per request, which broke
+  every shared link on a rename, is not reproduced.
+- **Collisions resolve instead of erupting.** Four titles differing only by accent and case produced
+  `dokimi-…`, `-2`, `-3`, `-4` with no exception reaching the caller — which matters because the
+  collation treats "ά" as "α" and ignores case.
+- Indexes: unique on `slug`, plus `published_at`, `is_visible`, and `(article_id, sort_order)` on
+  both child tables. Cover images are stored as a name, never a path, so the image gateway stays the
+  only route to a file.
+
+**The first attempt transliterated Greek wrongly**, and these become permanent public URLs.
+"Ελευθερούπολη" produced `eleytheroypoli` — disagreeing with the school's own domain, which spells
+it `eleftheroupolis`. Worse, digraphs were applied mid-word and swallowed letters: `σύγκρουση →
+sygroysi` (κ gone), `τσάντα → tsada` (ν gone), so genuinely different words collapsed onto one
+address. Fixed, and confirmed as a real fix rather than a patch by testing eighteen words that were
+never named in the prompt: 16 matched exactly, including every hard case — `ευ` correctly becomes
+`ef` or `ev` depending on what follows (`ευχαριστώ → efcharisto`, `ευγενικός → evgenikos`), `αυ`
+likewise, and `μπ`/`ντ` keep both letters inside a word (`λάμπα → lampa`, `κέντρο → kentro`).
+
+Accepted difference: `άγγελος → aggelos` and `σύγχρονος → sygchronos`, where the commoner rendering
+is `angelos` / `synchronos`. No information is lost and nothing collides — a convention, not a
+defect.
+
+**This must never be changed again once real articles are published**, because every existing link
+would break silently.
+
+The seeder was also too thin on the first attempt — plain paragraphs only, no article hidden from
+visitors, and none of the Facebook-pasted content that was asked for. It now carries 18 articles
+with headings, both list kinds, a blockquote, links, bold and italic, images, one hidden draft, two
+never published, and one article pasted from Facebook whose emoji arrive as inline images from
+**two** different hosts (`static.xx.fbcdn.net` and `www.facebook.com`) — the renderer will have to
+recognise both.
