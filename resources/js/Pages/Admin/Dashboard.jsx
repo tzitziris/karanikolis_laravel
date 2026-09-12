@@ -1,4 +1,4 @@
-import { router, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 
 const stateClasses = {
@@ -88,6 +88,12 @@ export default function Dashboard({ articles = [], user }) {
                     </div>
 
                     <div className="flex flex-col gap-3 text-sm text-bone-dim sm:flex-row sm:items-center">
+                        <Link
+                            className="inline-flex min-h-11 items-center justify-center border border-blood bg-blood px-4 font-display text-base font-black uppercase text-ink-0 transition hover:bg-blood-deep"
+                            href="/admin/articles/create"
+                        >
+                            Νέο άρθρο
+                        </Link>
                         <span title={user?.email}>{user?.email}</span>
                         <button
                             className="min-h-11 border border-line-strong px-4 font-display text-base font-black uppercase text-bone transition hover:border-blood hover:text-blood disabled:cursor-not-allowed disabled:opacity-60"
@@ -204,6 +210,13 @@ export default function Dashboard({ articles = [], user }) {
                                                     {articleBusy ? 'Αποθήκευση...' : 'Δημοσίευση'}
                                                 </button>
                                             )}
+
+                                            <Link
+                                                className="inline-flex min-h-11 items-center justify-center border border-line-strong px-4 font-display text-base font-black uppercase text-bone transition hover:border-blood hover:text-blood"
+                                                href={`/admin/articles/${article.id}/edit`}
+                                            >
+                                                Επεξεργασία
+                                            </Link>
 
                                             <button
                                                 className="min-h-11 border border-line-strong px-4 font-display text-base font-black uppercase text-bone-dim transition hover:border-blood-deep hover:text-blood-deep disabled:cursor-not-allowed disabled:opacity-60"

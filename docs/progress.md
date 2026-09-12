@@ -716,3 +716,81 @@ form is the step that starts accepting image references from a request, so the g
 before that lands. This goes into the next prompt as an invariant, not as a patch.
 
 Also open: a 1×1 upload is accepted; step 17 still owns error-page polish.
+
+## Prompt 28 — writing an article: title, summary, body, date (step 16 part two)
+
+`php artisan test` **112 passed (2001 assertions)**. `./vendor/bin/pint --test` passed. `npm run build` clean.
+
+New: `AdminArticleContentController` (create/store/edit/update), `ArticleContentRequest`,
+`ArticleBodyContract`, `ArticleBodyValidator`, `RichTextEditor.jsx`, `ArticleForm.jsx`. TipTap 3
+added to `package.json`. The dashboard grew a «Νέο άρθρο» link, so the old test forbidding `<Link>`
+there was correctly relaxed.
+
+### The editor does not reach visitors
+
+| chunk | bytes | prosemirror/tiptap occurrences |
+|---|---|---|
+| `app.js` | 449,328 | **0** |
+| `News.js` | 6,361 | **0** |
+| `Article.js` | 15,546 | **0** |
+| `Home.js`, `ArticleGrid.js` | 15,189 / 3,264 | **0** |
+| `RichTextEditor.js` | 394,470 | (all of it) |
+
+The editor is a 394 kB chunk of its own, and the manifest confirms `/news` pulls only
+`app.jsx` + `News` + `ArticleGrid`. `app.js` looks like it tripled, from 137 kB — it did not: the
+previously separate `jsx-runtime` chunk (311.68 kB) was folded into it. 137 + 312 ≈ 449.
+
+### The slug survived a rename — read from the database
+
+| | slug | published_at |
+|---|---|---|
+| before | `agonas-stin-kavala` | 2026-09-02 12:22:01 |
+| after retitling to «Εντελώς άλλος τίτλος» | **`agonas-stin-kavala`** | unchanged |
+
+### Nothing the renderer cannot render gets stored silently
+
+Every construct the renderer does not know is refused, in Greek, naming the offender:
+
+| body sent | outcome |
+|---|---|
+| `underline` mark | REFUSED — «μορφοποίηση που δεν υποστηρίζεται (underline)» |
+| heading level 1 | REFUSED — «μόνο επίπεδο 2 ή 3» |
+| `codeBlock` | REFUSED |
+| `image` node | REFUSED |
+| link with `javascript:` href | REFUSED — «πρέπει να ξεκινούν με http ή https» |
+| a body that is not a `doc` | REFUSED |
+| the text `<script>alert(1)</script>` | accepted as **text**, and renders as `&lt;script&gt;…` |
+
+So the drift I was worried about cannot lose a paragraph in silence.
+
+### BUG — an edit can destroy a live article's publication date
+
+The publication date is an editable `datetime-local` field, and it is `nullable`. Emptying it and
+saving does this:
+
+| | is_visible | published_at | on the public archive |
+|---|---|---|---|
+| before | 1 | 2026-09-02 | listed |
+| after saving with the date field cleared | **1** | **NULL** | **gone** |
+
+The article vanishes from the public site, and the date it originally went live is destroyed with no
+way back. This is the exact fact the dashboard step went to trouble to protect: `published_at` is the
+sole source of ordering and a historical fact about the article. The dashboard does at least label
+the result «Ορατό χωρίς ημερομηνία», so the owner can see *that* something is wrong — but not what
+the date used to be.
+
+**Partly my prompt.** I wrote that saving an edit must not "disturb the date of something already
+published", which reads as a ban on changing it behind the owner's back. An explicit field the owner
+empties themselves is not behind their back, so the requirement was ambiguous where it needed to be
+flat. The next prompt states it as an invariant with no room: a live article cannot leave the public
+site as a side effect of editing its words.
+
+### Smaller finding — the drift guard checks two declarations, not the editor
+
+`contractMatches()` compares a hard-coded JS list against the server's contract. It never asks the
+editor what its schema actually permits, so it cannot catch the case that is actually live: TipTap 3's
+StarterKit ships `Underline` and headings 1–6, and neither is switched off. There is no underline
+button and no h1 button, but `Cmd+U` and `Cmd+Alt+1` are bound and work. The owner can press a
+keyboard shortcut everybody's fingers know, write for ten minutes, and only learn at save that it was
+never allowed. Refused rather than silently lost — the invariant holds — but the wrong moment to find
+out.

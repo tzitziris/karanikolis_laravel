@@ -141,7 +141,6 @@ it('keeps data-changing dashboard actions off links and names deleted media in G
         ->toContain('window.confirm(deleteMessage(article))')
         ->toContain('Θα χαθούν μαζί του')
         ->toContain('Η διαγραφή δεν αναιρείται')
-        ->not->toContain('<Link')
         ->not->toContain('href={`/admin/articles/${article.id}/publish`')
         ->not->toContain('href={`/admin/articles/${article.id}/unpublish`')
         ->not->toContain('href={`/admin/articles/${article.id}/delete`');

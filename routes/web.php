@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminArticleContentController;
 use App\Http\Controllers\AdminArticleController;
 use App\Http\Controllers\AdminArticlePublicationController;
 use App\Http\Controllers\AdminDashboardController;
@@ -39,6 +40,14 @@ Route::post('/admin/login', [LoginController::class, 'store'])
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminDashboardController::class)->name('home');
+    Route::get('/articles/create', [AdminArticleContentController::class, 'create'])
+        ->name('articles.create');
+    Route::post('/articles', [AdminArticleContentController::class, 'store'])
+        ->name('articles.store');
+    Route::get('/articles/{article}/edit', [AdminArticleContentController::class, 'edit'])
+        ->name('articles.edit');
+    Route::put('/articles/{article}', [AdminArticleContentController::class, 'update'])
+        ->name('articles.update');
     Route::patch('/articles/{article}/publish', [AdminArticlePublicationController::class, 'publish'])
         ->name('articles.publish');
     Route::patch('/articles/{article}/unpublish', [AdminArticlePublicationController::class, 'unpublish'])
