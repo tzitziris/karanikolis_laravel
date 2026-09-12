@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'slug',
     'excerpt',
     'body',
+    'cover_image_alt_text',
     'cover_image_name',
     'cover_image_width',
     'cover_image_height',

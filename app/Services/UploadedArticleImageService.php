@@ -79,7 +79,8 @@ class UploadedArticleImageService
 
     public function isUploadedName(?string $name): bool
     {
-        return is_string($name) && str_starts_with($name, self::NAME_PREFIX);
+        return is_string($name)
+            && preg_match('/^uploads\/articles\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $name) === 1;
     }
 
     /**

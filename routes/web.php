@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminArticleContentController;
 use App\Http\Controllers\AdminArticleController;
+use App\Http\Controllers\AdminArticleImageController;
 use App\Http\Controllers\AdminArticlePublicationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
@@ -48,6 +49,16 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('articles.edit');
     Route::put('/articles/{article}', [AdminArticleContentController::class, 'update'])
         ->name('articles.update');
+    Route::post('/articles/{article}/cover', [AdminArticleImageController::class, 'storeCover'])
+        ->name('articles.cover.store');
+    Route::delete('/articles/{article}/cover', [AdminArticleImageController::class, 'destroyCover'])
+        ->name('articles.cover.destroy');
+    Route::post('/articles/{article}/gallery', [AdminArticleImageController::class, 'storeGallery'])
+        ->name('articles.gallery.store');
+    Route::put('/articles/{article}/gallery', [AdminArticleImageController::class, 'updateGallery'])
+        ->name('articles.gallery.update');
+    Route::delete('/articles/{article}/gallery/{image}', [AdminArticleImageController::class, 'destroyGallery'])
+        ->name('articles.gallery.destroy');
     Route::patch('/articles/{article}/publish', [AdminArticlePublicationController::class, 'publish'])
         ->name('articles.publish');
     Route::patch('/articles/{article}/unpublish', [AdminArticlePublicationController::class, 'unpublish'])

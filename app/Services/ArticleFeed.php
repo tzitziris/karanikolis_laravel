@@ -63,6 +63,7 @@ class ArticleFeed
                 'slug',
                 'excerpt',
                 'body',
+                'cover_image_alt_text',
                 'cover_image_name',
                 'cover_image_width',
                 'cover_image_height',
@@ -77,6 +78,7 @@ class ArticleFeed
         return [
             'bodyHtml' => $renderer->render($article->body),
             'coverImageHeight' => $article->cover_image_height,
+            'coverImageAltText' => $article->cover_image_alt_text,
             'coverImage' => $this->imageData(
                 $article->cover_image_name,
                 $article->cover_image_width,
@@ -125,6 +127,7 @@ class ArticleFeed
                 'title',
                 'slug',
                 'excerpt',
+                'cover_image_alt_text',
                 'cover_image_name',
                 'cover_image_width',
                 'cover_image_height',
@@ -139,6 +142,7 @@ class ArticleFeed
     {
         return [
             'coverImageHeight' => $article->cover_image_height,
+            'coverImageAltText' => $article->cover_image_alt_text,
             'coverImage' => $this->imageData(
                 $article->cover_image_name,
                 $article->cover_image_width,

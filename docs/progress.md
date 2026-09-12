@@ -866,3 +866,106 @@ each mark, which is the weaker half.
 
 One consequence worth knowing: this test needs Node to run. That is fine locally and irrelevant on the
 target host, which never runs the suite.
+
+## Prompt 31 — the article's photographs: cover, gallery, ordering
+
+**The suite is not green.** `php artisan test` → **1 failed, 113 passed (2058 assertions)**.
+`./vendor/bin/pint --test` passed; `npm run build` clean. This was reported to me as done.
+
+The failure is in the test, not the feature: `StylesheetTest` treats any `text-…` class as a colour
+utility unless it appears in a hand-kept allow-list, and `ArticleForm.jsx` legitimately introduced
+`text-center`, which is not in that list. It is the same list-of-exceptions design that keeps costing
+us — but a red suite is a red suite, and I only found this by running it.
+
+### What is genuinely right
+
+The traversal hole is closed. `isUploadedName()` now matches a UUID, not a prefix:
+
+| name | accepted? | files the delete glob reaches |
+|---|---|---|
+| `uploads/articles/../../static/hero-kickboxing` | **no** | **0** (it found 8 before) |
+| a real UUID name | yes | its own |
+| `uploads/articles/not-a-uuid` | no | 0 |
+
+Files and rows still agree, measured on disk:
+
+| | files |
+|---|---|
+| cover uploaded | 5 |
+| cover **replaced** | 5 — the previous cover's files: **0 left** |
+| four gallery photographs | 29 |
+| the **second** removed | 23, and its own files: **0 left** |
+
+Order survives that removal: `πρώτη, δεύτερη, τρίτη, τέταρτη` → `πρώτη, τρίτη, τέταρτη`, renumbered
+0,1,2 with the relative order intact.
+
+An upload larger than PHP's own `post_max_size` produces a redirect back to the editing screen and
+«Η φωτογραφία είναι μεγαλύτερη από όσο δέχεται ο server. Ανεβάστε μικρότερη φωτογραφία.» — not the
+419 or the bogus "field is required" that this failure normally causes.
+
+### MY MISTAKE — the upload ceiling now rejects an ordinary phone photograph
+
+`max_pixels` was lowered from 24 MP to **8 MP** and `max_dimension` from 7000 to **4000**. An iPhone
+or Samsung photograph is 4032×3024 — 12.2 MP. I put one through:
+
+```
+REFUSED: Οι διαστάσεις της φωτογραφίας είναι εκτός ορίων. Ανεβάστε μικρότερη φωτογραφία.
+```
+
+The owner cannot upload a photograph from their phone. That is the only kind they have.
+
+This came from my prompt, and from a claim in it I had not checked. I wrote that decoding consumes
+several bytes per pixel against PHP's 128 MB `memory_limit`, so 24 MP could exhaust it and hand the
+owner a blank page. That is false. GD allocates image buffers outside the Zend memory manager, so
+they do not count against `memory_limit` at all. Measured:
+
+```
+decoded 6000x4000 (24.0 MP) under memory_limit=128M -> OK, zend peak 2.0 MB
+resampled to 2400x1600 and encoded webp -> OK
+```
+
+A 24-megapixel photograph decodes, resizes and encodes fine on this configuration. I asserted a
+technical fact I had not verified, framed the requirement as "make the two numbers agree", and the
+number that moved was the wrong one. The ceiling has to come back up to somewhere that comfortably
+admits a 12 MP phone photograph.
+
+### For the owner
+
+`2026_09_12_000001_add_cover_alt_text_to_articles` is **pending** on the development database —
+`php artisan migrate` before using the editing screen.
+
+## Prompt 32 — the ceiling comes back up, and the suite goes green
+
+`php artisan test` **120 passed (2128 assertions)**. `./vendor/bin/pint --test` passed.
+
+The limits are back to `max_pixels` 24,000,000 and `max_dimension` 7000, and I re-ran both
+photographs through the real path:
+
+| photograph | result |
+|---|---|
+| 4032×3024 — an ordinary phone photograph, 12.2 MP | **accepted**, 7 derivatives |
+| 6000×4000 — 24 MP | **accepted**, 7 derivatives |
+
+The regression I caused is gone.
+
+### A new one, in the gap between two numbers
+
+`max_bytes` is 12 MB. PHP's own `upload_max_filesize` here is **10 MB**. A photograph in between is
+refused by PHP before any of our code runs — and because that is not the same failure as exceeding
+`post_max_size`, the handler written last step does not catch it. What the owner gets is:
+
+> The photo failed to upload.
+
+English, from the framework, reaching a person who reads Greek — which `CLAUDE.md` names as a bug
+outright — and it does not say the photograph is too large or what to do. On cPanel the host's own
+limit is usually lower than ours, so this band is not a corner case there; it is the common case.
+
+### The stylesheet check is narrower but still a list
+
+The fix adds a regex naming `left|center|right|justify|start|end`, plus the existing hand-kept list of
+tokens. It is green and text alignments are a closed set, so it will not rot the way the token list
+does. But the underlying shape is unchanged: any ordinary Tailwind utility beginning with `bg-`,
+`border-`, `fill-`, `decoration-` or `text-` and ending in a word — `bg-cover`, `border-collapse`,
+`text-balance`, `fill-none` — is still read as an undefined colour unless somebody adds it to a list.
+Not worth another round now; worth doing properly in the suite cleanup step, where the answer is
+probably to ask the compiled stylesheet whether a class exists rather than to guess from its name.

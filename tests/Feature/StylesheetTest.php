@@ -21,6 +21,11 @@ function themeBlock(string $source): string
     return $match['body'] ?? '';
 }
 
+function isTailwindTextAlignment(string $utility): bool
+{
+    return preg_match('/^(?:[a-z-]+:)*text-(?:left|center|right|justify|start|end)$/', $utility) === 1;
+}
+
 it('exposes every design colour variable to Tailwind utilities', function () {
     $stylesheet = stylesheetSource();
 
@@ -99,6 +104,7 @@ it('only uses project colour utilities that are exposed by the theme', function 
                 'utility' => $match['utility'],
             ]);
         })
+        ->reject(fn (array $match): bool => isTailwindTextAlignment($match['utility']))
         ->reject(fn (array $match): bool => $knownNonColourTokens->contains($match['token']))
         ->unique(fn (array $match): string => $match['utility'])
         ->values();

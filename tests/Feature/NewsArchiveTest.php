@@ -120,6 +120,6 @@ it('loads archive cards with one count query and one card query without article 
 
     expect($queries)->toHaveCount(2)
         ->and($queries[0])->toContain('count(*)')
-        ->and($queries[1])->toContain('select `id`, `title`, `slug`, `excerpt`, `cover_image_name`, `cover_image_width`, `cover_image_height`, `published_at`')
+        ->and($queries[1])->toContain('select `id`, `title`, `slug`, `excerpt`, `cover_image_alt_text`, `cover_image_name`, `cover_image_width`, `cover_image_height`, `published_at`')
         ->and($queries[1])->not->toContain('`body`');
 });

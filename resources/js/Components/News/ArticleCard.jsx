@@ -14,7 +14,7 @@ export default function ArticleCard({ article, index = 0, revealAttribute }) {
                 <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-ink-3">
                     {article.coverImage ? (
                         <ArticleImage
-                            alt={article.title}
+                            alt={article.coverImageAltText ?? article.title}
                             className="h-full w-full object-cover grayscale contrast-125 transition-[filter,transform] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                             image={article.coverImage}
                             slot="card"

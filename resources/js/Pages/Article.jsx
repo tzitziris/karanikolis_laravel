@@ -20,6 +20,7 @@ function CoverFallback() {
 export default function Article({ article }) {
     const pageRef = useRef(null);
     const hasCover = Boolean(article.coverImage);
+    const coverAlt = article.coverImageAltText ?? article.title;
     const gallery = article.gallery ?? [];
     const videos = article.videos ?? [];
 
@@ -112,7 +113,7 @@ export default function Article({ article }) {
                         >
                             {hasCover ? (
                                 <Photo
-                                    alt={article.title}
+                                    alt={coverAlt}
                                     height={article.coverImageHeight}
                                     image={article.coverImage}
                                     imageName={article.coverImageName}
