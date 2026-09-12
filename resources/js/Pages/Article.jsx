@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { useRef } from 'react';
 import ArticleGallery from '../Components/News/ArticleGallery';
+import ArticleImage from '../Components/News/ArticleImage';
 import Photo from '../Components/News/Photo';
 import YoutubeEmbed from '../Components/News/YoutubeEmbed';
 import SiteImage from '../Components/SiteImage';
@@ -18,7 +19,7 @@ function CoverFallback() {
 
 export default function Article({ article }) {
     const pageRef = useRef(null);
-    const hasCover = Boolean(article.coverImageName);
+    const hasCover = Boolean(article.coverImage);
     const gallery = article.gallery ?? [];
     const videos = article.videos ?? [];
 
@@ -29,12 +30,12 @@ export default function Article({ article }) {
             <article>
                 <section className="grain relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink-0">
                     {hasCover ? (
-                        <SiteImage
+                        <ArticleImage
                             alt=""
                             aria-hidden="true"
                             className="absolute inset-0 -z-30 h-full w-full object-cover object-center saturate-[.55] contrast-125"
                             data-article-hero-image
-                            image={article.coverImageName}
+                            image={article.coverImage}
                             priority
                             slot="hero"
                         />
@@ -113,6 +114,7 @@ export default function Article({ article }) {
                                 <Photo
                                     alt={article.title}
                                     height={article.coverImageHeight}
+                                    image={article.coverImage}
                                     imageName={article.coverImageName}
                                     mode="natural"
                                     slot="full"

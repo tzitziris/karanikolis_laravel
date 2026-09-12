@@ -1,4 +1,4 @@
-import SiteImage from '../SiteImage';
+import ArticleImage from './ArticleImage';
 
 function validDimension(value) {
     return Number.isInteger(value) && value > 0;
@@ -8,6 +8,7 @@ export default function Photo({
     alt,
     className = '',
     height,
+    image,
     imageClassName = '',
     imageName,
     mode = 'tile',
@@ -35,10 +36,11 @@ export default function Photo({
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,161,66,.12),transparent_65%)]"
             />
-            <SiteImage
+            <ArticleImage
                 alt={alt}
                 className={`h-full w-full object-contain ${imageClassName}`}
-                image={imageName}
+                image={image}
+                imageName={imageName}
                 slot={slot}
             />
         </div>

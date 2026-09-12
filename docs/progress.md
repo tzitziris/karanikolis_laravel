@@ -655,3 +655,64 @@ the behaviour, and it would pass on a file that never renders. The behaviour is 
 but I established that by firing GETs at the routes and reading the row back, not from that test.
 This is the third time (after the shell tests and `DatabaseContainerTest`) that a string match has
 stood in for a check. Worth a cleanup prompt before the suite gets any larger.
+
+## Prompt 27 — uploaded photographs become real images (step 16 split, part one)
+
+Step 16 was going to be "the article form with TipTap and uploads". I split it, because a check
+before writing that prompt showed the form could not have worked: every article image goes through
+`SiteImage`, which resolves names from a manifest generated at **build time**, and renders a `<span>`
+of alt text when the name is unknown. An uploaded photograph arrives after the build. The owner would
+have uploaded photographs and seen alt text.
+
+`php artisan test` **107 passed (1869 assertions)**. `./vendor/bin/pint --test` passed. `npm run build` clean.
+
+New: `UploadedArticleImageService`, `ArticleImageUploadException`, `ArticleImage.jsx`, an `uploads`
+section in `config/images.php` with separate widths per role. `ArticleFeed` now hands the front end an
+image descriptor that says whether a name is `static` or `upload`; uploaded ones carry their real
+dimensions, read from the database, so the page cannot jump as photographs arrive.
+
+### A real phone-sized photograph through the pipeline
+
+Source: **775,838 bytes, 4032×3024** (12.2 megapixels).
+
+| role | derivatives | largest single file | all of them together |
+|---|---|---|---|
+| cover | 7 (480 → 2400) | **71,878 bytes** (2400×1800) | 267,572 bytes |
+| gallery | 6 (320 → 1600) | 45,204 bytes (1600×1200) | 148,758 bytes |
+
+A browser downloads **one** of these, so the worst case a visitor pays is 72 KB where the original was
+776 KB. Everything under `public/images/uploads` is webp — 13 files, 13 with a `.webp` extension, zero
+without. The original never lands there.
+
+### What I threw at it that its own tests do not
+
+| Input | Result |
+|---|---|
+| PHP script named `.jpg`, declared `image/jpeg` | refused, Greek, **0 files left behind** |
+| A real JPEG renamed `.png`, declared `image/png` | refused — content and declared type must agree |
+| SVG (with a `<script>` in it) declared `image/jpeg` | refused |
+| Valid 1×1 JPEG | accepted, one 1px derivative — silly but harmless |
+
+### The debt from the last step is paid, and I checked it on disk
+
+| | files under `public/images/uploads` |
+|---|---|
+| before | 14 |
+| article created with a cover and one gallery photograph | 27 |
+| **article deleted** | **14** — all thirteen of its files gone, none of the others touched |
+
+And the case that would have been easy to get wrong: two articles pointing at the *same* photograph.
+Deleting the first left all 7 files in place; deleting the second removed them. Rows and files cannot
+disagree.
+
+### A hole I found, not yet exploitable, that the next step would make live
+
+`isUploadedName()` decides whether a name is safe to delete files for, and it only checks the prefix.
+A name of `uploads/articles/../../static/hero-kickboxing` passes it, and the delete glob then matches
+**8 files in `public/images/static/`** — the site's own hero. I confirmed this by running the glob.
+
+Nothing can reach it today: only the service writes these names, and it writes UUIDs. But the article
+form is the step that starts accepting image references from a request, so the guard has to hold
+before that lands. This goes into the next prompt as an invariant, not as a patch.
+
+Also open: a 1×1 upload is accepted; step 17 still owns error-page polish.

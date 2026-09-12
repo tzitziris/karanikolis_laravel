@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import SiteImage from '../SiteImage';
+import ArticleImage from './ArticleImage';
 
 export default function ArticleCard({ article, index = 0, revealAttribute }) {
     const revealProps = revealAttribute ? { [revealAttribute]: '' } : {};
@@ -12,11 +12,11 @@ export default function ArticleCard({ article, index = 0, revealAttribute }) {
                 prefetch={['hover']}
             >
                 <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-ink-3">
-                    {article.coverImageName ? (
-                        <SiteImage
+                    {article.coverImage ? (
+                        <ArticleImage
                             alt={article.title}
                             className="h-full w-full object-cover grayscale contrast-125 transition-[filter,transform] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
-                            image={article.coverImageName}
+                            image={article.coverImage}
                             slot="card"
                         />
                     ) : (

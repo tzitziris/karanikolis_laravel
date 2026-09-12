@@ -15,6 +15,8 @@ class ArticleFeed
 
     public const NEWS_PAGE_SIZE = 9;
 
+    public function __construct(private readonly UploadedArticleImageService $uploadedImages) {}
+
     /**
      * @return array<int, array<string, mixed>>
      */
@@ -75,6 +77,12 @@ class ArticleFeed
         return [
             'bodyHtml' => $renderer->render($article->body),
             'coverImageHeight' => $article->cover_image_height,
+            'coverImage' => $this->imageData(
+                $article->cover_image_name,
+                $article->cover_image_width,
+                $article->cover_image_height,
+                'cover',
+            ),
             'coverImageName' => $article->cover_image_name,
             'coverImageWidth' => $article->cover_image_width,
             'date' => $this->dateForGreekReader($article->published_at),
@@ -84,6 +92,7 @@ class ArticleFeed
                     'altText' => $image->alt_text,
                     'height' => $image->height,
                     'id' => $image->id,
+                    'image' => $this->imageData($image->image_name, $image->width, $image->height, 'gallery'),
                     'imageName' => $image->image_name,
                     'sortOrder' => $image->sort_order,
                     'width' => $image->width,
@@ -130,6 +139,12 @@ class ArticleFeed
     {
         return [
             'coverImageHeight' => $article->cover_image_height,
+            'coverImage' => $this->imageData(
+                $article->cover_image_name,
+                $article->cover_image_width,
+                $article->cover_image_height,
+                'cover',
+            ),
             'coverImageName' => $article->cover_image_name,
             'coverImageWidth' => $article->cover_image_width,
             'date' => $this->dateForGreekReader($article->published_at),
@@ -145,5 +160,36 @@ class ArticleFeed
     private function dateForGreekReader(?Carbon $publishedAt): ?string
     {
         return $publishedAt?->locale('el')->translatedFormat('j F Y');
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function imageData(?string $name, ?int $width, ?int $height, string $role): ?array
+    {
+        if (! filled($name)) {
+            return null;
+        }
+
+        if (! $this->uploadedImages->isUploadedName($name)) {
+            return [
+                'height' => $height,
+                'name' => $name,
+                'source' => 'static',
+                'width' => $width,
+            ];
+        }
+
+        if (! is_int($width) || ! is_int($height) || $width < 1 || $height < 1) {
+            return null;
+        }
+
+        return [
+            'height' => $height,
+            'name' => $name,
+            'source' => 'upload',
+            'width' => $width,
+            'widths' => $this->uploadedImages->widthsFor($role, $width),
+        ];
     }
 }

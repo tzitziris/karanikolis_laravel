@@ -119,6 +119,7 @@ export default function ArticleGallery({ fallbackAlt, images }) {
                         alt={activeImage.altText ?? fallbackAlt}
                         className="max-w-full border border-line-strong"
                         height={activeImage.height}
+                        image={activeImage.image}
                         imageName={activeImage.imageName}
                         mode="natural"
                         slot="full"
@@ -177,6 +178,7 @@ export default function ArticleGallery({ fallbackAlt, images }) {
                     >
                         <Photo
                             alt={image.altText ?? fallbackAlt}
+                            image={image.image}
                             imageClassName="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                             height={image.height}
                             imageName={image.imageName}

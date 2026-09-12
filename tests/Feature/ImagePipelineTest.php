@@ -221,7 +221,10 @@ it('keeps direct image file references inside the SiteImage gateway component', 
     $scannedFiles = collect([
         ...File::allFiles(resource_path('js/Components')),
         ...File::allFiles(resource_path('js/Pages')),
-    ])->reject(fn (SplFileInfo $file): bool => $file->getRelativePathname() === 'SiteImage.jsx');
+    ])->reject(fn (SplFileInfo $file): bool => in_array($file->getRelativePathname(), [
+        'News/ArticleImage.jsx',
+        'SiteImage.jsx',
+    ], true));
 
     foreach ($scannedFiles as $file) {
         $source = File::get($file->getPathname());

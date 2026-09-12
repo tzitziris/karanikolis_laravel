@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\ArticleImage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminArticleService
 {
+    public function __construct(private readonly UploadedArticleImageService $uploadedImages) {}
+
     /**
      * @return array<int, array<string, mixed>>
      */
@@ -50,7 +54,31 @@ class AdminArticleService
 
     public function delete(Article $article): void
     {
-        $article->delete();
+        $names = DB::transaction(function () use ($article): array {
+            $article->loadMissing('images:id,article_id,image_name');
+            $names = [
+                $article->cover_image_name,
+                ...$article->images->pluck('image_name')->all(),
+            ];
+
+            $article->delete();
+
+            return $names;
+        });
+
+        $this->uploadedImages->deleteUnreferenced($names);
+    }
+
+    public function deleteGalleryImage(ArticleImage $image): void
+    {
+        $name = DB::transaction(function () use ($image): ?string {
+            $name = $image->image_name;
+            $image->delete();
+
+            return $name;
+        });
+
+        $this->uploadedImages->deleteUnreferenced([$name]);
     }
 
     /**

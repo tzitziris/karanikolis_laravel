@@ -36,4 +36,23 @@ return [
             'sparring' => 'sparring.jpg',
         ],
     ],
+    'uploads' => [
+        'article_dir' => 'images/uploads/articles',
+        'quality' => 82,
+        'roles' => [
+            'cover' => [
+                'widths' => [480, 768, 1024, 1280, 1600, 1920, 2400],
+            ],
+            'gallery' => [
+                'widths' => [320, 480, 768, 1024, 1280, 1600],
+            ],
+        ],
+        'limits' => [
+            'allowed_mimes' => ['image/jpeg', 'image/png'],
+            'max_bytes' => 12 * 1024 * 1024,
+            'max_dimension' => 7000,
+            'max_pixels' => 24_000_000,
+            'min_dimension' => 1,
+        ],
+    ],
 ];
