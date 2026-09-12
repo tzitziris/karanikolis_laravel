@@ -124,9 +124,11 @@ it('does not leave unrendered page components behind', function () {
 
     expect($pageComponents)->toBe([
         'About.jsx',
+        'Article.jsx',
         'Coaches.jsx',
         'Home.jsx',
         'News.jsx',
+        'NotFound.jsx',
         'PublicPlaceholder.jsx',
         'Schedule.jsx',
     ]);

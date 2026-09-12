@@ -304,6 +304,110 @@ body {
     color: var(--ink-1);
 }
 
+.article-content {
+    color: var(--bone-dim);
+    font-size: clamp(1rem, 2.4vw, 1.12rem);
+    line-height: 1.85;
+}
+
+.article-content > * + * {
+    margin-top: 1.5rem;
+}
+
+.article-content h2,
+.article-content h3 {
+    max-width: 18ch;
+    color: var(--bone);
+    font-family: var(--font-display-face), sans-serif;
+    font-weight: 900;
+    line-height: 0.95;
+    overflow-wrap: normal;
+    text-transform: uppercase;
+    word-break: normal;
+}
+
+.article-content h2 {
+    margin-top: 3rem;
+    font-size: clamp(2.75rem, 9vw, 5.4rem);
+}
+
+.article-content h3 {
+    margin-top: 2.5rem;
+    font-size: clamp(2.1rem, 6vw, 3.5rem);
+}
+
+.article-content a {
+    border-bottom: 1px solid var(--blood);
+    color: var(--bone);
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        border-color 180ms ease,
+        color 180ms ease;
+}
+
+.article-content a:hover {
+    border-color: var(--bone);
+    color: var(--blood);
+}
+
+.article-content strong {
+    color: var(--bone);
+    font-weight: 800;
+}
+
+.article-content em {
+    color: var(--bone);
+}
+
+.article-content ul,
+.article-content ol {
+    display: grid;
+    gap: 0.7rem;
+    padding-left: 1.4rem;
+}
+
+.article-content ul {
+    list-style: square;
+}
+
+.article-content ol {
+    list-style: decimal;
+}
+
+.article-content li::marker {
+    color: var(--blood);
+}
+
+.article-content blockquote {
+    padding: 1.25rem 0 1.25rem 1.25rem;
+    border-left: 2px solid var(--blood);
+    color: var(--bone);
+    font-size: clamp(1.2rem, 3vw, 1.55rem);
+    line-height: 1.55;
+}
+
+.article-content .article-inline-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 2.4rem 0;
+    border: 1px solid var(--line-strong);
+    background: var(--ink-2);
+}
+
+.article-content .article-emoji {
+    display: inline;
+}
+
+.article-content .article-removed-image {
+    display: inline-block;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--line-strong);
+    color: var(--pewter);
+    font-size: 0.85rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .marquee-track {
         animation: none;

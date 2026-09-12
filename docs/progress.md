@@ -505,3 +505,39 @@ no `body` key reaches the browser.
 Bad page numbers behave sensibly. `?page=99` redirects to `?page=2`, the last page that exists, so a
 reader who overshoots lands on articles rather than on emptiness; `?page=abc`, `?page=0` and
 `?page=-1` all serve the first page.
+
+## Prompt 23 — the article page
+
+`/news/{slug}` renders a single article, with the gallery, the videos, and the body converted by
+`ArticleBodyRenderer`. 76 tests / 1546 assertions, Pint clean.
+
+**No leak by address.** The archive's rule is not restated here — `readyForPublic()` remains the
+single definition, called from two places in `ArticleFeed` and nowhere else. Requested directly:
+
+| Address | Result |
+|---|---|
+| a published article | 200 |
+| «Ορατό χωρίς ημερομηνία δημοσίευσης» (visible, undated) | 404 |
+| «Προσχέδιο ανακοίνωσης για αγώνες» (hidden draft) | 404 |
+| a slug that does not exist | 404 |
+
+The 404 is the site's own page in Greek — «Η σελίδα δεν βρέθηκε», explaining that the article may
+have moved, may not be published yet, or may no longer be available — not an English framework page.
+
+**The videos genuinely do not contact Google.** The reference defeated its own click-to-load by
+showing a still frame fetched from `i.ytimg.com`, which identifies the reader before they choose
+anything. Measured on a loaded article page with a video: **zero third-party requests, zero iframes**
+before the click. The only external URL in the component is the `youtube-nocookie` embed, and it
+exists only once the reader has pressed play.
+
+**Queries:** three for the whole page — the article, its images, its videos — with the children eager
+loaded by `article_id IN (…)`. No per-photograph or per-video query.
+
+**The gallery lightbox** was driven from the keyboard: arrow keys move between photographs and back,
+Tab wraps in both directions, Escape closes, focus returns to the thumbnail that opened it, body
+scroll is released, and it reports `role="dialog"` with `aria-modal`. Nothing is hidden — the panel
+measures opacity 1 and visibility visible.
+
+**Headings hold.** Measured the longest published title, «Κλείσιμο χρονιάς με δυνατές στιγμές»
+(35 characters), across ten widths from 375 to 2200px: nothing past the viewport, no horizontal
+scroll. Sixth page, first time with no typography finding.

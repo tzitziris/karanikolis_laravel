@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsArchiveController;
+use App\Http\Controllers\NewsArticleController;
+use App\Http\Controllers\NotFoundController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,7 +18,10 @@ Route::get('/schedule', function () {
 })->name('schedule');
 
 Route::get('/news', NewsArchiveController::class)->name('news');
+Route::get('/news/{slug}', NewsArticleController::class)->name('news.show');
 
 Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
+
+Route::fallback(NotFoundController::class);

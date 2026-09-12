@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\ArticleImage;
+use App\Models\ArticleVideo;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -35,6 +37,70 @@ class ArticleFeed
         return $this->publishedCardsQuery()
             ->paginate(self::NEWS_PAGE_SIZE, ['*'], 'page', $page)
             ->through(fn (Article $article): array => $this->cardData($article));
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function articlePage(string $slug, ArticleBodyRenderer $renderer): ?array
+    {
+        $article = Article::query()
+            ->readyForPublic()
+            ->where('slug', $slug)
+            ->with([
+                'images' => fn ($query) => $query
+                    ->select(['id', 'article_id', 'image_name', 'alt_text', 'width', 'height', 'sort_order'])
+                    ->orderBy('sort_order'),
+                'videos' => fn ($query) => $query
+                    ->select(['id', 'article_id', 'youtube_id', 'sort_order'])
+                    ->orderBy('sort_order'),
+            ])
+            ->select([
+                'id',
+                'title',
+                'slug',
+                'excerpt',
+                'body',
+                'cover_image_name',
+                'cover_image_width',
+                'cover_image_height',
+                'published_at',
+            ])
+            ->first();
+
+        if (! $article instanceof Article) {
+            return null;
+        }
+
+        return [
+            'bodyHtml' => $renderer->render($article->body),
+            'coverImageHeight' => $article->cover_image_height,
+            'coverImageName' => $article->cover_image_name,
+            'coverImageWidth' => $article->cover_image_width,
+            'date' => $this->dateForGreekReader($article->published_at),
+            'excerpt' => $article->excerpt,
+            'gallery' => $article->images
+                ->map(fn (ArticleImage $image): array => [
+                    'altText' => $image->alt_text,
+                    'height' => $image->height,
+                    'id' => $image->id,
+                    'imageName' => $image->image_name,
+                    'sortOrder' => $image->sort_order,
+                    'width' => $image->width,
+                ])
+                ->all(),
+            'id' => $article->id,
+            'publishedAt' => $article->published_at?->toISOString(),
+            'slug' => $article->slug,
+            'title' => $article->title,
+            'videos' => $article->videos
+                ->map(fn (ArticleVideo $video): array => [
+                    'id' => $video->id,
+                    'sortOrder' => $video->sort_order,
+                    'youtubeId' => $video->youtube_id,
+                ])
+                ->all(),
+        ];
     }
 
     /**
