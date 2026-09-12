@@ -794,3 +794,34 @@ button and no h1 button, but `Cmd+U` and `Cmd+Alt+1` are bound and work. The own
 keyboard shortcut everybody's fingers know, write for ten minutes, and only learn at save that it was
 never allowed. Refused rather than silently lost — the invariant holds — but the wrong moment to find
 out.
+
+## Prompt 29 — the editing screen can no longer take a live article off the site
+
+`php artisan test` **114 passed (2038 assertions)**. `./vendor/bin/pint --test` passed.
+The fix is one line in `AdminArticleContentController::update()`: an absent or empty date leaves the
+stored one alone.
+
+I re-ran the scenario that caught it, plus the two ways around the form:
+
+| what was sent for the date on a live article | published_at afterwards | public archive |
+|---|---|---|
+| the field, emptied (what the form sends) | **kept, 2026-09-02** | still listed |
+| the field absent entirely | **kept** | still listed |
+| an explicit `null` | **kept** | still listed |
+
+No path through this screen destroys the date any more.
+
+### Still true, and I am leaving it: a future date removes a live article, silently
+
+Setting the date of a published article to next year and saving leaves `is_visible` at 1, writes
+`2027-09-12`, and the article **vanishes from the public archive**. Nothing on the save says so; the
+owner only learns it from the dashboard, which does label it «Προγραμματισμένο».
+
+This is not the same defect. The owner typed that value, nothing is destroyed, and scheduling an
+article forward is a legitimate thing to want. But «Το άρθρο αποθηκεύτηκε.» is the same message
+whether the save left the article on the site or took it off, and that is the part worth changing
+when the writing screen is next open — together with the fact that emptying the date field now does
+nothing at all and still reports success, so the owner is told their change was saved when it was
+ignored.
+
+Neither is data loss. Both go on the list for the polish step rather than another round now.

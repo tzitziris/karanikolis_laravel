@@ -140,6 +140,74 @@ it('rewrites a published article title without changing its slug, publication da
         ->and($article->is_visible)->toBeTrue();
 });
 
+it('keeps a live article public when its editor date field is emptied', function () {
+    $publishedAt = now()->subDays(7)->seconds(0);
+    $article = Article::factory()->published()->create([
+        'excerpt' => 'Παλιά δημόσια σύνοψη.',
+        'published_at' => $publishedAt,
+        'title' => 'Δημόσιο άρθρο με ημερομηνία',
+    ]);
+    $originalPublishedAt = $article->published_at?->copy();
+
+    $this->get('/news')
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('articles.0.title', 'Δημόσιο άρθρο με ημερομηνία')
+        );
+
+    $this->actingAs(User::factory()->create())
+        ->put("/admin/articles/{$article->id}", [
+            'body' => editorBody('Το δημόσιο άρθρο ενημερώθηκε.'),
+            'excerpt' => 'Νέα δημόσια σύνοψη.',
+            'published_at' => '',
+            'title' => 'Δημόσιο άρθρο με αλλαγμένο κείμενο',
+        ])
+        ->assertRedirect("/admin/articles/{$article->id}/edit")
+        ->assertSessionHas('success', 'Το άρθρο αποθηκεύτηκε.');
+
+    $article->refresh();
+
+    expect($article->is_visible)->toBeTrue()
+        ->and($article->published_at?->equalTo($originalPublishedAt))->toBeTrue()
+        ->and($article->excerpt)->toBe('Νέα δημόσια σύνοψη.');
+
+    $this->get('/news')
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('articles.0.title', 'Δημόσιο άρθρο με αλλαγμένο κείμενο')
+            ->where('articles.0.date', $originalPublishedAt?->locale('el')->translatedFormat('j F Y'))
+        );
+
+    $this->actingAs(User::factory()->create())
+        ->get("/admin/articles/{$article->id}/edit")
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('article.publishedAt', $originalPublishedAt?->format('Y-m-d\TH:i'))
+        );
+});
+
+it('does not erase an existing publication date when editing an undrawn article with an empty date field', function () {
+    $publishedAt = now()->subDays(12)->seconds(0);
+    $article = Article::factory()->create([
+        'is_visible' => false,
+        'published_at' => $publishedAt,
+        'title' => 'Κρυφό άρθρο με παλιά ημερομηνία',
+    ]);
+    $originalPublishedAt = $article->published_at?->copy();
+
+    $this->actingAs(User::factory()->create())
+        ->put("/admin/articles/{$article->id}", [
+            'body' => editorBody('Το κρυφό άρθρο ενημερώθηκε.'),
+            'excerpt' => 'Νέα σύνοψη για κρυφό άρθρο.',
+            'published_at' => '',
+            'title' => 'Κρυφό άρθρο με αλλαγμένο κείμενο',
+        ])
+        ->assertRedirect("/admin/articles/{$article->id}/edit");
+
+    $article->refresh();
+
+    expect($article->is_visible)->toBeFalse()
+        ->and($article->published_at?->equalTo($originalPublishedAt))->toBeTrue()
+        ->and($article->title)->toBe('Κρυφό άρθρο με αλλαγμένο κείμενο');
+});
+
 it('keeps the editor contract aligned with the server body renderer vocabulary', function () {
     $renderer = File::get(app_path('Services/ArticleBodyRenderer.php'));
     $editor = File::get(resource_path('js/Components/Admin/RichTextEditor.jsx'));

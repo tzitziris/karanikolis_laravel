@@ -49,7 +49,7 @@ class AdminArticleContentController extends Controller
         $article->update([
             'body' => $request->validated('body'),
             'excerpt' => trim((string) $request->validated('excerpt')),
-            'published_at' => $request->date('published_at'),
+            'published_at' => $request->filled('published_at') ? $request->date('published_at') : $article->published_at,
             'title' => trim((string) $request->validated('title')),
         ]);
 
