@@ -21,6 +21,9 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            'flash' => [
+                'success' => fn (): ?string => $request->session()->get('success'),
+            ],
         ];
     }
 }

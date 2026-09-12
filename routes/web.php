@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminArticleController;
+use App\Http\Controllers\AdminArticlePublicationController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsArchiveController;
@@ -35,7 +38,13 @@ Route::post('/admin/login', [LoginController::class, 'store'])
     ->name('admin.login.store');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', fn () => Inertia::render('Admin/SignedIn'))->name('home');
+    Route::get('/', AdminDashboardController::class)->name('home');
+    Route::patch('/articles/{article}/publish', [AdminArticlePublicationController::class, 'publish'])
+        ->name('articles.publish');
+    Route::patch('/articles/{article}/unpublish', [AdminArticlePublicationController::class, 'unpublish'])
+        ->name('articles.unpublish');
+    Route::delete('/articles/{article}', [AdminArticleController::class, 'destroy'])
+        ->name('articles.destroy');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
     Route::any('/{adminPath}', fn () => abort(404))

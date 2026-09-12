@@ -85,6 +85,9 @@ it('redirects direct unauthenticated management requests to the sign-in page', f
 })->with([
     ['get', '/admin'],
     ['post', '/admin/logout'],
+    ['patch', '/admin/articles/1/publish'],
+    ['patch', '/admin/articles/1/unpublish'],
+    ['delete', '/admin/articles/1'],
     ['get', '/admin/news'],
     ['get', '/admin/news/create'],
     ['get', '/admin/news/1/edit'],

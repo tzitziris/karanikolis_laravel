@@ -581,3 +581,77 @@ that particular cron line.
    `cd /home/USER/APP && php artisan admin:create --email=THEIR@EMAIL --password-file=/home/USER/pw.txt`
 3. Wait for it to run. The password file deletes itself.
 4. Delete the cron job.
+
+## Prompt 26 — the dashboard: every article, publish, unpublish, delete
+
+`php artisan test` **100 passed (1764 assertions)**. `./vendor/bin/pint --test` passed.
+`npm run build` clean; `Dashboard-*.js` is 7.56 kB (2.25 kB gzipped) and, because the admin page
+opts out of the public layout, it costs a visitor nothing.
+
+What was built: `AdminDashboardController`, `AdminArticlePublicationController` (publish/unpublish),
+`AdminArticleController@destroy`, `AdminArticleService`, and `resources/js/Pages/Admin/Dashboard.jsx`.
+`Admin/SignedIn.jsx` — the placeholder from the auth step — is gone.
+
+### The prefetch trap was avoided
+
+Seventeen links on this site prefetch on hover. Had any state change been reachable by following a
+link, articles would have deleted themselves under the owner's cursor. They are not:
+
+| Probe (mine, not the suite's) | Result |
+|---|---|
+| `GET /admin/articles/{id}/publish` | **404**, article untouched |
+| `GET .../unpublish`, `GET .../delete`, `GET .../destroy`, `GET /admin/articles/{id}` | **404**, article untouched |
+| Article row after all five GETs | still present, `is_visible=0`, `published_at` still `NULL` |
+| `Link` components in `Dashboard.jsx` | **zero** — every action goes through `router.patch` / `router.delete` |
+| `prefetch` anywhere under `Pages/Admin/` | none |
+
+State changes are `PATCH`/`DELETE` behind `web` + `auth`, so CSRF and the session both apply, and
+unauthenticated attempts redirect to `/admin/login` before touching data.
+
+### Unpublishing does not forget the date — checked in the database, not through the code that wrote it
+
+Read straight from the `articles` row, travelling three days between each step:
+
+| Step | `is_visible` | `published_at` | `updated_at` |
+|---|---|---|---|
+| start | 0 | NULL | — |
+| published | 1 | **2026-09-12 11:39:13** | 2026-09-12 |
+| unpublished (3 days later) | 0 | **2026-09-12 11:39:13** | 2026-09-15 |
+| republished (3 more days later) | 1 | **2026-09-12 11:39:13** | 2026-09-18 |
+
+And the consequence that actually matters, measured through the public feed: an article published
+30 days ago, taken down and put back an hour ago, still sits **below** one published 2 days ago.
+Public order reads `Νεότερο, Παλιό`. The historical fact survived.
+
+`publish()` writes `published_at ?? now()`, so a first publication gets a date and a later one keeps
+the original.
+
+### The owner sees what the public cannot
+
+Four distinct states, each with a Greek label and an explanation of *why* nobody can see it:
+Κρυφό, Ορατό χωρίς ημερομηνία, Προγραμματισμένο, Ζωντανό. The public rule was not reused to build
+this list and was not weakened: `readyForPublic()` is still called from exactly two places, both in
+`ArticleFeed`.
+
+One query for the whole list, with `withCount` for photographs and videos, and the `body` column is
+never selected — verified by asserting on the SQL actually issued.
+
+### Known limits, deliberately left
+
+- **The list is not paginated.** Every article is sent on every dashboard load. At eighteen articles
+  this is nothing; it is a real problem at several hundred, and pagination is the fix when it comes.
+- **Deleting an article removes its database rows but not its files.** The cascade takes
+  `article_images` and `article_videos` with it, but any webp left in `public/` stays. Nothing
+  uploads files yet, so nothing is orphaned today — this must be solved in the upload step, not after.
+- **A missing admin article id renders Laravel's English 404.** Only the owner can reach it, and
+  error-page polish is its own step.
+- Every button on the page is disabled while any one action is in flight. Honest, slightly blunt.
+
+### Third sighting of the same weakness in the suite
+
+`AdminDashboardTest` ends with a test that reads `Dashboard.jsx` as text and asserts it *contains*
+`router.patch(...)` and does *not* contain `<Link`. That documents the intention; it does not check
+the behaviour, and it would pass on a file that never renders. The behaviour is genuinely correct —
+but I established that by firing GETs at the routes and reading the row back, not from that test.
+This is the third time (after the shell tests and `DatabaseContainerTest`) that a string match has
+stood in for a check. Worth a cleanup prompt before the suite gets any larger.
