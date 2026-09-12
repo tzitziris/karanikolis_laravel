@@ -969,3 +969,58 @@ does. But the underlying shape is unchanged: any ordinary Tailwind utility begin
 `text-balance`, `fill-none` — is still read as an undefined colour unless somebody adds it to a list.
 Not worth another round now; worth doing properly in the suite cleanup step, where the answer is
 probably to ask the compiled stylesheet whether a class exists rather than to guess from its name.
+
+## Prompt 33 — the upload messages, finished by hand
+
+Codex ran out of budget part way through this one, so I wrote the rest myself. Final state:
+`php artisan test` **133 passed (2188 assertions)**, `./vendor/bin/pint --test` passed, `npm run build`
+clean.
+
+### What Codex had already done, and what was wrong with it
+
+`UploadLimits` derives the enforced ceiling as the smallest of our configured `max_bytes` and PHP's
+own `upload_max_filesize` and `post_max_size`, and `ArticleImageUploadRequest::failedValidation()`
+translates each `UPLOAD_ERR_*` into a Greek sentence. Both are the right shape. Three defects:
+
+- **The suite would not run at all.** `failedValidation()` imported `Illuminate\Validation\Validator`
+  instead of `Illuminate\Contracts\Validation\Validator`, so PHP rejected the signature and every
+  test died with a fatal error. Fixed.
+- **`UPLOAD_ERR_NO_FILE` said «Δοκιμάστε ξανά με μικρότερη φωτογραφία.»** — advice to shrink a
+  photograph the owner never chose. Now «Διαλέξτε φωτογραφία για ανέβασμα.»
+- **The size label read «10,0 MB» instead of «10 MB».** `10485760 / 1048576` returns an **int** in
+  PHP, not a float, so `floor($m) === $m` compares `float(10)` with `int(10)` and is always false.
+  Fixed with a note in the code, because it will look like a pointless loose comparison otherwise.
+
+### What I added
+
+Every message that refuses a photograph for its size now says the limit, so the owner learns the
+number from the refusal as well as from the field. A pre-existing test caught the label lying at small
+scales — 512 bytes was being reported as «1 KB» — so the label is now honest at every scale:
+
+| enforced | shown |
+|---|---|
+| 512 bytes | `512 bytes` |
+| 2,048 | `2 KB` |
+| 1,572,864 | `1,5 MB` |
+| 10,485,760 | `10 MB` |
+
+`tests/Feature/UploadLimitsTest.php` is new — Codex wrote none. Thirteen tests: every `UPLOAD_ERR_*`
+produces a Greek sentence carrying no framework English, the too-large ones name the limit,
+`UPLOAD_ERR_NO_FILE` does not blame the size, the enforced ceiling never exceeds what this PHP will
+take, and the editing screen carries the limit before a file is chosen.
+
+I mutation-tested them rather than trusting they pass: restoring the `===` bug failed the label test,
+deleting the `UPLOAD_ERR_NO_FILE` case failed its test, and removing the too-large case failed the
+one that checks the limit is named. All three restored.
+
+### Where the numbers stand on this machine
+
+```
+config max_bytes       : 12582912
+php upload_max_filesize: 10M (10485760 bytes)
+php post_max_size      : 12M (12582912 bytes)
+=> enforced            : 10485760 bytes, shown to the owner as "10 MB"
+```
+
+On cPanel the host's own figure is usually lower and is not ours to set. Nothing needs changing there:
+the ceiling follows whatever PHP reports, and the sentence the owner reads follows the ceiling.

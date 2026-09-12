@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\ArticleImage;
 use App\Services\UploadedArticleImageService;
 use App\Support\ArticleBodyContract;
+use App\Support\UploadLimits;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -135,12 +136,13 @@ class AdminArticleContentController extends Controller
     }
 
     /**
-     * @return array<string, int>
+     * @return array<string, int|string>
      */
     private function uploadLimits(): array
     {
         return [
-            'maxBytes' => (int) config('images.uploads.limits.max_bytes'),
+            'maxBytes' => UploadLimits::articleImageMaxBytes(),
+            'maxLabel' => UploadLimits::articleImageMaxLabel(),
             'maxPixels' => (int) config('images.uploads.limits.max_pixels'),
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\ArticleImageUploadException;
 use App\Models\Article;
 use App\Models\ArticleImage;
+use App\Support\UploadLimits;
 use finfo;
 use GdImage;
 use Illuminate\Http\UploadedFile;
@@ -127,8 +128,8 @@ class UploadedArticleImageService
 
         $bytes = filesize($sourcePath);
 
-        if (! is_int($bytes) || $bytes < 1 || $bytes > $this->limit('max_bytes')) {
-            throw ArticleImageUploadException::ownerMessage('Η φωτογραφία είναι πολύ μεγάλη. Ανεβάστε μικρότερο αρχείο.');
+        if (! is_int($bytes) || $bytes < 1 || $bytes > UploadLimits::articleImageMaxBytes()) {
+            throw ArticleImageUploadException::ownerMessage('Η φωτογραφία είναι πολύ μεγάλη. Το όριο είναι '.UploadLimits::articleImageMaxLabel().'.');
         }
 
         $declaredMime = (string) $file->getClientMimeType();

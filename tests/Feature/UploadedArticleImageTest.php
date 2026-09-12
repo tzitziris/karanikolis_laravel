@@ -117,7 +117,7 @@ it('refuses oversized uploads with a Greek owner-facing message and no leftovers
     $upload = makeJpegUpload();
 
     expect(fn () => app(UploadedArticleImageService::class)->store($upload, 'cover'))
-        ->toThrow(ArticleImageUploadException::class, 'Η φωτογραφία είναι πολύ μεγάλη. Ανεβάστε μικρότερο αρχείο.');
+        ->toThrow(ArticleImageUploadException::class, 'Η φωτογραφία είναι πολύ μεγάλη. Το όριο είναι 512 bytes.');
 
     expect(File::exists(public_path('images/uploads/articles')))->toBeTrue()
         ->and(File::allFiles(public_path('images/uploads/articles')))->toBeEmpty();

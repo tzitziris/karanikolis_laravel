@@ -44,6 +44,7 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
     const coverError = coverLocalError || pageErrors.cover_photo || pageErrors.photo;
     const galleryError = galleryLocalError || pageErrors.gallery_photo || pageErrors.gallery || pageErrors.photo;
     const maxUploadBytes = Number.isInteger(uploadLimits.maxBytes) ? uploadLimits.maxBytes : null;
+    const maxUploadLabel = uploadLimits.maxLabel ?? '';
 
     const metadata = useMemo(() => {
         if (!isEditing) return 'Το άρθρο θα μείνει προσχέδιο μέχρι να δημοσιευτεί από τον πίνακα άρθρων.';
@@ -284,6 +285,9 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
                                         </label>
                                         <label className="grid gap-2" htmlFor="cover-photo">
                                             <span className="text-sm font-bold">Νέα φωτογραφία</span>
+                                            {maxUploadLabel ? (
+                                                <span className="text-xs leading-5 text-bone-dim">Μέγιστο μέγεθος αρχείου: {maxUploadLabel}.</span>
+                                            ) : null}
                                             <input
                                                 accept="image/jpeg,image/png"
                                                 className="min-h-11 border border-line-strong bg-ink-1 px-3 py-2 text-sm text-bone file:mr-4 file:border-0 file:bg-blood file:px-3 file:py-2 file:font-mono file:text-xs file:font-bold file:uppercase file:text-ink-0"
@@ -407,6 +411,9 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
                                     </label>
                                     <label className="grid gap-2" htmlFor="gallery-photo">
                                         <span className="text-sm font-bold">Νέα φωτογραφία</span>
+                                        {maxUploadLabel ? (
+                                            <span className="text-xs leading-5 text-bone-dim">Μέγιστο μέγεθος αρχείου: {maxUploadLabel}.</span>
+                                        ) : null}
                                         <input
                                             accept="image/jpeg,image/png"
                                             className="min-h-11 border border-line-strong bg-ink-2 px-3 py-2 text-sm text-bone file:mr-4 file:border-0 file:bg-blood file:px-3 file:py-2 file:font-mono file:text-xs file:font-bold file:uppercase file:text-ink-0"
