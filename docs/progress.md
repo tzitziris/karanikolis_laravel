@@ -541,3 +541,43 @@ measures opacity 1 and visibility visible.
 **Headings hold.** Measured the longest published title, «Κλείσιμο χρονιάς με δυνατές στιγμές»
 (35 characters), across ten widths from 375 to 2200px: nothing past the viewport, no horizontal
 scroll. Sixth page, first time with no typography finding.
+
+## Prompt 24 — administrator accounts and sign-in
+
+Session auth at `/admin/login`, everything else behind it, plus `admin:create`, `admin:list` and
+`admin:delete`. 89 tests / 1675 assertions, Pint clean.
+
+**The cPanel constraint was solved properly.** The reference takes the password as `--password=` on
+the command line; on a host with no terminal the only way to run artisan is a temporary cron job,
+whose command line is visible in the control panel and copied into its logs and notification mail.
+`admin:create` refuses that outright — «Ο κωδικός δεν πρέπει να μπει στη γραμμή της εντολής» — and
+takes `--password-file=` instead, **deleting the file as soon as it has read it**, so the owner
+cannot forget to. Confirmed: the password appears zero times in the command's output, and the file
+is gone afterwards.
+
+Verified by probing the running site, not by reading the tests:
+
+| Check | Result |
+|---|---|
+| `/admin`, `/admin/logout`, `/admin/articles`, any unknown admin path, unauthenticated | **302 → /admin/login** |
+| `POST /admin/logout` with no session or token | 419, never 200 |
+| Wrong password, **existing** vs **non-existent** email | byte-identical Greek reply — no user enumeration |
+| Failed attempts | blocked on the **11th**: «Έγιναν πολλές αποτυχημένες προσπάθειες. Δοκιμάστε ξανά σε 15 λεπτά.» |
+| Session identifier before vs after sign-in | changes — no session fixation |
+| After sign-out | `/admin` redirects again |
+
+The admin area carries none of the public chrome: no header, no footer, and **no links back to the
+public site at all**. Its text is Greek, and the fields carry `username` / `current-password`
+autocomplete so a password manager behaves.
+
+`admin:delete` asks for confirmation only on an interactive terminal, so a cron job deletes without
+prompting. That is the only way it can work on the target host; worth remembering before writing
+that particular cron line.
+
+### How the owner creates their account on cPanel
+
+1. File Manager → create a file, e.g. `/home/USER/pw.txt`, containing only the password (≥10 chars).
+2. Cron Jobs → add a job, once, with the command
+   `cd /home/USER/APP && php artisan admin:create --email=THEIR@EMAIL --password-file=/home/USER/pw.txt`
+3. Wait for it to run. The password file deletes itself.
+4. Delete the cron job.

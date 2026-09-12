@@ -14,11 +14,14 @@ createInertiaApp({
     setup({ el, App, props }) {
         createRoot(el).render(
             <App {...props}>
-                {({ Component, key, props }) => (
-                    <SiteShell>
-                        <Component key={key} {...props} />
-                    </SiteShell>
-                )}
+                {({ Component, key, props }) => {
+                    const page = <Component key={key} {...props} />;
+                    const layout =
+                        Component.layout ??
+                        ((children) => <SiteShell>{children}</SiteShell>);
+
+                    return layout(page);
+                }}
             </App>,
         );
     },

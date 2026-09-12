@@ -106,7 +106,8 @@ it('keeps the public shell outside the keyed Inertia page component', function (
     $shell = File::get(resource_path('js/Layouts/SiteShell.jsx'));
     $navbar = File::get(resource_path('js/Components/Navbar.jsx'));
 
-    expect($entry)->toContain('<SiteShell>')
+    expect($entry)->toContain('Component.layout')
+        ->and($entry)->toContain('<SiteShell>{children}</SiteShell>')
         ->and($entry)->toContain('<Component key={key} {...props} />')
         ->and($shell)->toContain('<Navbar />')
         ->and($shell)->toContain('<main id="site-content">{children}</main>')
