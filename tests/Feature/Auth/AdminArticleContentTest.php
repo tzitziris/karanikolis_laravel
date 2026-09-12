@@ -7,6 +7,7 @@ use App\Support\ArticleSlug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Inertia\Testing\AssertableInertia as Assert;
+use Symfony\Component\Process\Process;
 
 uses(RefreshDatabase::class);
 
@@ -211,19 +212,87 @@ it('does not erase an existing publication date when editing an undrawn article 
 it('keeps the editor contract aligned with the server body renderer vocabulary', function () {
     $renderer = File::get(app_path('Services/ArticleBodyRenderer.php'));
     $editor = File::get(resource_path('js/Components/Admin/RichTextEditor.jsx'));
+    $schema = inspectEditorSchema();
 
     foreach (ArticleBodyContract::editableNodes() as $node) {
         expect($renderer)->toContain("'{$node}'")
-            ->and($editor)->toContain("'{$node}'");
+            ->and($schema['nodes'])->toContain($node);
     }
 
     foreach (ArticleBodyContract::editableMarks() as $mark) {
         expect($renderer)->toContain("'{$mark}'")
-            ->and($editor)->toContain("'{$mark}'");
+            ->and($schema['marks'])->toContain($mark);
     }
+
+    expect($schema['nodes'])->toBe(collect(ArticleBodyContract::editableNodes())->sort()->values()->all())
+        ->and($schema['marks'])->toBe(collect(ArticleBodyContract::editableMarks())->sort()->values()->all())
+        ->and($schema['headingLevels'])->toBe(ArticleBodyContract::headingLevels())
+        ->and($schema['canToggleHeadingOne'])->toBeFalse()
+        ->and($schema['canToggleHeadingTwo'])->toBeTrue()
+        ->and($schema['hasToggleUnderlineCommand'])->toBeFalse();
 
     expect($editor)
         ->not->toContain('@tiptap/extension-image')
         ->not->toContain('youtube')
-        ->toContain('EDITOR_BODY_CONTRACT');
+        ->not->toContain('EDITOR_BODY_CONTRACT')
+        ->toContain('createArticleEditorExtensions(bodyContract)');
 });
+
+/**
+ * @return array{
+ *     canToggleHeadingOne: bool,
+ *     canToggleHeadingTwo: bool,
+ *     hasToggleUnderlineCommand: bool,
+ *     headingLevels: array<int, int>,
+ *     marks: array<int, string>,
+ *     nodes: array<int, string>
+ * }
+ */
+function inspectEditorSchema(): array
+{
+    $contract = [
+        'alignments' => ArticleBodyContract::alignments(),
+        'headingLevels' => ArticleBodyContract::headingLevels(),
+        'marks' => ArticleBodyContract::editableMarks(),
+        'nodes' => ArticleBodyContract::editableNodes(),
+    ];
+
+    $script = <<<'JS'
+        import { Editor } from '@tiptap/core';
+        import { createArticleEditorExtensions, schemaVocabulary } from './resources/js/Components/Admin/articleEditorSchema.js';
+
+        const contract = JSON.parse(process.argv[1]);
+        const editor = new Editor({
+            content: {
+                type: 'doc',
+                content: [
+                    {
+                        type: 'paragraph',
+                        content: [{ type: 'text', text: 'Έλεγχος editor' }],
+                    },
+                ],
+            },
+            extensions: createArticleEditorExtensions(contract),
+        });
+        const heading = editor.extensionManager.extensions.find((extension) => extension.name === 'heading');
+        const canToggleHeadingOne = editor.commands.toggleHeading({ level: 1 });
+        const canToggleHeadingTwo = editor.commands.toggleHeading({ level: 2 });
+
+        process.stdout.write(JSON.stringify({
+            ...schemaVocabulary(editor),
+            canToggleHeadingOne,
+            canToggleHeadingTwo,
+            hasToggleUnderlineCommand: typeof editor.commands.toggleUnderline === 'function',
+            headingLevels: heading.options.levels,
+        }));
+        editor.destroy();
+    JS;
+
+    $process = new Process(['node', '--input-type=module', '-e', $script, json_encode($contract, JSON_THROW_ON_ERROR)], base_path());
+    $process->mustRun();
+
+    /** @var array<string, mixed> $schema */
+    $schema = json_decode($process->getOutput(), true, flags: JSON_THROW_ON_ERROR);
+
+    return $schema;
+}

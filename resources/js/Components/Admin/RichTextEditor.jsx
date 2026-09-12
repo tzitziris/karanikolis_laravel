@@ -1,38 +1,6 @@
-import Link from '@tiptap/extension-link';
-import TextAlign from '@tiptap/extension-text-align';
 import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { useEffect, useMemo, useState } from 'react';
-
-export const EDITOR_BODY_CONTRACT = {
-    alignments: ['left', 'center', 'right', 'justify'],
-    headingLevels: [2, 3],
-    marks: ['bold', 'italic', 'link'],
-    nodes: [
-        'blockquote',
-        'bulletList',
-        'doc',
-        'hardBreak',
-        'heading',
-        'listItem',
-        'orderedList',
-        'paragraph',
-        'text',
-    ],
-};
-
-function sameList(left, right) {
-    return JSON.stringify([...(left ?? [])].sort()) === JSON.stringify([...(right ?? [])].sort());
-}
-
-function contractMatches(contract) {
-    return (
-        sameList(contract?.alignments, EDITOR_BODY_CONTRACT.alignments) &&
-        sameList(contract?.headingLevels, EDITOR_BODY_CONTRACT.headingLevels) &&
-        sameList(contract?.marks, EDITOR_BODY_CONTRACT.marks) &&
-        sameList(contract?.nodes, EDITOR_BODY_CONTRACT.nodes)
-    );
-}
+import { useEffect, useMemo } from 'react';
+import { createArticleEditorExtensions, schemaMatchesContract } from './articleEditorSchema';
 
 function ToolbarButton({ active = false, children, disabled = false, onClick }) {
     return (
@@ -52,27 +20,9 @@ function ToolbarButton({ active = false, children, disabled = false, onClick }) 
 }
 
 export default function RichTextEditor({ bodyContract, error, onChange, value }) {
-    const [contractOk, setContractOk] = useState(() => contractMatches(bodyContract));
     const extensions = useMemo(
-        () => [
-            StarterKit.configure({
-                code: false,
-                codeBlock: false,
-                dropcursor: false,
-                horizontalRule: false,
-                strike: false,
-            }),
-            Link.configure({
-                autolink: false,
-                defaultProtocol: 'https',
-                openOnClick: false,
-            }),
-            TextAlign.configure({
-                alignments: EDITOR_BODY_CONTRACT.alignments,
-                types: ['heading', 'paragraph'],
-            }),
-        ],
-        [],
+        () => createArticleEditorExtensions(bodyContract),
+        [bodyContract],
     );
 
     const editor = useEditor({
@@ -81,10 +31,6 @@ export default function RichTextEditor({ bodyContract, error, onChange, value })
         immediatelyRender: false,
         onUpdate: ({ editor: currentEditor }) => onChange(currentEditor.getJSON()),
     });
-
-    useEffect(() => {
-        setContractOk(contractMatches(bodyContract));
-    }, [bodyContract]);
 
     useEffect(() => {
         if (!editor || !value) return;
@@ -122,6 +68,8 @@ export default function RichTextEditor({ bodyContract, error, onChange, value })
         onChange(editor.getJSON());
     };
 
+    const contractOk = editor ? schemaMatchesContract(editor, bodyContract) : true;
+
     if (!contractOk) {
         return (
             <div className="border border-blood bg-ink-3 p-4 text-sm leading-6 text-blood-deep" role="alert">
@@ -157,7 +105,7 @@ export default function RichTextEditor({ bodyContract, error, onChange, value })
                 <ToolbarButton active={editor?.isActive('link')} disabled={!editor} onClick={setLink}>
                     Link
                 </ToolbarButton>
-                {EDITOR_BODY_CONTRACT.alignments.map((alignment) => (
+                {bodyContract.alignments.map((alignment) => (
                     <ToolbarButton
                         active={editor?.isActive({ textAlign: alignment })}
                         disabled={!editor}

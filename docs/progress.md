@@ -825,3 +825,44 @@ nothing at all and still reports success, so the owner is told their change was 
 ignored.
 
 Neither is data loss. Both go on the list for the polish step rather than another round now.
+
+## Prompt 30 — the editor's vocabulary now comes from one place, and the check is real
+
+`php artisan test` **114 passed (2071 assertions)**. `./vendor/bin/pint --test` passed. `npm run build`
+clean; `RichTextEditor` still its own 394 kB chunk, `app.js` unchanged at 449 kB.
+
+The duplicate JavaScript list is gone. `articleEditorSchema.js` builds the editor's extensions *from*
+the server's contract, and the check reads `editor.schema` — the schema ProseMirror actually built —
+instead of comparing two hand-written descriptions of it.
+
+### I asked the editor myself, in Node, outside their test
+
+```
+NODES: blockquote, bulletList, doc, hardBreak, heading, listItem, orderedList, paragraph, text
+MARKS: bold, italic, link
+heading levels: [2,3]
+toggleUnderline exists: false     toggleStrike exists: false     toggleCodeBlock exists: false
+toggleHeading({level:1}) applied: false      toggleHeading({level:2}) applied: true
+```
+
+Nine nodes and three marks — exactly `ArticleBodyContract`. Underline, strike and code block have no
+command to bind a shortcut to, so `Cmd+U` has nothing to do, and a level-one heading cannot be made.
+A mark that is not in the schema cannot survive a paste either: ProseMirror drops what it cannot
+represent, so a Facebook post with underlined text now arrives as text rather than as a body the
+server will reject ten minutes later.
+
+### The check fails when it should — I broke it on purpose, twice
+
+| mutation | result |
+|---|---|
+| removed `blockquote` from the PHP contract | **test failed**, diff naming the missing node |
+| re-enabled `underline` in the editor's extensions | **test failed**, diff showing `+ 'underline'` |
+
+Both restored; suite green again. This is the first test in the project that verifies the front end
+by *running* it — it boots a real TipTap editor in Node and reads its schema — rather than matching
+strings in a source file. It is the pattern the shell tests and `DatabaseContainerTest` should follow
+when their cleanup step comes; part of the same test still string-matches the renderer's source for
+each mark, which is the weaker half.
+
+One consequence worth knowing: this test needs Node to run. That is fine locally and irrelevant on the
+target host, which never runs the suite.
