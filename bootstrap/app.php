@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\SecurityHeaders;
+use App\Support\UploadLimits;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             HandleInertiaRequests::class,
+            SecurityHeaders::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -25,10 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (PostTooLargeException $exception, Request $request) {
             if ($request->is('admin/articles/*/cover') || $request->is('admin/articles/*/gallery')) {
-                return response(
-                    '<!doctype html><html lang="el"><meta charset="utf-8"><title>Η φωτογραφία είναι πολύ μεγάλη</title><body>Η φωτογραφία είναι μεγαλύτερη από όσο δέχεται ο server. Ανεβάστε μικρότερη φωτογραφία.</body></html>',
-                    413,
-                );
+                return response()->view('errors.413', [
+                    'maxLabel' => UploadLimits::articleImageMaxLabel(),
+                ], 413);
             }
 
             return null;

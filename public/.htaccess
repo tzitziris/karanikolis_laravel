@@ -1,3 +1,11 @@
+<IfModule mod_headers.c>
+    # Apache serves the files that exist on disk without ever entering PHP, so the
+    # headers SecurityHeaders sets never reach an image, a font or a built asset.
+    # This is the one that matters for them: a file must be read as what it is
+    # served as, not as whatever a browser guesses from its bytes.
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
