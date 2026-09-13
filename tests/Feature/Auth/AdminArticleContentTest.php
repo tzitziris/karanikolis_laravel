@@ -2,6 +2,7 @@
 
 use App\Models\Article;
 use App\Models\User;
+use App\Services\ArticleBodyRenderer;
 use App\Support\ArticleBodyContract;
 use App\Support\ArticleSlug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -210,20 +211,58 @@ it('does not erase an existing publication date when editing an undrawn article 
         ->and($article->title)->toBe('Κρυφό άρθρο με αλλαγμένο κείμενο');
 });
 
-it('keeps the editor contract aligned with the server body renderer vocabulary', function () {
-    $renderer = File::get(app_path('Services/ArticleBodyRenderer.php'));
-    $editor = File::get(resource_path('js/Components/Admin/RichTextEditor.jsx'));
+it('renders every node and mark the contract declares, as the element it means', function () {
+    // This used to grep ArticleBodyRenderer.php for the word 'blockquote'. The
+    // name being present in the source says nothing about what a visitor gets;
+    // these are the elements the renderer must actually produce.
+    $elements = [
+        'blockquote' => ['<blockquote', ['type' => 'blockquote', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Απόσπασμα']]]]]],
+        'bulletList' => ['<ul', ['type' => 'bulletList', 'content' => [['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Στοιχείο']]]]]]]],
+        'hardBreak' => ['<br', ['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Πριν'], ['type' => 'hardBreak'], ['type' => 'text', 'text' => 'Μετά']]]],
+        'heading' => ['<h2', ['type' => 'heading', 'attrs' => ['level' => 2], 'content' => [['type' => 'text', 'text' => 'Τίτλος']]]],
+        'listItem' => ['<li', ['type' => 'bulletList', 'content' => [['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Στοιχείο']]]]]]]],
+        'orderedList' => ['<ol', ['type' => 'orderedList', 'content' => [['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Πρώτο']]]]]]]],
+        'paragraph' => ['<p', ['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Παράγραφος']]]],
+    ];
+
+    // doc and text are the document itself and its words; there is no element
+    // for them and nothing optional about them.
+    expect(array_diff(ArticleBodyContract::editableNodes(), [...array_keys($elements), 'doc', 'text']))
+        ->toBe([], 'The contract declares a node this test does not render.');
+
+    $renderer = app(ArticleBodyRenderer::class);
+
+    foreach ($elements as $node => [$tag, $content]) {
+        $html = $renderer->render(['type' => 'doc', 'content' => [$content]]);
+
+        expect(str_contains($html, $tag))
+            ->toBeTrue("The renderer does not produce {$tag} for the {$node} the editor can write. It gave: {$html}");
+    }
+
+    $marks = [
+        'bold' => '<strong',
+        'italic' => '<em',
+        'link' => '<a ',
+    ];
+
+    expect(array_diff(ArticleBodyContract::editableMarks(), array_keys($marks)))
+        ->toBe([], 'The contract declares a mark this test does not render.');
+
+    foreach ($marks as $mark => $tag) {
+        $attrs = $mark === 'link' ? ['href' => 'https://example.com'] : [];
+
+        $html = $renderer->render(['type' => 'doc', 'content' => [[
+            'type' => 'paragraph',
+            'content' => [['type' => 'text', 'text' => 'Σημειωμένο', 'marks' => [['type' => $mark, 'attrs' => $attrs]]]],
+        ]]]);
+
+        expect(str_contains($html, $tag))
+            ->toBeTrue("The renderer drops the {$mark} mark the editor can write. It gave: {$html}");
+    }
+});
+
+it('gives the editor exactly the vocabulary the server declares, and nothing of its own', function () {
     $schema = inspectEditorSchema();
-
-    foreach (ArticleBodyContract::editableNodes() as $node) {
-        expect($renderer)->toContain("'{$node}'")
-            ->and($schema['nodes'])->toContain($node);
-    }
-
-    foreach (ArticleBodyContract::editableMarks() as $mark) {
-        expect($renderer)->toContain("'{$mark}'")
-            ->and($schema['marks'])->toContain($mark);
-    }
 
     expect($schema['nodes'])->toBe(collect(ArticleBodyContract::editableNodes())->sort()->values()->all())
         ->and($schema['marks'])->toBe(collect(ArticleBodyContract::editableMarks())->sort()->values()->all())
@@ -231,12 +270,40 @@ it('keeps the editor contract aligned with the server body renderer vocabulary',
         ->and($schema['canToggleHeadingOne'])->toBeFalse()
         ->and($schema['canToggleHeadingTwo'])->toBeTrue()
         ->and($schema['hasToggleUnderlineCommand'])->toBeFalse();
+});
 
-    expect($editor)
-        ->not->toContain('@tiptap/extension-image')
-        ->not->toContain('youtube')
-        ->not->toContain('EDITOR_BODY_CONTRACT')
-        ->toContain('createArticleEditorExtensions(bodyContract)');
+it('takes its heading levels and alignments from the contract it is handed', function () {
+    // These two the editor really is built from, so a narrower contract must
+    // produce a narrower editor. If it did not, the server and the toolbar could
+    // drift apart without anything saying so.
+    $narrowed = inspectEditorSchema([
+        'alignments' => ['left'],
+        'headingLevels' => [3],
+        'marks' => ArticleBodyContract::editableMarks(),
+        'nodes' => ArticleBodyContract::editableNodes(),
+    ]);
+
+    expect($narrowed['headingLevels'])->toBe([3])
+        ->and($narrowed['canToggleHeadingTwo'])->toBeFalse()
+        ->and($narrowed['matchesContract'])->toBeTrue();
+});
+
+it('refuses to open rather than offer a vocabulary the server will not render', function () {
+    // The node and mark lists are not what the editor is assembled from — the
+    // StarterKit is configured by hand — so the protection is that a mismatch is
+    // detected. When it is, RichTextEditor shows a Greek warning instead of the
+    // toolbar, rather than letting the owner write something that would vanish.
+    $mismatched = inspectEditorSchema([
+        'alignments' => ArticleBodyContract::alignments(),
+        'headingLevels' => ArticleBodyContract::headingLevels(),
+        'marks' => ['bold'],
+        'nodes' => ['doc', 'paragraph', 'text'],
+    ]);
+
+    expect($mismatched['matchesContract'])->toBeFalse();
+
+    expect(File::get(resource_path('js/Components/Admin/RichTextEditor.jsx')))
+        ->toContain('Το πρόγραμμα επεξεργασίας δεν συμφωνεί');
 });
 
 /**
@@ -245,13 +312,14 @@ it('keeps the editor contract aligned with the server body renderer vocabulary',
  *     canToggleHeadingTwo: bool,
  *     hasToggleUnderlineCommand: bool,
  *     headingLevels: array<int, int>,
+ *     matchesContract: bool,
  *     marks: array<int, string>,
  *     nodes: array<int, string>
  * }
  */
-function inspectEditorSchema(): array
+function inspectEditorSchema(?array $contract = null): array
 {
-    $contract = [
+    $contract ??= [
         'alignments' => ArticleBodyContract::alignments(),
         'headingLevels' => ArticleBodyContract::headingLevels(),
         'marks' => ArticleBodyContract::editableMarks(),
@@ -260,7 +328,7 @@ function inspectEditorSchema(): array
 
     $script = <<<'JS'
         import { Editor } from '@tiptap/core';
-        import { createArticleEditorExtensions, schemaVocabulary } from './resources/js/Components/Admin/articleEditorSchema.js';
+        import { createArticleEditorExtensions, schemaMatchesContract, schemaVocabulary } from './resources/js/Components/Admin/articleEditorSchema.js';
 
         const contract = JSON.parse(process.argv[1]);
         const editor = new Editor({
@@ -276,6 +344,7 @@ function inspectEditorSchema(): array
             extensions: createArticleEditorExtensions(contract),
         });
         const heading = editor.extensionManager.extensions.find((extension) => extension.name === 'heading');
+        const matchesContract = schemaMatchesContract(editor, contract);
         const canToggleHeadingOne = editor.commands.toggleHeading({ level: 1 });
         const canToggleHeadingTwo = editor.commands.toggleHeading({ level: 2 });
 
@@ -285,6 +354,7 @@ function inspectEditorSchema(): array
             canToggleHeadingTwo,
             hasToggleUnderlineCommand: typeof editor.commands.toggleUnderline === 'function',
             headingLevels: heading.options.levels,
+            matchesContract,
         }));
         editor.destroy();
     JS;

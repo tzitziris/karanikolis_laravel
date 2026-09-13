@@ -131,19 +131,16 @@ it('deletes an article and its database media records from a non-link action rou
     $this->assertDatabaseMissing('article_videos', ['article_id' => $article->id]);
 });
 
-it('keeps data-changing dashboard actions off links and names deleted media in Greek', function () {
+it('asks before deleting, and says in Greek what goes with the article', function () {
+    // Whether the dashboard puts a mutation behind a link is answered by the
+    // routes themselves, in GetChangesNothingTest. What is left here can only be
+    // asked of the source: a confirmation dialog lives entirely in the browser.
     $dashboard = File::get(resource_path('js/Pages/Admin/Dashboard.jsx'));
 
     expect($dashboard)
-        ->toContain('router.patch(`/admin/articles/${article.id}/publish`')
-        ->toContain('router.patch(`/admin/articles/${article.id}/unpublish`')
-        ->toContain('router.delete(`/admin/articles/${article.id}`')
         ->toContain('window.confirm(deleteMessage(article))')
         ->toContain('Θα χαθούν μαζί του')
-        ->toContain('Η διαγραφή δεν αναιρείται')
-        ->not->toContain('href={`/admin/articles/${article.id}/publish`')
-        ->not->toContain('href={`/admin/articles/${article.id}/unpublish`')
-        ->not->toContain('href={`/admin/articles/${article.id}/delete`');
+        ->toContain('Η διαγραφή δεν αναιρείται');
 });
 
 it('redirects unauthenticated mutation requests to the sign-in page before changing data', function (string $method, string $uri) {

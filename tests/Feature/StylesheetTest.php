@@ -21,9 +21,28 @@ function themeBlock(string $source): string
     return $match['body'] ?? '';
 }
 
-function isTailwindTextAlignment(string $utility): bool
+/**
+ * The one stylesheet Vite built. Asking it whether a class exists is the only
+ * answer that matches what a visitor's browser will do; guessing from the name
+ * of the class is what this file used to do, and it needed a hand-kept list of
+ * exceptions to stop it calling `text-center` a colour.
+ */
+function compiledStylesheet(): string
 {
-    return preg_match('/^(?:[a-z-]+:)*text-(?:left|center|right|justify|start|end)$/', $utility) === 1;
+    $files = File::glob(public_path('build/assets/*.css'));
+
+    expect($files)->not->toBeEmpty('There is no compiled stylesheet. Run: npm run build');
+
+    return collect($files)->map(fn (string $path): string => File::get($path))->implode("\n");
+}
+
+function compiledStylesheetDefines(string $css, string $class): bool
+{
+    $escaped = preg_quote((string) preg_replace('/([^a-zA-Z0-9_-])/', '\\\\$1', $class), '/');
+
+    // A trailing backslash would mean we matched `.text-blood` inside
+    // `.text-blood\/10`, which is a different utility.
+    return preg_match('/\.'.$escaped.'(?![a-zA-Z0-9_\\\\-])/', $css) === 1;
 }
 
 it('exposes every design colour variable to Tailwind utilities', function () {
@@ -49,31 +68,10 @@ it('exposes every design colour variable to Tailwind utilities', function () {
     }
 });
 
-it('only uses project colour utilities that are exposed by the theme', function () {
-    $stylesheet = stylesheetSource();
-    preg_match_all('/--color-(?<name>[a-z0-9-]+)\s*:/', themeBlock($stylesheet), $themeMatches);
+it('draws every colour utility the components use from a rule that really exists', function () {
+    $css = compiledStylesheet();
 
-    $themeColours = collect($themeMatches['name'])->unique();
-    $knownNonColourTokens = collect([
-        'b',
-        'base',
-        'black',
-        'current',
-        'e',
-        'lg',
-        'none',
-        'offset-2',
-        'r',
-        's',
-        'sm',
-        't',
-        'transparent',
-        'white',
-        'xl',
-        'xs',
-    ]);
-
-    $usedColourUtilities = collect([
+    $used = collect([
         ...File::allFiles(resource_path('js/Components')),
         ...File::allFiles(resource_path('js/Layouts')),
         ...File::allFiles(resource_path('js/Pages')),
@@ -89,10 +87,14 @@ it('only uses project colour utilities that are exposed by the theme', function 
             $classNames = collect($classNameMatches)
                 ->map(fn (array $match): string => $match['double'] ?: ($match['single'] ?: ($match['template'] ?? '')))
                 ->implode(' ');
+
+            // Whatever a template literal computes at runtime, Tailwind never
+            // saw it either, so it is not something this test can answer.
+            $classNames = preg_replace('/\$\{[^}]*\}/', ' ', $classNames) ?? $classNames;
             $classNames = preg_replace('/\[[^\]]+\]/', ' ', $classNames) ?? $classNames;
 
             preg_match_all(
-                '/(?<![A-Za-z0-9_-])(?<utility>(?:[a-z-]+:)*(?:text|bg|border|outline|ring|decoration|divide|accent|caret|fill|stroke)-(?<token>[a-z][a-z0-9-]*)(?:\/\d+)?)(?![A-Za-z0-9_-])/',
+                '/(?<![A-Za-z0-9_-])(?<utility>(?:[a-z-]+:)*(?:text|bg|border|outline|ring|decoration|divide|accent|caret|fill|stroke)-[a-z][a-z0-9-]*(?:\/\d+)?)(?![A-Za-z0-9_-])/',
                 $classNames,
                 $matches,
                 PREG_SET_ORDER,
@@ -100,21 +102,22 @@ it('only uses project colour utilities that are exposed by the theme', function 
 
             return collect($matches)->map(fn (array $match): array => [
                 'file' => $file->getRelativePathname(),
-                'token' => $match['token'],
                 'utility' => $match['utility'],
             ]);
         })
-        ->reject(fn (array $match): bool => isTailwindTextAlignment($match['utility']))
-        ->reject(fn (array $match): bool => $knownNonColourTokens->contains($match['token']))
         ->unique(fn (array $match): string => $match['utility'])
         ->values();
 
-    expect($usedColourUtilities)->not->toBeEmpty();
+    expect($used)->not->toBeEmpty();
 
-    foreach ($usedColourUtilities as $match) {
-        expect($themeColours->contains($match['token']))
-            ->toBeTrue("Colour utility [{$match['utility']}] in [{$match['file']}] is not exposed by @theme.");
-    }
+    // A colour the theme does not expose compiles to nothing at all, and the
+    // element quietly inherits whatever its parent had.
+    $missing = $used
+        ->reject(fn (array $match): bool => compiledStylesheetDefines($css, $match['utility']))
+        ->map(fn (array $match): string => "{$match['utility']} ({$match['file']})")
+        ->all();
+
+    expect($missing)->toBe([], 'These utilities produce no rule in the compiled stylesheet. If one was just added, run: npm run build');
 });
 
 it('does not ship the deleted readable fallback stylesheet', function () {

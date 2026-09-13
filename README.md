@@ -1,6 +1,8 @@
 # Karanikolis Laravel
 
-Empty Laravel 13 skeleton for rebuilding the existing site as a Laravel application.
+The site of the kickboxing school «Μαχητές Ελευθερούπολης», rebuilt from Next.js + Supabase
+as Laravel + Inertia + React so it can be hosted on cPanel shared hosting with no terminal and no
+Node process on the server.
 
 ## Stack
 
@@ -119,3 +121,15 @@ To change the test database name, update `DB_TEST_DATABASE` in `.env`. On a bran
 docker compose down -v
 docker compose up -d
 ```
+
+## Deployment
+
+The package for the server is built locally, because there is no Node on the host:
+
+```bash
+bash scripts/pack-deploy.sh
+```
+
+It writes `../karanikolis-deploy.zip` and checks its own output before finishing. The cPanel steps —
+document root, the `.env` on the server, permissions, and the temporary cron jobs that stand in for a
+terminal — are in [docs/deployment.md](docs/deployment.md).
