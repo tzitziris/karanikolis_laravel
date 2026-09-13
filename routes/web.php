@@ -11,6 +11,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsArchiveController;
 use App\Http\Controllers\NewsArticleController;
 use App\Http\Controllers\NotFoundController;
+use App\Http\Controllers\RobotsController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,6 +28,9 @@ Route::get('/schedule', function () {
 
 Route::get('/news', NewsArchiveController::class)->name('news');
 Route::get('/news/{slug}', NewsArticleController::class)->name('news.show');
+
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', RobotsController::class)->name('robots');
 
 Route::get('/about', function () {
     return Inertia::render('About');

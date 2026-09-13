@@ -86,7 +86,11 @@ it('does not let another site put the pages in a frame', function () {
 });
 
 it('keeps crawlers out of the admin', function () {
-    $robots = File::get(public_path('robots.txt'));
+    // Served by the application, not as a file, so nothing in public/ can shadow
+    // it with an older copy that allowed everything.
+    expect(File::exists(public_path('robots.txt')))->toBeFalse();
 
-    expect($robots)->toContain('Disallow: /admin');
+    test()->get('/robots.txt')
+        ->assertOk()
+        ->assertSee('Disallow: /admin', false);
 });

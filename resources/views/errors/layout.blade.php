@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noindex">
-        <title>@yield('title') · {{ config('app.name') }}</title>
+        <title>@yield('title') · {{ \App\Services\PageMetadata::SITE_NAME }}</title>
         <link rel="stylesheet" href="/css/error.css">
     </head>
     <body>

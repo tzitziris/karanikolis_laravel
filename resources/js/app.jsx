@@ -1,9 +1,18 @@
 import '../css/app.css';
 
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, Head, usePage } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import SiteShell from './Layouts/SiteShell';
+
+// The server writes the whole head, because crawlers do not run JavaScript.
+// A client-side visit replaces only the body, so the browser tab would keep
+// the first page's title — this puts it back in step, from the same value.
+function PageTitle() {
+    const title = usePage().props.meta?.title;
+
+    return title ? <Head title={title} /> : null;
+}
 
 createInertiaApp({
     resolve: (name) =>
@@ -20,7 +29,12 @@ createInertiaApp({
                         Component.layout ??
                         ((children) => <SiteShell>{children}</SiteShell>);
 
-                    return layout(page);
+                    return (
+                        <>
+                            <PageTitle />
+                            {layout(page)}
+                        </>
+                    );
                 }}
             </App>,
         );
