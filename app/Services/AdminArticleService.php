@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Article;
 use App\Models\ArticleImage;
+use App\Models\ArticleVideo;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -186,6 +187,57 @@ class AdminArticleService
         });
     }
 
+    public function addVideo(Article $article, string $youtubeUrl): void
+    {
+        DB::transaction(function () use ($article, $youtubeUrl): void {
+            $article->videos()->create([
+                'sort_order' => ((int) ($article->videos()->max('sort_order') ?? -1)) + 1,
+                'youtube_url' => trim($youtubeUrl),
+            ]);
+        });
+    }
+
+    public function deleteVideo(ArticleVideo $video): void
+    {
+        DB::transaction(function () use ($video): void {
+            $articleId = $video->article_id;
+            $video->delete();
+            $this->compactVideoOrder($articleId);
+        });
+    }
+
+    /**
+     * @param  array<int, array{id?: int}>  $videos
+     */
+    public function saveVideoOrder(Article $article, array $videos): void
+    {
+        DB::transaction(function () use ($article, $videos): void {
+            $ownedIds = $article->videos()->pluck('id')->all();
+            $submittedIds = collect($videos)
+                ->pluck('id')
+                ->filter(fn (mixed $id): bool => is_numeric($id))
+                ->map(fn (mixed $id): int => (int) $id)
+                ->values()
+                ->all();
+
+            if (
+                count($submittedIds) !== count(array_unique($submittedIds))
+                || array_diff($ownedIds, $submittedIds) !== []
+                || array_diff($submittedIds, $ownedIds) !== []
+            ) {
+                throw ValidationException::withMessages([
+                    'videos' => 'Η σειρά των βίντεο δεν είναι έγκυρη.',
+                ]);
+            }
+
+            foreach (array_values($videos) as $index => $video) {
+                $article->videos()
+                    ->whereKey($video['id'])
+                    ->update(['sort_order' => $index]);
+            }
+        });
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -215,12 +267,14 @@ class AdminArticleService
     /**
      * @return array{key: string, label: string, detail: string, canBeSeen: bool}
      */
-    private function stateFor(Article $article): array
+    public function stateFor(Article $article): array
     {
         if (! $article->is_visible) {
             return [
                 'canBeSeen' => false,
-                'detail' => 'Δεν εμφανίζεται δημόσια, αλλά κρατά την ημερομηνία του.',
+                'detail' => $article->published_at === null
+                    ? 'Δεν εμφανίζεται δημόσια και δεν έχει ημερομηνία δημοσίευσης.'
+                    : 'Δεν εμφανίζεται δημόσια, αλλά κρατά την ημερομηνία του.',
                 'key' => 'hidden',
                 'label' => 'Κρυφό',
             ];
@@ -273,6 +327,18 @@ class AdminArticleService
             ->get(['id'])
             ->each(function (ArticleImage $image, int $index): void {
                 $image->forceFill(['sort_order' => $index])->save();
+            });
+    }
+
+    private function compactVideoOrder(int $articleId): void
+    {
+        ArticleVideo::query()
+            ->where('article_id', $articleId)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get(['id'])
+            ->each(function (ArticleVideo $video, int $index): void {
+                $video->forceFill(['sort_order' => $index])->save();
             });
     }
 }

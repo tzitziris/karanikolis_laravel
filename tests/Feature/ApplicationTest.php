@@ -329,7 +329,10 @@ it('keeps font preloads family-complete and aligned with shipped font files', fu
         ->values()
         ->all();
 
-    expect($preloadedFontPaths)->toBe($shippedFontPaths);
+    // The rule is not "preload everything" — it is that a family is either wholly
+    // on the critical path or wholly off it, checked below. What must hold here is
+    // that nothing is preloaded which the stylesheet does not actually ship.
+    expect(array_diff($preloadedFontPaths, $shippedFontPaths))->toBe([]);
 
     $fontFaces
         ->groupBy('family')

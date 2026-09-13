@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticleContentRequest;
 use App\Models\Article;
 use App\Models\ArticleImage;
+use App\Models\ArticleVideo;
+use App\Services\AdminArticleService;
 use App\Services\UploadedArticleImageService;
 use App\Support\ArticleBodyContract;
 use App\Support\UploadLimits;
@@ -43,7 +45,10 @@ class AdminArticleContentController extends Controller
 
     public function edit(Article $article): Response
     {
-        $article->loadMissing('images:id,article_id,image_name,alt_text,width,height,sort_order');
+        $article->loadMissing([
+            'images:id,article_id,image_name,alt_text,width,height,sort_order',
+            'videos:id,article_id,youtube_url,youtube_id,sort_order',
+        ]);
 
         return Inertia::render('Admin/ArticleForm', [
             'article' => $this->articleData($article),
@@ -53,8 +58,10 @@ class AdminArticleContentController extends Controller
         ]);
     }
 
-    public function update(ArticleContentRequest $request, Article $article): RedirectResponse
+    public function update(ArticleContentRequest $request, Article $article, AdminArticleService $articles): RedirectResponse
     {
+        $keptDate = ! $request->filled('published_at') && $article->published_at !== null;
+
         $article->update([
             'body' => $request->validated('body'),
             'excerpt' => trim((string) $request->validated('excerpt')),
@@ -64,7 +71,22 @@ class AdminArticleContentController extends Controller
 
         return redirect()
             ->route('admin.articles.edit', $article)
-            ->with('success', 'Το άρθρο αποθηκεύτηκε.');
+            ->with('success', $this->savedMessage($article, $articles, $keptDate));
+    }
+
+    /**
+     * Saving must never be able to report success while quietly doing something
+     * else: taking the article off the public site, or ignoring an emptied date.
+     */
+    private function savedMessage(Article $article, AdminArticleService $articles, bool $keptDate): string
+    {
+        $message = 'Το άρθρο αποθηκεύτηκε. '.$articles->stateFor($article->refresh())['detail'];
+
+        if ($keptDate) {
+            $message .= ' Το πεδίο της ημερομηνίας ήταν άδειο, οπότε κρατήθηκε η ημερομηνία που είχε ήδη.';
+        }
+
+        return $message;
     }
 
     /**
@@ -101,6 +123,14 @@ class AdminArticleContentController extends Controller
             'publishedAt' => $article->published_at?->format('Y-m-d\TH:i'),
             'slug' => $article->slug,
             'title' => $article->title,
+            'videos' => $article->videos
+                ->map(fn (ArticleVideo $video): array => [
+                    'id' => $video->id,
+                    'sortOrder' => $video->sort_order,
+                    'youtubeId' => $video->youtube_id,
+                    'youtubeUrl' => $video->youtube_url,
+                ])
+                ->all(),
         ];
     }
 

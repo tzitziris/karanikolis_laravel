@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminArticleContentController;
 use App\Http\Controllers\AdminArticleController;
 use App\Http\Controllers\AdminArticleImageController;
 use App\Http\Controllers\AdminArticlePublicationController;
+use App\Http\Controllers\AdminArticleVideoController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
@@ -59,6 +60,12 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('articles.gallery.update');
     Route::delete('/articles/{article}/gallery/{image}', [AdminArticleImageController::class, 'destroyGallery'])
         ->name('articles.gallery.destroy');
+    Route::post('/articles/{article}/videos', [AdminArticleVideoController::class, 'store'])
+        ->name('articles.videos.store');
+    Route::put('/articles/{article}/videos', [AdminArticleVideoController::class, 'update'])
+        ->name('articles.videos.update');
+    Route::delete('/articles/{article}/videos/{video}', [AdminArticleVideoController::class, 'destroy'])
+        ->name('articles.videos.destroy');
     Route::patch('/articles/{article}/publish', [AdminArticlePublicationController::class, 'publish'])
         ->name('articles.publish');
     Route::patch('/articles/{article}/unpublish', [AdminArticlePublicationController::class, 'unpublish'])

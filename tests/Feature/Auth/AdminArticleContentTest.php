@@ -131,7 +131,8 @@ it('rewrites a published article title without changing its slug, publication da
             'title' => 'Εντελώς νέος τίτλος',
         ])
         ->assertRedirect("/admin/articles/{$article->id}/edit")
-        ->assertSessionHas('success', 'Το άρθρο αποθηκεύτηκε.');
+        ->assertSessionHas('success', fn (string $message): bool => str_contains($message, 'Το άρθρο αποθηκεύτηκε.')
+            && str_contains($message, 'Εμφανίζεται στη δημόσια σελίδα ειδήσεων.'));
 
     $article->refresh();
 
@@ -163,7 +164,7 @@ it('keeps a live article public when its editor date field is emptied', function
             'title' => 'Δημόσιο άρθρο με αλλαγμένο κείμενο',
         ])
         ->assertRedirect("/admin/articles/{$article->id}/edit")
-        ->assertSessionHas('success', 'Το άρθρο αποθηκεύτηκε.');
+        ->assertSessionHas('success', fn (string $message): bool => str_contains($message, 'κρατήθηκε η ημερομηνία που είχε ήδη'));
 
     $article->refresh();
 

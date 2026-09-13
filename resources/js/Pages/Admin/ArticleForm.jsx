@@ -30,6 +30,9 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
     const [galleryItems, setGalleryItems] = useState(article?.gallery ?? []);
     const [galleryLocalError, setGalleryLocalError] = useState('');
     const [galleryProcessing, setGalleryProcessing] = useState(false);
+    const [videoUrl, setVideoUrl] = useState('');
+    const [videoItems, setVideoItems] = useState(article?.videos ?? []);
+    const [videoProcessing, setVideoProcessing] = useState(false);
     const { data, setData, post, put, processing, errors, isDirty } = useForm({
         body: article?.body ?? emptyBody,
         excerpt: article?.excerpt ?? '',
@@ -43,6 +46,7 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
     const bodyError = Array.isArray(errors.body) ? errors.body[0] : errors.body;
     const coverError = coverLocalError || pageErrors.cover_photo || pageErrors.photo;
     const galleryError = galleryLocalError || pageErrors.gallery_photo || pageErrors.gallery || pageErrors.photo;
+    const videoError = pageErrors.youtube_url || pageErrors.videos;
     const maxUploadBytes = Number.isInteger(uploadLimits.maxBytes) ? uploadLimits.maxBytes : null;
     const maxUploadLabel = uploadLimits.maxLabel ?? '';
 
@@ -70,7 +74,8 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
     useEffect(() => {
         setCoverAltText(article?.coverImageAltText ?? '');
         setGalleryItems(article?.gallery ?? []);
-    }, [article?.coverImageAltText, article?.gallery]);
+        setVideoItems(article?.videos ?? []);
+    }, [article?.coverImageAltText, article?.gallery, article?.videos]);
 
     const leaveSafely = () => {
         if (isDirty && !window.confirm('Υπάρχουν αλλαγές που δεν αποθηκεύτηκαν. Να φύγετε από τη σελίδα;')) {
@@ -199,6 +204,53 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
             preserveScroll: true,
             preserveState: true,
             onFinish: () => setGalleryProcessing(false),
+        });
+    };
+
+    const addVideo = (event) => {
+        event.preventDefault();
+        if (!isEditing || videoUrl.trim() === '') return;
+
+        setVideoProcessing(true);
+        router.post(`/admin/articles/${article.id}/videos`, { youtube_url: videoUrl.trim() }, {
+            preserveScroll: true,
+            onSuccess: () => setVideoUrl(''),
+            onFinish: () => setVideoProcessing(false),
+        });
+    };
+
+    const moveVideo = (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= videoItems.length) return;
+
+        setVideoItems((items) => {
+            const reordered = [...items];
+            [reordered[index], reordered[targetIndex]] = [reordered[targetIndex], reordered[index]];
+            return reordered;
+        });
+    };
+
+    const saveVideoOrder = () => {
+        if (!isEditing) return;
+
+        setVideoProcessing(true);
+        router.put(`/admin/articles/${article.id}/videos`, {
+            videos: videoItems.map((item) => ({ id: item.id })),
+        }, {
+            preserveScroll: true,
+            preserveState: true,
+            onFinish: () => setVideoProcessing(false),
+        });
+    };
+
+    const removeVideo = (video) => {
+        if (!isEditing || !window.confirm('Να αφαιρεθεί αυτό το βίντεο από το άρθρο;')) return;
+
+        setVideoProcessing(true);
+        router.delete(`/admin/articles/${article.id}/videos/${video.id}`, {
+            preserveScroll: true,
+            preserveState: true,
+            onFinish: () => setVideoProcessing(false),
         });
     };
 
@@ -429,6 +481,102 @@ export default function ArticleForm({ article, bodyContract, mode, uploadLimits 
                                         type="submit"
                                     >
                                         {galleryProcessing ? 'Ανέβασμα...' : 'Προσθήκη στη συλλογή'}
+                                    </button>
+                                </form>
+                            </div>
+                        </section>
+
+                        <section className="border border-line-strong bg-ink-2 p-4 sm:p-5" aria-labelledby="videos-heading">
+                            <p className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-blood">Βίντεο</p>
+                            <h2 id="videos-heading" className="mt-2 font-display text-3xl font-black uppercase">
+                                Βίντεο YouTube
+                            </h2>
+                            <p className="mt-2 max-w-3xl text-sm leading-6 text-bone-dim">
+                                Τα βίντεο φορτώνονται μόνο όταν τα πατήσει ο επισκέπτης, οπότε η σελίδα δεν καλεί
+                                το YouTube από μόνη της.
+                            </p>
+
+                            <div className="mt-5 grid gap-5">
+                                {videoItems.length ? (
+                                    <div className="grid gap-3">
+                                        {videoItems.map((video, index) => (
+                                            <div
+                                                className="grid gap-3 border border-line-strong bg-ink-1 p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
+                                                key={video.id}
+                                            >
+                                                <div className="min-w-0">
+                                                    <p className="font-mono text-xs uppercase text-pewter">
+                                                        Θέση {index + 1} · {video.youtubeId}
+                                                    </p>
+                                                    <p className="mt-1 truncate text-sm text-bone" title={video.youtubeUrl}>
+                                                        {video.youtubeUrl}
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-wrap gap-2">
+                                                    <button
+                                                        className="min-h-11 border border-line-strong px-3 font-mono text-xs font-bold uppercase text-bone transition hover:border-blood hover:text-blood disabled:cursor-not-allowed disabled:opacity-60"
+                                                        disabled={videoProcessing || index === 0}
+                                                        onClick={() => moveVideo(index, -1)}
+                                                        type="button"
+                                                    >
+                                                        Πάνω
+                                                    </button>
+                                                    <button
+                                                        className="min-h-11 border border-line-strong px-3 font-mono text-xs font-bold uppercase text-bone transition hover:border-blood hover:text-blood disabled:cursor-not-allowed disabled:opacity-60"
+                                                        disabled={videoProcessing || index === videoItems.length - 1}
+                                                        onClick={() => moveVideo(index, 1)}
+                                                        type="button"
+                                                    >
+                                                        Κάτω
+                                                    </button>
+                                                    <button
+                                                        className="min-h-11 border border-line-strong px-3 font-mono text-xs font-bold uppercase text-bone-dim transition hover:border-blood-deep hover:text-blood-deep disabled:cursor-not-allowed disabled:opacity-60"
+                                                        disabled={videoProcessing}
+                                                        onClick={() => removeVideo(video)}
+                                                        type="button"
+                                                    >
+                                                        Αφαίρεση
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <button
+                                            className="min-h-11 justify-self-start border border-blood bg-blood px-4 font-display text-base font-black uppercase text-ink-0 transition hover:bg-blood-deep disabled:cursor-not-allowed disabled:opacity-60"
+                                            disabled={videoProcessing}
+                                            onClick={saveVideoOrder}
+                                            type="button"
+                                        >
+                                            {videoProcessing ? 'Αποθήκευση...' : 'Αποθήκευση σειράς'}
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <p className="border border-line-strong bg-ink-1 p-4 text-sm text-bone-dim">
+                                        Δεν υπάρχουν βίντεο σε αυτό το άρθρο.
+                                    </p>
+                                )}
+
+                                <form className="grid gap-4 border border-line-strong bg-ink-1 p-4" onSubmit={addVideo}>
+                                    <label className="grid gap-2" htmlFor="video-url">
+                                        <span className="text-sm font-bold">Σύνδεσμος YouTube</span>
+                                        <span className="text-xs leading-5 text-bone-dim">
+                                            Αντιγράψτε τη διεύθυνση από το YouTube, όπως είναι.
+                                        </span>
+                                        <input
+                                            className="min-h-11 border border-line-strong bg-ink-2 px-3 text-sm text-bone outline-none transition focus:border-blood focus:ring-2 focus:ring-blood-glow"
+                                            id="video-url"
+                                            inputMode="url"
+                                            type="text"
+                                            value={videoUrl}
+                                            onChange={(event) => setVideoUrl(event.target.value)}
+                                        />
+                                    </label>
+                                    {videoError ? <p className="text-sm text-blood-deep" role="alert">{videoError}</p> : null}
+                                    <button
+                                        className="min-h-11 border border-blood bg-blood px-4 font-display text-base font-black uppercase text-ink-0 transition hover:bg-blood-deep disabled:cursor-not-allowed disabled:opacity-60"
+                                        disabled={videoProcessing}
+                                        type="submit"
+                                    >
+                                        {videoProcessing ? 'Προσθήκη...' : 'Προσθήκη βίντεο'}
                                     </button>
                                 </form>
                             </div>

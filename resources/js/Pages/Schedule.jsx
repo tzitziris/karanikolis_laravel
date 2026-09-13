@@ -388,7 +388,7 @@ function LevelsLegend() {
                             <p className="font-mono text-xs text-blood">
                                 {String(index + 1).padStart(2, '0')}
                             </p>
-                            <h3 className="mt-8 whitespace-normal font-display text-[clamp(2.2rem,7vw,3.4rem)] font-black uppercase leading-[0.9] text-bone md:text-[clamp(2.4rem,4vw,3.3rem)] xl:text-[clamp(2rem,2.2vw,2.7rem)]">
+                            <h3 className="mt-8 whitespace-normal font-display text-[clamp(2.2rem,7vw,3.4rem)] font-black uppercase leading-[0.9] text-bone md:text-[clamp(2.4rem,4vw,3.3rem)] xl:text-[clamp(1.75rem,2.05vw,2.5rem)]">
                                 {level.name}
                             </h3>
                             <p className="mt-4 text-sm leading-7 text-bone-dim">
