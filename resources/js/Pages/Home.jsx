@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import ArticleGrid from '../Components/News/ArticleGrid';
 import SiteImage from '../Components/SiteImage';
 import { useHomePageAnimation } from '../animation/useHomePageAnimation';
@@ -170,32 +170,49 @@ function JourneySection() {
                     Η διαδρομή
                 </p>
                 {chapters.map((chapter) => (
-                    <article
-                        className="grain relative isolate flex min-h-[78svh] items-end overflow-hidden border-t border-line px-5 pb-12 pt-28"
-                        key={chapter.number}
-                    >
-                        <SiteImage
-                            alt={chapter.imageAlt}
-                            className="absolute inset-0 -z-20 h-full w-full object-cover"
-                            image={chapter.image}
-                            slot="full"
-                        />
-                        <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.16),rgba(5,5,5,.94)_88%)]" />
-                        <div data-home-reveal>
-                            <span className="font-display text-5xl font-black text-blood">
-                                {chapter.number}
-                            </span>
-                            <h2 className="mt-3 max-w-full font-display text-[clamp(3.45rem,15vw,4rem)] font-black uppercase leading-[0.84] text-bone">
-                                {chapter.titleLead}
-                                <span className="block text-[clamp(2.45rem,11vw,3.25rem)]">
-                                    {chapter.titleAction}
-                                </span>
-                            </h2>
-                            <p className="mt-6 max-w-md text-sm leading-6 text-bone/75">
-                                {chapter.body}
-                            </p>
-                        </div>
-                    </article>
+                    <Fragment key={chapter.number}>
+                        {/* Where the card sits in the flow. A stuck card reports
+                            where it is stuck, so the animation measures this. */}
+                        <div aria-hidden="true" data-home-journey-marker />
+                        <article
+                            className="relative flex min-h-[78svh] overflow-hidden border-t border-line bg-ink-0 stack:sticky stack:top-20 stack:h-[calc(100svh-5rem)] stack:min-h-0 stack:shadow-[0_-28px_56px_rgba(0,0,0,.55)]"
+                            data-home-journey-card
+                        >
+                            <div
+                                className="grain relative isolate flex w-full items-end overflow-hidden px-5 pb-12 pt-28"
+                                data-home-journey-card-inner
+                            >
+                                <SiteImage
+                                    alt={chapter.imageAlt}
+                                    className="absolute inset-0 -z-20 h-full w-full object-cover"
+                                    image={chapter.image}
+                                    slot="full"
+                                />
+                                <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.16),rgba(5,5,5,.94)_88%)]" />
+                                <div data-home-reveal>
+                                    <span className="font-display text-5xl font-black text-blood">
+                                        {chapter.number}
+                                    </span>
+                                    <h2 className="mt-3 max-w-full font-display text-[clamp(3.45rem,15vw,4rem)] font-black uppercase leading-[0.84] text-bone">
+                                        {chapter.titleLead}
+                                        <span className="block text-[clamp(2.45rem,11vw,3.25rem)]">
+                                            {chapter.titleAction}
+                                        </span>
+                                    </h2>
+                                    <p className="mt-6 max-w-md text-sm leading-6 text-bone/75">
+                                        {chapter.body}
+                                    </p>
+                                </div>
+                                {/* Darkens the card as the next one covers it.
+                                    Transparent unless the animation says so. */}
+                                <div
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 z-10 bg-ink-0 opacity-0"
+                                    data-home-journey-dim
+                                />
+                            </div>
+                        </article>
+                    </Fragment>
                 ))}
             </div>
 

@@ -9,9 +9,9 @@ use RuntimeException;
 class StaticImageService
 {
     /**
-     * @return array{name: string, source_bytes: int, original_width: int, original_height: int, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}
+     * @return array{name: string, source_bytes: int, original_width: int, original_height: int, placeholder: string|null, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}
      */
-    public function convert(string $name, string $sourcePath, bool $force = false, ?array $widths = null): array
+    public function convert(string $name, string $sourcePath, bool $force = false, ?array $widths = null, bool $placeholder = false): array
     {
         $this->validateName($name);
         $this->ensureOutputDirectory();
@@ -19,9 +19,14 @@ class StaticImageService
         $info = $this->inspect($sourcePath);
         $source = null;
         $written = [];
+        $placeholderUri = null;
 
         try {
             $source = $this->createSource($sourcePath, $info['mime']);
+
+            if ($placeholder) {
+                $placeholderUri = $this->encodePlaceholder($source);
+            }
 
             foreach ($this->targetWidths((int) $info['width'], $widths) as $targetWidth) {
                 $targetHeight = $this->proportionalHeight(
@@ -63,8 +68,29 @@ class StaticImageService
             'name' => $name,
             'original_height' => (int) $info['height'],
             'original_width' => (int) $info['width'],
+            'placeholder' => $placeholderUri,
             'source_bytes' => (int) $info['bytes'],
         ];
+    }
+
+    /**
+     * The whole photograph as a webp a couple of dozen pixels across, as a data
+     * URI. It is small enough to travel inside the JavaScript bundle, so the box
+     * a photograph goes into shows its colours from the first paint instead of
+     * standing black while the real file is on its way.
+     */
+    public function placeholder(string $sourcePath): string
+    {
+        $info = $this->inspect($sourcePath);
+        $source = null;
+
+        try {
+            $source = $this->createSource($sourcePath, $info['mime']);
+
+            return $this->encodePlaceholder($source);
+        } finally {
+            $this->destroyGdImage($source);
+        }
     }
 
     /**
@@ -104,7 +130,7 @@ class StaticImageService
     }
 
     /**
-     * @param  array<int, array{name: string, source_bytes: int, original_width: int, original_height: int, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}>  $convertedImages
+     * @param  array<int, array{name: string, source_bytes: int, original_width: int, original_height: int, placeholder?: string|null, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}>  $convertedImages
      */
     public function writeManifest(array $convertedImages): string
     {
@@ -114,8 +140,14 @@ class StaticImageService
             $name = $image['name'];
             $this->validateName($name);
 
+            $entry = ['height' => (int) $image['original_height']];
+
+            if (is_string($image['placeholder'] ?? null)) {
+                $entry['placeholder'] = $image['placeholder'];
+            }
+
             $images[$name] = [
-                'height' => (int) $image['original_height'],
+                ...$entry,
                 'width' => (int) $image['original_width'],
                 'widths' => array_values(array_map(
                     fn (array $derivative): int => (int) $derivative['width'],
@@ -291,6 +323,45 @@ class StaticImageService
                 @unlink($temporary);
             }
 
+            $this->destroyGdImage($output);
+        }
+    }
+
+    private function encodePlaceholder(GdImage $source): string
+    {
+        if (! function_exists('imagewebp')) {
+            throw new RuntimeException('PHP GD WebP support is not available.');
+        }
+
+        $longestSide = (int) config('images.static.placeholder.size', 24);
+        $sourceWidth = imagesx($source);
+        $sourceHeight = imagesy($source);
+        $scale = min(1, $longestSide / max($sourceWidth, $sourceHeight));
+        $width = max(1, (int) round($sourceWidth * $scale));
+        $height = max(1, (int) round($sourceHeight * $scale));
+        $output = null;
+
+        try {
+            $output = imagecreatetruecolor($width, $height);
+
+            if (! $output instanceof GdImage) {
+                throw new RuntimeException('Unable to allocate placeholder image.');
+            }
+
+            if (! imagecopyresampled($output, $source, 0, 0, 0, 0, $width, $height, $sourceWidth, $sourceHeight)) {
+                throw new RuntimeException('Unable to resize placeholder image.');
+            }
+
+            ob_start();
+            $encoded = @imagewebp($output, null, (int) config('images.static.placeholder.quality', 60));
+            $bytes = ob_get_clean();
+
+            if (! $encoded || ! is_string($bytes) || $bytes === '') {
+                throw new RuntimeException('Unable to encode WebP placeholder.');
+            }
+
+            return 'data:image/webp;base64,'.base64_encode($bytes);
+        } finally {
             $this->destroyGdImage($output);
         }
     }

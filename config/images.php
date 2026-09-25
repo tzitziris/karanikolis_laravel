@@ -7,6 +7,12 @@ return [
         'manifest_path' => resource_path('js/images/staticImages.generated.json'),
         'quality' => 82,
         'widths' => [320, 480, 768, 1024, 1280, 1600, 1920, 2400],
+        // Photographs only: marks are transparent, and a blurred copy would
+        // show through them.
+        'placeholder' => [
+            'size' => 24,
+            'quality' => 60,
+        ],
         'mark_source_dir' => resource_path('images/marks'),
         'mark_widths' => [32, 48, 64, 96, 128],
         'limits' => [

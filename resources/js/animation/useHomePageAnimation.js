@@ -1,4 +1,9 @@
+import { DESKTOP_QUERY, HANDHELD_QUERY, driftInFrame } from './imageMotion';
 import { usePageAnimation } from './pageAnimation';
+
+// Must match the `stack` variant in app.css, which makes the cards sticky.
+const JOURNEY_STACK_QUERY =
+    '(max-width: 639.98px) and (prefers-reduced-motion: no-preference) and (min-height: 30rem)';
 
 export function useHomePageAnimation(scopeRef) {
     usePageAnimation(scopeRef, ({ gsap, root }) => {
@@ -11,6 +16,8 @@ export function useHomePageAnimation(scopeRef) {
         const desktopJourney = root.querySelector('[data-home-journey-desktop]');
         const journeyTrack = root.querySelector('[data-home-journey-track]');
         const journeyImages = root.querySelectorAll('[data-home-journey-image]');
+        const journeyCards = gsap.utils.toArray('[data-home-journey-card]', root);
+        const journeyMarkers = gsap.utils.toArray('[data-home-journey-marker]', root);
         const media = gsap.matchMedia();
 
         revealItems.forEach((item) => {
@@ -57,39 +64,83 @@ export function useHomePageAnimation(scopeRef) {
             });
         }
 
-        statementImages.forEach((image) => {
-            gsap.fromTo(
-                image,
-                { scale: 1.06 },
-                {
-                    ease: 'none',
-                    scale: 1,
-                    scrollTrigger: {
-                        end: 'bottom top',
-                        scrub: 1,
-                        start: 'top bottom',
-                        trigger: image.closest('section'),
+        media.add(DESKTOP_QUERY, () => {
+            statementImages.forEach((image) => {
+                gsap.fromTo(
+                    image,
+                    { scale: 1.06 },
+                    {
+                        ease: 'none',
+                        scale: 1,
+                        scrollTrigger: {
+                            end: 'bottom top',
+                            scrub: 1,
+                            start: 'top bottom',
+                            trigger: image.closest('section'),
+                        },
                     },
-                },
-            );
+                );
+            });
+
+            if (finalImage) {
+                gsap.fromTo(
+                    finalImage,
+                    { scale: 1.06 },
+                    {
+                        ease: 'none',
+                        scale: 1,
+                        scrollTrigger: {
+                            end: 'center center',
+                            scrub: 1,
+                            start: 'top bottom',
+                            trigger: finalImage.closest('section'),
+                        },
+                    },
+                );
+            }
         });
 
-        if (finalImage) {
-            gsap.fromTo(
-                finalImage,
-                { scale: 1.06 },
-                {
-                    ease: 'none',
-                    scale: 1,
+        media.add(HANDHELD_QUERY, () => {
+            statementImages.forEach((image) => {
+                driftInFrame(gsap, image, image.closest('section'));
+            });
+
+            driftInFrame(gsap, finalImage, finalImage?.closest('section'));
+        });
+
+        // Each card recedes and darkens while the next one slides over it.
+        // The stacking itself is plain CSS, so the scroll stays the phone's
+        // own; this only adds depth, and only while a card is being covered.
+        media.add(JOURNEY_STACK_QUERY, () => {
+            journeyCards.slice(0, -1).forEach((card, index) => {
+                const next = journeyCards[index + 1];
+                const stuckAt = () =>
+                    Number.parseFloat(window.getComputedStyle(next).top) || 0;
+
+                gsap.timeline({
+                    defaults: { ease: 'none' },
                     scrollTrigger: {
-                        end: 'center center',
-                        scrub: 1,
+                        end: () => `top ${stuckAt()}px`,
+                        invalidateOnRefresh: true,
+                        scrub: true,
                         start: 'top bottom',
-                        trigger: finalImage.closest('section'),
+                        trigger: journeyMarkers[index + 1],
                     },
-                },
-            );
-        }
+                })
+                    .fromTo(
+                        card.querySelector('[data-home-journey-card-inner]'),
+                        { scale: 1 },
+                        { scale: 0.9, transformOrigin: '50% 0%' },
+                        0,
+                    )
+                    .fromTo(
+                        card.querySelector('[data-home-journey-dim]'),
+                        { opacity: 0 },
+                        { opacity: 0.6 },
+                        0,
+                    );
+            });
+        });
 
         if (finalCopy) {
             gsap.fromTo(

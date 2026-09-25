@@ -129,6 +129,14 @@
     --font-mono: var(--font-code-face), "SF Mono", Menlo, Consolas, monospace;
 }
 
+/*
+ * On a phone the journey's chapters stack like cards: each one sticks under
+ * the header and the next slides over it. Only when a whole card fits on the
+ * screen, because a stuck card taller than the screen would keep its text
+ * below the fold for good; and never for a visitor who asked for less motion.
+ */
+@custom-variant stack (@media (prefers-reduced-motion: no-preference) and (min-height: 30rem));
+
 * {
     border-radius: 0 !important;
 }

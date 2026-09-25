@@ -1,3 +1,9 @@
+import {
+    DESKTOP_QUERY,
+    HANDHELD_QUERY,
+    driftInFrame,
+    openFrame,
+} from './imageMotion';
 import { usePageAnimation } from './pageAnimation';
 
 export function useSchedulePageAnimation(scopeRef) {
@@ -7,6 +13,7 @@ export function useSchedulePageAnimation(scopeRef) {
         const heroContent = root.querySelector('[data-schedule-hero-content]');
         const rhythmImage = root.querySelector('[data-schedule-rhythm-image]');
         const closingImage = root.querySelector('[data-schedule-closing-image]');
+        const media = gsap.matchMedia();
 
         revealItems.forEach((item) => {
             gsap.fromTo(
@@ -52,21 +59,31 @@ export function useSchedulePageAnimation(scopeRef) {
             });
         }
 
-        [rhythmImage, closingImage].filter(Boolean).forEach((image) => {
-            gsap.fromTo(
-                image,
-                { scale: 1.05 },
-                {
-                    ease: 'none',
-                    scale: 1,
-                    scrollTrigger: {
-                        end: 'center center',
-                        scrub: 0.8,
-                        start: 'top bottom',
-                        trigger: image.closest('section'),
+        media.add(DESKTOP_QUERY, () => {
+            [rhythmImage, closingImage].filter(Boolean).forEach((image) => {
+                gsap.fromTo(
+                    image,
+                    { scale: 1.05 },
+                    {
+                        ease: 'none',
+                        scale: 1,
+                        scrollTrigger: {
+                            end: 'center center',
+                            scrub: 0.8,
+                            start: 'top bottom',
+                            trigger: image.closest('section'),
+                        },
                     },
-                },
-            );
+                );
+            });
         });
+
+        media.add(HANDHELD_QUERY, () => {
+            openFrame(gsap, rhythmImage?.parentElement);
+            driftInFrame(gsap, rhythmImage, rhythmImage?.parentElement);
+            driftInFrame(gsap, closingImage, closingImage?.closest('section'));
+        });
+
+        return () => media.revert();
     }, []);
 }

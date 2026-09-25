@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\StaticImageService;
 use Illuminate\Support\Facades\File;
 
 function writeImagePipelineTestJpeg(string $path, int $width = 640, int $height = 426): void
@@ -91,6 +92,20 @@ it('converts static images through an idempotent local command', function () {
                 'mark-32.webp',
                 'mark-64.webp',
             ]);
+
+        $manifest = json_decode(File::get($manifestPath), true, flags: JSON_THROW_ON_ERROR);
+        $placeholder = $manifest['images']['demo']['placeholder'] ?? '';
+
+        expect($placeholder)->toStartWith('data:image/webp;base64,')
+            ->and($manifest['images']['mark'])->not->toHaveKey('placeholder');
+
+        $placeholderBytes = base64_decode(substr($placeholder, strlen('data:image/webp;base64,')), true);
+        $placeholderInfo = getimagesizefromstring((string) $placeholderBytes);
+
+        // 640x426 fitted into 24 pixels on its longer side.
+        expect($placeholderInfo['mime'] ?? null)->toBe('image/webp')
+            ->and([$placeholderInfo[0], $placeholderInfo[1]])->toBe([24, 16])
+            ->and(strlen((string) $placeholderBytes))->toBeLessThan(1024);
 
         $firstHashes = $files->mapWithKeys(fn (string $path): array => [
             basename($path) => hash_file('sha256', $path),
@@ -257,13 +272,18 @@ it('keeps the generated JavaScript static image manifest exactly aligned with lo
     );
     $photos = config('images.static.photos');
     $marks = config('images.static.marks');
+    $images = app(StaticImageService::class);
     $expectedImages = [];
 
+    // The placeholder is rebuilt from the source here, so a photograph that
+    // was replaced at the same size without rebuilding still fails.
     foreach ($photos as $name => $filename) {
-        $info = getimagesize(config('images.static.source_dir')."/{$filename}");
+        $path = config('images.static.source_dir')."/{$filename}";
+        $info = getimagesize($path);
 
         $expectedImages[$name] = [
             'height' => $info[1],
+            'placeholder' => $images->placeholder($path),
             'width' => $info[0],
             'widths' => array_values(array_filter(
                 config('images.static.widths'),

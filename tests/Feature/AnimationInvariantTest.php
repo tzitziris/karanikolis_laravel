@@ -86,3 +86,26 @@ it('keeps the home journey pin inside page-scoped animation cleanup', function (
         ->and($pageAnimation)->toContain('setupCleanup?.()')
         ->and($pageAnimation)->toContain('context?.revert()');
 });
+
+it('animates the journey cards only where the stylesheet really stacks them', function () {
+    preg_match(
+        '/@custom-variant\s+stack\s+\(@media\s+(?<query>.+?)\);/',
+        File::get(resource_path('css/app.css')),
+        $stylesheet,
+    );
+    preg_match(
+        "/JOURNEY_STACK_QUERY\s*=\s*'(?<query>[^']+)'/",
+        File::get(resource_path('js/animation/useHomePageAnimation.js')),
+        $animation,
+    );
+
+    expect($stylesheet['query'] ?? null)->not->toBeNull('app.css has no `stack` variant.')
+        ->and($animation['query'] ?? null)->not->toBeNull('The home animation has no JOURNEY_STACK_QUERY.');
+
+    $conditions = fn (string $query): array => array_map('trim', explode(' and ', $query));
+
+    // A card that shrinks without sticking shrinks in the middle of the page.
+    // The animation may be narrower than the stylesheet, never wider.
+    expect(array_values(array_diff($conditions($stylesheet['query']), $conditions($animation['query']))))
+        ->toBe([], 'The journey animation runs where app.css does not make the cards sticky.');
+});

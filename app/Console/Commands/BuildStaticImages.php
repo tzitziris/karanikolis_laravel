@@ -57,7 +57,7 @@ class BuildStaticImages extends Command
                 return self::FAILURE;
             }
 
-            $result = $images->convert($name, $sourceDir.DIRECTORY_SEPARATOR.$filename, $force);
+            $result = $images->convert($name, $sourceDir.DIRECTORY_SEPARATOR.$filename, $force, placeholder: true);
             $convertedImages[] = $result;
             $sourceBytes += $result['source_bytes'];
 
