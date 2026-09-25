@@ -153,7 +153,7 @@ function CoachSection() {
             <div className="coaches-sticky relative h-[72svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)]">
                 <SiteImage
                     alt="Αθλητής kickboxing εξασκεί τεχνική σε σάκο"
-                    className="h-full w-full object-cover object-center grayscale contrast-125"
+                    className="h-full w-full object-cover object-top grayscale contrast-125"
                     data-coach-image
                     image="coach-portrait"
                     slot="half"
