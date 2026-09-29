@@ -18,11 +18,13 @@ const chapters = [
         // Where the full-screen desktop panel crops: low, so the dark arena
         // above the fighters is what goes.
         imageDesktopPosition: 'object-[center_75%]',
-        // A phone card is a narrow strip of a wide photograph, and these two
-        // fighters are wider than the strip. The photograph sits lower and
-        // smaller in the card so both fit; its dark top fades into the card.
+        // Two fighters side by side are about as wide as they are tall, and
+        // a phone card is twice as tall as it is wide, so they can be at most
+        // as wide as the card. The frame is sized to that, lifted so they
+        // stand in the upper half, and fades out below them so the text sits
+        // on dark floor instead of across the fighters.
         imageMobileFrame:
-            'inset-x-0 bottom-0 h-[86%] object-[92%_center] [mask-image:linear-gradient(transparent,#000_18%)]',
+            'inset-x-0 top-0 h-auto aspect-[5/8] -translate-y-[14%] object-[94%_center] [mask-image:linear-gradient(#000_70%,transparent)]',
         number: '01',
         titleAction: 'στέκεσαι.',
         titleLead: 'Μάθε να',
@@ -30,9 +32,10 @@ const chapters = [
     {
         body: 'Η πειθαρχία μετατρέπει την επανάληψη σε αυτοπεποίθηση και την προσπάθεια σε πρόοδο.',
         image: 'pad-work',
-        imageAlt: 'Αθλητής εξασκεί χτυπήματα με την προπονήτριά του',
+        imageAlt: 'Δύο αθλητές kickboxing αγωνίζονται μέσα στο ρινγκ',
         imageDesktopPosition: 'object-center',
-        imageMobileFrame: 'inset-0 h-full object-center',
+        imageMobileFrame:
+            'inset-x-0 top-0 h-auto aspect-[8/13] -translate-y-[18%] object-[88%_center] [mask-image:linear-gradient(#000_70%,transparent)]',
         number: '02',
         titleAction: 'επιμένεις.',
         titleLead: 'Μάθε να',
@@ -397,8 +400,8 @@ function FinalCallSection() {
         <section className="relative min-h-[88dvh] overflow-hidden bg-ink-0">
             <div className="absolute inset-0" data-home-final-image>
                 <SiteImage
-                    alt="Προπόνηση kickboxing με στόχους"
-                    className="h-full w-full object-cover object-center"
+                    alt="Αγώνας kickboxing σε γεμάτη αρένα"
+                    className="h-full w-full object-cover object-[72%_center] lg:object-center"
                     image="pad-work"
                     slot="full"
                 />

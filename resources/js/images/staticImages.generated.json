@@ -121,14 +121,15 @@
             ]
         },
         "pad-work": {
-            "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRt4AAABXRUJQVlA4INIAAACwBACdASoQABgAPrVInkmnJCKhMAgA4BaJYwCdBPAKj1ZWIOGr0FwEhpNCDVQAAP7yMdjIV6Vld2uQrxpue1dSRTbJ95rAJt5xTNW9lCc/HvK053BV6swy14tsXYqzK64nzTWo5VgxheRb7vZr2KP6zzn/m65vgNIKCiuY0fgw4Op39wCFcaoARDOTFSyV+xg/zu2mc7BP93reZ/n1otKrlFT6f/f6WFum2F9f8/Hv0ymMYwR/09Rks4p57xvXdxDJb4gXLCy9m7btJXpC/4sAAAA=",
-            "width": 1067,
+            "height": 1024,
+            "placeholder": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAAAQBACdASoYABAAPrVKnkmnJCKhMAgA4BaJbACdAYv+yAXA+z6U7apVYAD+8r/me1Rn3AHrtS46+sNZq3R1rl5addaIXGcSlDpDK1+AZiyV6HdQ6zzzau8484XCBg0w4+WIw++Iy7LLW/3qlrVSJ7t/+Sf6sWeOjLaQvgwbPEpm/YGG+25b0QVkbjUPlBUtRbouGu+vPXqvo5Dx3CcQK1pmIMfDiMWEr1aWnUDMygSQAA==",
+            "width": 1536,
             "widths": [
                 320,
                 480,
                 768,
-                1024
+                1024,
+                1280
             ]
         },
         "ring-training": {
