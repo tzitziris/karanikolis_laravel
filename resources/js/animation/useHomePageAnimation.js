@@ -123,7 +123,11 @@ export function useHomePageAnimation(scopeRef) {
                         end: () => `top ${stuckAt()}px`,
                         invalidateOnRefresh: true,
                         scrub: true,
-                        start: 'top bottom',
+                        // From the moment this card sticks, not from the moment
+                        // the next one shows. On an iPhone with the toolbar
+                        // tucked away the screen is taller than a card, so the
+                        // next card peeks in while this one is still arriving.
+                        start: () => `top ${stuckAt() + card.offsetHeight}px`,
                         trigger: journeyMarkers[index + 1],
                     },
                 })

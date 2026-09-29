@@ -15,6 +15,14 @@ const chapters = [
         body: 'Η τεχνική ξεκινά πριν από το πρώτο χτύπημα. Στάση, ισορροπία, ακρίβεια.',
         image: 'ring-training',
         imageAlt: 'Αθλητές kickboxing προπονούνται μέσα στο ρινγκ',
+        // Where the full-screen desktop panel crops: low, so the dark arena
+        // above the fighters is what goes.
+        imageDesktopPosition: 'object-[center_75%]',
+        // A phone card is a narrow strip of a wide photograph, and these two
+        // fighters are wider than the strip. The photograph sits lower and
+        // smaller in the card so both fit; its dark top fades into the card.
+        imageMobileFrame:
+            'inset-x-0 bottom-0 h-[86%] object-[92%_center] [mask-image:linear-gradient(transparent,#000_18%)]',
         number: '01',
         titleAction: 'στέκεσαι.',
         titleLead: 'Μάθε να',
@@ -23,6 +31,8 @@ const chapters = [
         body: 'Η πειθαρχία μετατρέπει την επανάληψη σε αυτοπεποίθηση και την προσπάθεια σε πρόοδο.',
         image: 'pad-work',
         imageAlt: 'Αθλητής εξασκεί χτυπήματα με την προπονήτριά του',
+        imageDesktopPosition: 'object-center',
+        imageMobileFrame: 'inset-0 h-full object-center',
         number: '02',
         titleAction: 'επιμένεις.',
         titleLead: 'Μάθε να',
@@ -31,6 +41,8 @@ const chapters = [
         body: 'Με έλεγχο, σεβασμό και καθαρό μυαλό. Μέσα στο ρινγκ και έξω από αυτό.',
         image: 'sparring',
         imageAlt: 'Δύο αθλητές εξασκούν τεχνικές kickboxing',
+        imageDesktopPosition: 'object-center',
+        imageMobileFrame: 'inset-0 h-full object-center',
         number: '03',
         titleAction: 'μάχεσαι.',
         titleLead: 'Μάθε να',
@@ -184,7 +196,7 @@ function JourneySection() {
                             >
                                 <SiteImage
                                     alt={chapter.imageAlt}
-                                    className="absolute inset-0 -z-20 h-full w-full object-cover"
+                                    className={`absolute -z-20 w-full object-cover ${chapter.imageMobileFrame}`}
                                     image={chapter.image}
                                     slot="full"
                                 />
@@ -232,13 +244,13 @@ function JourneySection() {
                             >
                                 <SiteImage
                                     alt={chapter.imageAlt}
-                                    className="h-full w-full object-cover"
+                                    className={`h-full w-full object-cover ${chapter.imageDesktopPosition}`}
                                     image={chapter.image}
                                     slot="full"
                                 />
                             </div>
-                            <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,.94)_0%,rgba(0,0,0,.72)_42%,rgba(0,0,0,.18)_82%,rgba(0,0,0,.42)_100%)]" />
-                            <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-[linear-gradient(0deg,rgba(0,0,0,.7),transparent)]" />
+                            <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,.86)_0%,rgba(0,0,0,.55)_40%,rgba(0,0,0,.08)_72%,rgba(0,0,0,.18)_100%)]" />
+                            <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-[linear-gradient(0deg,rgba(0,0,0,.5),transparent)]" />
 
                             <p className="absolute left-8 top-8 text-[10px] font-medium uppercase text-blood lg:left-12">
                                 Η διαδρομή

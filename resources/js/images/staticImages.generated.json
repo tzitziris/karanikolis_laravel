@@ -132,16 +132,15 @@
             ]
         },
         "ring-training": {
-            "height": 1067,
-            "placeholder": "data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAACQBACdASoYABAAPrVInkmnJCKhMAgA4BaJQBfNAwQTwm98Oy2C+8sgxaR0pAAA4ly4vLEab+Fx7Ie57ak/1wJJJOqt3ocrbq180OC944mmVSH605NzOsq9ML+QPgDOt1j2SiEhQwvsx9saZSe9g7r+TfTvXA+8UCx0AsrXsRUgdR7X/zsJbNe7qXQpEPMk+6EKaxEc3oWudV37BfM+VTpfY0upLUY/HlOnA4mT+03GSvZG72qhGiV37EfSBCaqXjLPFm4X3jgNhKZ9xgkGoLyAqV+a0rO0VNwCo/XJ+sdAuvw5xMAAAA==",
-            "width": 1600,
+            "height": 1024,
+            "placeholder": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAACwBACdASoYABAAPrVIn0mnJCKhMAgA4BaJbACdMoRwFf/i1lnIk1nSSnha2gCAAP7sVLNCbUUzVUtIwVLPypw9mC0J6GvfYibfaBUVydBOSXsU71c71pXV9BukqPJTnPHBmxWCIl0ZHDOMkAw0BdpZoBOxx/9KYpdN6On7WSD/TUnP+ENujnh9SR0/M8qW8noU15Id0FH0HXcmiSnC6iXBfKIwl0ZLJcTFTuVo+4tuWCkmoAA=",
+            "width": 1536,
             "widths": [
                 320,
                 480,
                 768,
                 1024,
-                1280,
-                1600
+                1280
             ]
         },
         "schedule-hero": {
