@@ -91,18 +91,15 @@
             ]
         },
         "coaches-hero": {
-            "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACQBwCdASooABsAPrVIoEmnJCMhMBqqqOAWiWYAnTLHAJ9FgKqj0YmBVwdY6O4vNbqayZd4Oz1s7qAl+1GQh0B29NtxXDAA/vt96RF/6ma5cexQ10wLcfJrCdIKm40NNO2Lv1vIufnxuKrSO5/ZRmPpDRJzaGG0X/PCl+fcV9UTVMMZfCJZ4FlcA0aUycQZspHjgHoslGOuj5euDqyUT8VTkHfQnvgasKSeK29ZTzjVtfrP0IA5G6Ksn32bjqVmotVNAR2/YgDkTo4AAAA=",
-            "width": 2400,
+            "height": 1024,
+            "placeholder": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACwBgCdASooABsAPrVOoUunJCMhqrgMAOAWiUAVyfQ5bvZ3hSDDG3O8q/XLx63DenHcAY5X69dWH4U2N4WuAAD+/uKcxkrLiQXNlaY3syZ950avzZF3Z33uNdG7mQFNwL8dLq26R2jxF/Wdj5YiaCkRwXz8pY6/JxKtMJDz8reW2AX5O3txOEb5zRPTYKabNF9kbbBlky06hMab6e6BaLyGIe4uiAAA",
+            "width": 1536,
             "widths": [
                 320,
                 480,
                 768,
                 1024,
-                1280,
-                1600,
-                1920,
-                2400
+                1280
             ]
         },
         "hero-kickboxing": {

@@ -99,15 +99,15 @@ function CoachesHero() {
             data-coaches-hero
         >
             <SiteImage
-                alt="Αθλητής kickboxing προπονείται με στόχους μέσα στη σχολή"
-                className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center] saturate-[.72] contrast-125"
+                alt="Αθλητής σηκώνει τα χέρια του στη νίκη, με τον διαιτητή δίπλα του"
+                className="absolute inset-0 -z-30 h-full w-full object-cover object-[87%_center] saturate-[.72] contrast-125 lg:object-[center_70%]"
                 data-coaches-hero-image
                 image="coaches-hero"
                 priority
                 slot="hero"
             />
-            <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,.94)_0%,rgba(5,5,5,.68)_48%,rgba(5,5,5,.15)_100%)]" />
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.05),rgba(5,5,5,.84)_100%)]" />
+            <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,.82)_0%,rgba(5,5,5,.45)_48%,rgba(5,5,5,.05)_100%)]" />
+            <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_35%,rgba(5,5,5,.78)_100%)]" />
 
             <div
                 className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
@@ -120,11 +120,11 @@ function CoachesHero() {
                     Η εμπειρία οδηγεί · Η συνέπεια χτίζει
                 </p>
                 <h1
-                    className="max-w-[68rem] font-display text-[clamp(3.5rem,12vw,12rem)] font-black uppercase leading-[0.74] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
+                    className="max-w-[68rem] font-display text-[clamp(3rem,14.3vw,3.5rem)] font-black uppercase leading-[0.74] text-bone [text-shadow:0_6px_40px_rgba(0,0,0,.35)] sm:text-[clamp(3.5rem,9.5vw,9.5rem)]"
                     data-coaches-reveal
                 >
                     Προπονητές
-                    <span className="block text-[clamp(3rem,8vw,8rem)] text-blood">
+                    <span className="block text-[clamp(3rem,8vw,8rem)] text-blood sm:text-[clamp(2.5rem,6.4vw,6.4rem)]">
                         &amp; Αθλητές
                     </span>
                 </h1>
