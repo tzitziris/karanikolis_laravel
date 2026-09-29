@@ -8,9 +8,12 @@ return [
         'quality' => 82,
         'widths' => [320, 480, 768, 1024, 1280, 1600, 1920, 2400],
         // Photographs only: marks are transparent, and a blurred copy would
-        // show through them.
+        // show through them. The photograph is shrunk to `detail` pixels on
+        // its longer side and smoothed back up to `size`, so it arrives
+        // already blurred and the browser only has to stretch it.
         'placeholder' => [
-            'size' => 24,
+            'detail' => 16,
+            'size' => 40,
             'quality' => 60,
         ],
         'mark_source_dir' => resource_path('images/marks'),

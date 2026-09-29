@@ -128,7 +128,7 @@ function SweepLink({ children, href, variant }) {
 function ScheduleHero() {
     return (
         <section
-            className="grain relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink-0"
+            className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0"
             data-schedule-hero
         >
             <SiteImage
@@ -143,7 +143,7 @@ function ScheduleHero() {
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.04),rgba(5,5,5,.88)_100%)]" />
 
             <div
-                className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
+                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
                 data-schedule-hero-content
             >
                 <p
@@ -269,7 +269,7 @@ function WeeklyTimetable() {
         >
             <div className="mx-auto grid max-w-[1600px] lg:grid-cols-[minmax(20rem,.76fr)_minmax(0,1.24fr)]">
                 <div className="relative border-b border-line lg:border-r lg:[border-bottom-width:0px]">
-                    <aside className="schedule-sticky relative h-[68svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)]">
+                    <aside className="schedule-sticky relative h-[68svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100svh-5rem)]">
                         <SiteImage
                             alt="Αθλητής kickboxing εκτελεί γόνατο σε προπονητικό στόχο"
                             className="h-full w-full object-cover object-[58%_center] saturate-[.55] contrast-125"

@@ -129,7 +129,11 @@ export default function Navbar() {
     return (
         <header
             className={`sticky top-0 z-50 transition-colors duration-500 ${
-                scrolled ? 'bg-ink-0/94 backdrop-blur-sm' : 'bg-ink-0'
+                // The blur behind the header is redrawn on every frame of a
+                // scroll; on a phone it costs more than it shows.
+                scrolled
+                    ? 'bg-ink-0 lg:bg-ink-0/94 lg:backdrop-blur-sm'
+                    : 'bg-ink-0'
             }`}
             data-site-header
         >

@@ -109,3 +109,19 @@ it('animates the journey cards only where the stylesheet really stacks them', fu
     expect(array_values(array_diff($conditions($stylesheet['query']), $conditions($animation['query']))))
         ->toBe([], 'The journey animation runs where app.css does not make the cards sticky.');
 });
+
+it('sizes the page by the small viewport, so a phone toolbar never moves it', function () {
+    // dvh follows the phone's toolbar as it shows and hides, so a section
+    // sized by it grows and shrinks in the middle of a scroll: the page jumps
+    // and repaints under the thumb. Only the menu may use it, because it
+    // covers the screen and the page under it cannot scroll while it is open.
+    $offenders = frontendFiles()
+        ->push(new SplFileInfo(resource_path('css/app.css')))
+        ->filter(fn (SplFileInfo $file) => str_contains(File::get($file->getPathname()), 'dvh'))
+        ->map(fn (SplFileInfo $file) => $file->getFilename())
+        ->reject(fn (string $name) => $name === 'Navbar.jsx')
+        ->values()
+        ->all();
+
+    expect($offenders)->toBe([]);
+});

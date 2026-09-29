@@ -95,7 +95,7 @@ function SweepLink({ children, href, variant }) {
 function CoachesHero() {
     return (
         <section
-            className="grain relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink-0"
+            className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0"
             data-coaches-hero
         >
             <SiteImage
@@ -110,7 +110,7 @@ function CoachesHero() {
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.05),rgba(5,5,5,.84)_100%)]" />
 
             <div
-                className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
+                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
                 data-coaches-hero-content
             >
                 <p
@@ -150,7 +150,7 @@ function CoachesHero() {
 function CoachSection() {
     return (
         <section className="relative mx-auto grid max-w-[1600px] bg-ink-0 lg:grid-cols-2">
-            <div className="coaches-sticky relative h-[72svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)]">
+            <div className="coaches-sticky relative h-[72svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100svh-5rem)]">
                 <SiteImage
                     alt="Αθλητής kickboxing εξασκεί τεχνική σε σάκο"
                     className="h-full w-full object-cover object-top grayscale contrast-125"
@@ -169,7 +169,7 @@ function CoachSection() {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center px-5 py-28 sm:px-8 sm:py-40 lg:min-h-[118dvh] lg:px-16 lg:py-48">
+            <div className="flex flex-col justify-center px-5 py-28 sm:px-8 sm:py-40 lg:min-h-[118svh] lg:px-16 lg:py-48">
                 <p
                     className="text-[10px] font-medium uppercase text-blood"
                     data-coaches-reveal
@@ -388,7 +388,7 @@ function GallerySection() {
 
 function ClosingSection() {
     return (
-        <section className="grain relative isolate min-h-[86dvh] overflow-hidden bg-ink-0">
+        <section className="grain relative isolate min-h-[86svh] overflow-hidden bg-ink-0">
             <div className="absolute inset-0 -z-20" data-coaches-closing-image>
                 <SiteImage
                     alt="Δυναμική προπόνηση kickboxing μέσα στη σχολή"
@@ -398,7 +398,7 @@ function ClosingSection() {
                 />
             </div>
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.18),rgba(5,5,5,.92))]" />
-            <div className="mx-auto flex min-h-[86dvh] max-w-[1600px] flex-col items-start justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24">
+            <div className="mx-auto flex min-h-[86svh] max-w-[1600px] flex-col items-start justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24">
                 <p
                     className="text-[10px] font-medium uppercase text-blood"
                     data-coaches-reveal

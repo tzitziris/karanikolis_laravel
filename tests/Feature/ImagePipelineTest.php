@@ -102,9 +102,9 @@ it('converts static images through an idempotent local command', function () {
         $placeholderBytes = base64_decode(substr($placeholder, strlen('data:image/webp;base64,')), true);
         $placeholderInfo = getimagesizefromstring((string) $placeholderBytes);
 
-        // 640x426 fitted into 24 pixels on its longer side.
+        // 640x426 fitted into 40 pixels on its longer side.
         expect($placeholderInfo['mime'] ?? null)->toBe('image/webp')
-            ->and([$placeholderInfo[0], $placeholderInfo[1]])->toBe([24, 16])
+            ->and([$placeholderInfo[0], $placeholderInfo[1]])->toBe([40, 27])
             ->and(strlen((string) $placeholderBytes))->toBeLessThan(1024);
 
         $firstHashes = $files->mapWithKeys(fn (string $path): array => [
@@ -124,6 +124,17 @@ it('converts static images through an idempotent local command', function () {
 
         expect($secondFiles)->toHaveCount(4)
             ->and($secondHashes)->toBe($firstHashes);
+
+        // What a wider photograph left behind before this one replaced it,
+        // and the temporary file of an interrupted build.
+        File::copy(public_path("{$outputDir}/demo-480.webp"), public_path("{$outputDir}/demo-768.webp"));
+        File::put(public_path("{$outputDir}/demo-320.webp.tmp-12345"), 'partial');
+
+        $this->artisan('images:build-static')
+            ->assertExitCode(0);
+
+        expect(collect(File::files(public_path($outputDir)))->map(fn (SplFileInfo $file): string => $file->getFilename())->sort()->values()->all())
+            ->toBe(['demo-320.webp', 'demo-480.webp', 'mark-32.webp', 'mark-64.webp']);
     } finally {
         File::deleteDirectory($sourceDir);
         File::deleteDirectory($markSourceDir);

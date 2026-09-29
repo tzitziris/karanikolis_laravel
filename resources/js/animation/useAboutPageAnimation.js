@@ -4,7 +4,7 @@ import {
     driftInFrame,
     openFrame,
 } from './imageMotion';
-import { usePageAnimation } from './pageAnimation';
+import { onOwnLayer, usePageAnimation } from './pageAnimation';
 
 export function useAboutPageAnimation(scopeRef) {
     usePageAnimation(scopeRef, ({ gsap, root }) => {
@@ -31,6 +31,8 @@ export function useAboutPageAnimation(scopeRef) {
                 },
             );
         });
+
+        onOwnLayer(gsap, [heroImage, heroContent]);
 
         if (heroImage) {
             gsap.to(heroImage, {

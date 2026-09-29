@@ -63,6 +63,8 @@ class StaticImageService
             $this->destroyGdImage($source);
         }
 
+        $this->removeStaleDerivatives($name, (int) $info['width'], $widths);
+
         return [
             'derivatives' => $written,
             'name' => $name,
@@ -74,10 +76,10 @@ class StaticImageService
     }
 
     /**
-     * The whole photograph as a webp a couple of dozen pixels across, as a data
-     * URI. It is small enough to travel inside the JavaScript bundle, so the box
-     * a photograph goes into shows its colours from the first paint instead of
-     * standing black while the real file is on its way.
+     * The whole photograph as a blurred webp a few dozen pixels across, as a
+     * data URI. It is small enough to travel inside the JavaScript bundle, so
+     * the box a photograph goes into shows its colours from the first paint
+     * instead of standing black while the real file is on its way.
      */
     public function placeholder(string $sourcePath): string
     {
@@ -327,29 +329,70 @@ class StaticImageService
         }
     }
 
+    /**
+     * A replacement narrower than the photograph it replaces leaves the old,
+     * wider derivatives behind. Nothing asks for them any more, but they would
+     * still be packed, uploaded and served. The same goes for the temporary
+     * file of a build that was interrupted.
+     */
+    private function removeStaleDerivatives(string $name, int $sourceWidth, ?array $widths): void
+    {
+        $staleWidths = array_diff($this->configuredWidths($widths), $this->targetWidths($sourceWidth, $widths));
+
+        foreach ($staleWidths as $width) {
+            $path = $this->publicPathFor($name, $width, $widths);
+
+            if (is_file($path)) {
+                @unlink($path);
+            }
+        }
+
+        foreach (glob(public_path($this->outputDir())."/{$name}-[0-9]*.webp.tmp-*") ?: [] as $temporary) {
+            @unlink($temporary);
+        }
+    }
+
     private function encodePlaceholder(GdImage $source): string
     {
         if (! function_exists('imagewebp')) {
             throw new RuntimeException('PHP GD WebP support is not available.');
         }
 
-        $longestSide = (int) config('images.static.placeholder.size', 24);
         $sourceWidth = imagesx($source);
         $sourceHeight = imagesy($source);
-        $scale = min(1, $longestSide / max($sourceWidth, $sourceHeight));
-        $width = max(1, (int) round($sourceWidth * $scale));
-        $height = max(1, (int) round($sourceHeight * $scale));
+        $fit = function (int $longestSide) use ($sourceWidth, $sourceHeight): array {
+            $scale = min(1, $longestSide / max($sourceWidth, $sourceHeight));
+
+            return [max(1, (int) round($sourceWidth * $scale)), max(1, (int) round($sourceHeight * $scale))];
+        };
+        [$detailWidth, $detailHeight] = $fit((int) config('images.static.placeholder.detail', 16));
+        [$width, $height] = $fit((int) config('images.static.placeholder.size', 40));
+        $detail = null;
         $output = null;
 
         try {
-            $output = imagecreatetruecolor($width, $height);
+            $detail = imagecreatetruecolor($detailWidth, $detailHeight);
 
-            if (! $output instanceof GdImage) {
+            if (! $detail instanceof GdImage) {
                 throw new RuntimeException('Unable to allocate placeholder image.');
             }
 
-            if (! imagecopyresampled($output, $source, 0, 0, 0, 0, $width, $height, $sourceWidth, $sourceHeight)) {
+            if (! imagecopyresampled($detail, $source, 0, 0, 0, 0, $detailWidth, $detailHeight, $sourceWidth, $sourceHeight)) {
                 throw new RuntimeException('Unable to resize placeholder image.');
+            }
+
+            // Blurred here, once, and not by a filter in the page: a browser
+            // computes a blur at the full size of the box, and Safari on a
+            // phone does it on the processor each time it paints the box
+            // while the photograph is still on its way.
+            $output = imagescale($detail, $width, $height, IMG_MITCHELL);
+
+            if (! $output instanceof GdImage) {
+                throw new RuntimeException('Unable to smooth placeholder image.');
+            }
+
+            for ($pass = 0; $pass < 3; $pass++) {
+                imagefilter($output, IMG_FILTER_GAUSSIAN_BLUR);
             }
 
             ob_start();
@@ -362,6 +405,7 @@ class StaticImageService
 
             return 'data:image/webp;base64,'.base64_encode($bytes);
         } finally {
+            $this->destroyGdImage($detail);
             $this->destroyGdImage($output);
         }
     }

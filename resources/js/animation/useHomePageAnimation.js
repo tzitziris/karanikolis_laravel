@@ -1,5 +1,5 @@
 import { DESKTOP_QUERY, HANDHELD_QUERY, driftInFrame } from './imageMotion';
-import { usePageAnimation } from './pageAnimation';
+import { onOwnLayer, usePageAnimation } from './pageAnimation';
 
 // Must match the `stack` variant in app.css, which makes the cards sticky.
 const JOURNEY_STACK_QUERY =
@@ -36,6 +36,8 @@ export function useHomePageAnimation(scopeRef) {
                 },
             );
         });
+
+        onOwnLayer(gsap, [heroImage, heroContent]);
 
         if (heroImage) {
             gsap.to(heroImage, {
@@ -114,8 +116,15 @@ export function useHomePageAnimation(scopeRef) {
         media.add(JOURNEY_STACK_QUERY, () => {
             journeyCards.slice(0, -1).forEach((card, index) => {
                 const next = journeyCards[index + 1];
+                const inner = card.querySelector('[data-home-journey-card-inner]');
+                const dim = card.querySelector('[data-home-journey-dim]');
                 const stuckAt = () =>
                     Number.parseFloat(window.getComputedStyle(next).top) || 0;
+
+                // Without a layer of its own the veil repaints the whole card,
+                // masked photograph included, on every frame it darkens.
+                onOwnLayer(gsap, inner);
+                onOwnLayer(gsap, dim, 'opacity');
 
                 gsap.timeline({
                     defaults: { ease: 'none' },
@@ -132,17 +141,12 @@ export function useHomePageAnimation(scopeRef) {
                     },
                 })
                     .fromTo(
-                        card.querySelector('[data-home-journey-card-inner]'),
+                        inner,
                         { scale: 1 },
                         { scale: 0.9, transformOrigin: '50% 0%' },
                         0,
                     )
-                    .fromTo(
-                        card.querySelector('[data-home-journey-dim]'),
-                        { opacity: 0 },
-                        { opacity: 0.6 },
-                        0,
-                    );
+                    .fromTo(dim, { opacity: 0 }, { opacity: 0.6 }, 0);
             });
         });
 

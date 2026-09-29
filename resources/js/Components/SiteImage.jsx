@@ -42,30 +42,12 @@ function sharedLoadAheadObserver() {
     return loadAheadObserver;
 }
 
-// The manifest carries each photograph as a webp 24 pixels on its longer side
-// (config/images.php). Stretched to fill a box it would show those pixels, so
-// it is drawn through a blur about one of them wide; the alpha step keeps the
-// edges from fading to transparent.
-function blurredPlaceholder(metadata) {
-    if (!metadata.placeholder) {
-        return null;
-    }
-
-    const blur = Math.max(metadata.width, metadata.height) / 24;
-    const svg =
-        `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${metadata.width} ${metadata.height}'>` +
-        `<filter id='b' color-interpolation-filters='sRGB'>` +
-        `<feGaussianBlur stdDeviation='${blur}'/>` +
-        `<feComponentTransfer><feFuncA type='discrete' tableValues='1 1'/></feComponentTransfer>` +
-        `</filter>` +
-        `<image width='100%' height='100%' preserveAspectRatio='none' filter='url(#b)' href='${metadata.placeholder}'/>` +
-        `</svg>`;
-    const encoded = svg
-        .replaceAll('#', '%23')
-        .replaceAll('<', '%3C')
-        .replaceAll('>', '%3E');
-
-    return `url("data:image/svg+xml,${encoded}")`;
+// The manifest carries each photograph as a webp 40 pixels on its longer
+// side, blurred when it was built (config/images.php), so all the browser
+// does is stretch it. A blur filter drawn here instead would be computed at
+// the full size of the box, on a phone's processor, every time it is painted.
+function placeholderBackground(metadata) {
+    return metadata.placeholder ? `url("${metadata.placeholder}")` : null;
 }
 
 function widthsFor(image) {
@@ -87,7 +69,7 @@ export default function SiteImage({
     const loadingMode = priority
         ? 'eager'
         : (loading ?? STATIC_IMAGE_LOADING[slot] ?? 'lazy');
-    const placeholder = metadata ? blurredPlaceholder(metadata) : null;
+    const placeholder = metadata ? placeholderBackground(metadata) : null;
 
     // Nothing here hides the photograph. The placeholder is painted behind it
     // and the real file covers it the moment it is decoded; if this never

@@ -25,6 +25,20 @@ function updateScrollTriggerCount() {
     );
 }
 
+// A transform tied to the scroll is rewritten on every frame. GSAP gives the
+// element a layer of its own only while a tween sits between its two ends, so
+// the browser builds one the moment the motion starts and throws it away when
+// it stops, repainting the photograph and its filter both times: on a phone,
+// a visible stall at each end. Asking for the layer up front keeps it for as
+// long as the animation lives; reverting the page's context takes it away.
+export function onOwnLayer(gsap, targets, property = 'transform') {
+    const elements = gsap.utils.toArray(targets).filter(Boolean);
+
+    if (elements.length > 0) {
+        gsap.set(elements, { willChange: property });
+    }
+}
+
 export function usePageAnimation(scopeRef, setup, dependencies = []) {
     useEffect(() => {
         const root = scopeRef.current;

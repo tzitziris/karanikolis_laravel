@@ -61,7 +61,7 @@ function SweepLink({ children, href, variant }) {
 function AboutHero() {
     return (
         <section
-            className="grain relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink-0"
+            className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0"
             data-about-hero
         >
             <SiteImage
@@ -77,7 +77,7 @@ function AboutHero() {
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_74%_40%,rgba(212,161,66,.16),transparent_30%)]" />
 
             <div
-                className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
+                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
                 data-about-hero-content
             >
                 <p
@@ -121,8 +121,8 @@ function StorySection() {
             className="relative mx-auto grid max-w-[1600px] bg-ink-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
             data-about-story
         >
-            <div className="relative lg:min-h-[210dvh]">
-                <div className="about-sticky relative h-[72svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)]">
+            <div className="relative lg:min-h-[210svh]">
+                <div className="about-sticky relative h-[72svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100svh-5rem)]">
                     <SiteImage
                         alt="Σάκοι προπόνησης σε οργανωμένο χώρο πυγμαχίας"
                         className="h-full w-full object-cover object-center grayscale contrast-125"
@@ -142,7 +142,7 @@ function StorySection() {
             </div>
 
             <div className="px-5 sm:px-8 lg:px-14 xl:px-20">
-                <article className="flex min-h-[92svh] flex-col justify-center border-b border-line-strong py-28 sm:py-36 lg:min-h-[105dvh] lg:py-48">
+                <article className="flex min-h-[92svh] flex-col justify-center border-b border-line-strong py-28 sm:py-36 lg:min-h-[105svh] lg:py-48">
                     <p
                         className="text-[10px] font-medium uppercase text-blood"
                         data-about-reveal
@@ -169,7 +169,7 @@ function StorySection() {
                     </p>
                 </article>
 
-                <article className="flex min-h-[92svh] flex-col justify-center py-28 sm:py-36 lg:min-h-[105dvh] lg:py-48">
+                <article className="flex min-h-[92svh] flex-col justify-center py-28 sm:py-36 lg:min-h-[105svh] lg:py-48">
                     <p
                         className="text-[10px] font-medium uppercase text-blood"
                         data-about-reveal

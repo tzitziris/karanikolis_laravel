@@ -1,4 +1,4 @@
-import { usePageAnimation } from './pageAnimation';
+import { onOwnLayer, usePageAnimation } from './pageAnimation';
 
 export function useNewsPageAnimation(scopeRef) {
     usePageAnimation(scopeRef, ({ gsap, root }) => {
@@ -22,6 +22,8 @@ export function useNewsPageAnimation(scopeRef) {
                 },
             );
         });
+
+        onOwnLayer(gsap, [heroImage, heroContent]);
 
         if (heroImage) {
             gsap.to(heroImage, {

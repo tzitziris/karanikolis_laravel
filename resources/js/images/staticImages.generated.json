@@ -3,7 +3,7 @@
     "images": {
         "about-hero": {
             "height": 2400,
-            "placeholder": "data:image/webp;base64,UklGRtoAAABXRUJQVlA4IM4AAACQBQCdASoQABgAPrVInkmnJCKhMAgA4BaJQBWHf+iAJYz3lArwPc+fcD7DhTXAZIpKw79oQAD+94YfDP3g2IP9pfe0guL0qaPLYcC/aFhC1d48CU1UT2SPj37b+1VRhQK3xem64IV/GHnsWcFxTM+WYzoj3Fj/JhU/OerzIThcW60PLQUM2e3Js8VXMCX3Fml3eP7o/ziWku3mYlbNDiRnQMRKdtlbisJ6DPwiRtSrDQVn1pdXHoNpMfB9flxUbT8kxilf73cmYdaRwlAAAA==",
+            "placeholder": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAACQBgCdASobACgAPqVGnEmmJCMhNVgMAMAUiUAXugisVlZaPB+H+9X0dqEKKyoAVMs2TY2Z8X5PYaZU7/rAAP77aJSTvaVNDQyg6lUNiKjgmiuf6pxJPfrgwazz1Umb3BP8KGgoginhGuS/bJ76nmkg3the9oSg5ci3FS39EztN9fQjmJ9L8kNlol57ii/4OkDIx4DBEylxlWHQWJHAAA==",
             "width": 1600,
             "widths": [
                 320,
@@ -16,7 +16,7 @@
         },
         "about-story": {
             "height": 1068,
-            "placeholder": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAACwBACdASoYABAAPrVInkmnJCKhMAgA4BaJYwC+SfwLIE7y2Q4+NDvwxSf5fCagAP68iffuv3XztOw9SqzzPnlkE+S8PFcYNZT18yk+0iiOnFL2Mw7OZcv4VU/EkgYPCNba1EUwfiKD4/obXqWfBTvAb1eF7WrxjMUJQYfU8ppL1wsDJsZKZ3FB5vN5CJGUGb31ZJ/z9aS8aLJQqmflOEbYLju6FLxCNuBX8rK9mng/gOdKU8p3n9jQ1baCeMSPBMIk8laA9TX0TCvbd+NGSAAA",
+            "placeholder": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAADwBgCdASooABsAPrVSoUqnJSMhsBqoAOAWiWUAvzg6RakoszYJeqx9Aia8q4TDjgDxXrsFth3P/zDDs97ut1QAAP6755Vsjmzzcr39aLpe/eAoW8p5IYmaDl3vvPlrYLVk26DTs6MhOm58QF0yOZUvUXYNhW19Ja9gSiSXAA0gZCMzGc7hzxklFwA/LermP7UatSOJDX9LZ3d92Z2RWTOebLmhV0EBHUpSAA==",
             "width": 1600,
             "widths": [
                 320,
@@ -29,7 +29,7 @@
         },
         "athlete-bag": {
             "height": 1067,
-            "placeholder": "data:image/webp;base64,UklGRvYAAABXRUJQVlA4IOoAAADQBQCdASoYABAAPrVInkmnJCKhMAgA4BaJbACdMoR4OsChASxmRmDZPn3BaET7aa7A2TTAREfgAP0D09Z38Fk+3v18fcmiPh/Yx5J8rfDMy/yvQVVK9unAL0eXw509+OYyDl5iZbB4615kDdIAbwIaez6P0OBlFurgOPfe3+1TiDXa1Kd5mgFMOSq41ddDc7sE5+xxfmkoINzgP8L3HIy9Bpe6IZ3/srWwKS6zlCOJ1xzh2UN021n9T1IQ4ZmISXQpmlpzpoFeC+ezm0eCime+OMrCbrqjoM2Dr3nJ8LF1Qp7X8P4SWdzvoAA=",
+            "placeholder": "data:image/webp;base64,UklGRtoAAABXRUJQVlA4IM4AAADQBgCdASooABsAPrVQokwnJKMiJWzI4BaJagCdMsp0JjkATncgXdJ8060CisTX6Ry2nA6oeWV2MFauENG70AAA/pvoxTwhuvXVj1Y7jNYhHK57SaVNaJIjC49LHWqz8OvuwX8TQn5wHQ50ypMU/6HJg8JCsJqr3auxycbshMhv5k6S4p9mNgKMonATGxv10o9OuuAQqPEwWLnYkgRkaRRk8TcdL5qMVVkGL/yT5xaEuWQ/lh6f40avgjjv5x85MGyLVL/Q2zhfqOiHTmyYAA==",
             "width": 1600,
             "widths": [
                 320,
@@ -42,7 +42,7 @@
         },
         "athlete-kick": {
             "height": 1067,
-            "placeholder": "data:image/webp;base64,UklGRuYAAABXRUJQVlA4INoAAADwBACdASoYABAAPrVInkmnJCKhMAgA4BaJZACdMoMltMAaKU2JyCHHG+e4lHV9oSAA/PE/pe+ou+lsSG8llWgIVErlgA1mnS0Xn1gMDVv/b6QLd3AWzu+kJCIXtM7TKu9vbo+bAfINJr4OMKS5ssz+BjMlryPBdYOB7bcI6V4IHA+RnXOUx6GhhKBUIIbuiDT26aSdG+f9yEHGyo/xJgnPv+8vRxeKTlf32MRrRBJfmev9vXxMr0aMT7puK+qo1IwlvMQ6C9Y+gHA0i+8RZtJxLu/edW2CbySAAA==",
+            "placeholder": "data:image/webp;base64,UklGRswAAABXRUJQVlA4IMAAAABwBgCdASooABsAPqVCmkmmI6KhOrZoAMAUiWQAnTMhu38drsq/BhzquMnNDaTxZkT28sSJt8de2RcoTaAA9YzzRDzHKDzDbbpJ6s6GgkZ9gBBVLWKnq0qCy3gVE6s1mfdxM32X76Xq9mx/7KWJbG3T4q/nAnNwp22Swy6G4/YO2qIIf1wYcxQSAy1R82cnIe1Y+Xg/usGHqpKax9u5ioidiJosYY+SntaK4W4U70oWeLuVBPezMDXd7KI87DPAfgA=",
             "width": 1600,
             "widths": [
                 320,
@@ -55,7 +55,7 @@
         },
         "athlete-padwork": {
             "height": 1067,
-            "placeholder": "data:image/webp;base64,UklGRhgBAABXRUJQVlA4IAwBAABwBgCdASoYABAAPrVInkmnJCKhMAgA4BaJbACdL1J6Tbh2gTIBvJzOAboLfmc1L10JKWeGsDVB4GWUYAAA/h3ori+ocrkEYjpsbOW/aBzLUqFl6aTjfi2mOjg3NJ+x3sw005yXHPgM9EUaZ1rzAjvI4w7wOVtzmUzhhM3kF5qq7R6+cRYpPEP3A2FOa5CCZmLH62xQUNPuIMt5/tBqIelRWuv54gYn9PK5+yVF77TdvvePWa6npGX4fgc08B0XwxjtUTqVz/+MoRKspvIAWYfW1gro3Hlu5+lCBfk7Pr2Gtvm+aoeDfl4pqx5NSrwXtNjpJH338HH9DuaPPPJ/iccX/+a8PXvwv+zkxAAA",
+            "placeholder": "data:image/webp;base64,UklGRgIBAABXRUJQVlA4IPYAAADQBwCdASooABsAPq1KnEmmJKKhNVgIAMAViWYAnTKEdQSBLF2c4oAF/XdzIFm4QwoMk388MZMrtEgfmouK4teEGAM0o2EUYAD+G/Y+ANoq9h+7Hh1wH1uH4Vv+vmxT6uFJe8EyD23e2rQCLpz2IsyKYrHv8zZ/K9xDMTRKE2IrV3dXUDuKvNXgWxn0xHxCAg+fg7W+q8+qZPZtbdg8502WB6zR3Jwke8iU1ykbCH21jSPtJGkj1urcuWBBY6pu4REVaXwcm2bxeMiAZwpuBHpyf/9C+NV5IrIjqOOrEtjMvy9vaZ1FEjrUoR2sRnALh/jOLUR3AAA=",
             "width": 1600,
             "widths": [
                 320,
@@ -68,7 +68,7 @@
         },
         "athlete-sparring": {
             "height": 1067,
-            "placeholder": "data:image/webp;base64,UklGRvAAAABXRUJQVlA4IOQAAABQBQCdASoYABAAPrVInkmnJCKhMAgA4BaJbACdMoR4OsBbFZHge4c1IhiSg8xoWVUW0cAA/uRrVvGW8D1J6V2eLKRBkXO/ztc+JTg7l/zdDVRzNYEFBgRD1hdguRJuEM9yVaXaldEuJ8QGYTAeWvnZY26+QXEidb9oHIzCbkLhOOxT97cwWaF9qf6P60+e/HC7hjBtICyyUjvTcfUyNf2dBa1EE5zH/6/C9ftNtC3LZr28cK//E7GgHyyG9Wqf9kWZah0smP9iyXwR4h5sqyl7m14TMWZQOa9O+cvVNv9O/dc1AAA=",
+            "placeholder": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAABQBwCdASooABsAPq1CmUmmI6IhNVgMAMAViWgAnTKEfjdAAJmPYG3vd2D3wNXEauNfJ8T49hEzVaJDJDa40gq0MfIAAP753iyHTKuSEEH2OKbH727ss29LstxbggWtYyinPWYdga9z+3YuFY7VmixDREwT9LY65LLEa/B0xOJnbn8fblKJC6avLJCgbytX6yiuQbaLSUbxPeITR/ti8MNBhPsIzqGlGIths0T0M9NsNKb63HdWBbhRwEKQELfvzG031eneKYJOUrEgAAA=",
             "width": 1600,
             "widths": [
                 320,
@@ -81,7 +81,7 @@
         },
         "coach-portrait": {
             "height": 1536,
-            "placeholder": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAABwBACdASoQABgAPrVInkmnJCKhMAgA4BaJYgC1CIjC+OjCfI7GefRAiy/JgAD2uva4BS7uQ5ZvmGJaZHBYZNDpssHnseVINCSVdKKPYX3j/Fm0Vo8OfrDH9bTJjQzBRTCDU7XCGWXRb5a7lvXxuj/kkI9R+fobf8vM+rfady4iSDAAAAA=",
+            "placeholder": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAACwBQCdASobACgAPq1Km0mmJKIhNVgIAMAViWIAxNgUAyzBUJehEG8wlRlnbIDiUzrxXCQ38EAAzfa9UUvayrXvipA6WOz78B/mv+SM2yCEgfpUG90jSB/oJ91OqOd09Hl81aUVh5VzDBAfyPDmogQseNdJ3SQdZstVy05NvPbtedpZqOzn4NTuMjzgP0AA",
             "width": 1024,
             "widths": [
                 320,
@@ -92,7 +92,7 @@
         },
         "coaches-hero": {
             "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRvAAAABXRUJQVlA4IOQAAABQBQCdASoYABAAPrVInkmnJCKhMAgA4BaJbACdMoR4OsBbFZHge4c1IhiSg8xoWVUW0cAA/uRrVvGW8D1J6V2eLKRBkXO/ztc+JTg7l/zdDVRzNYEFBgRD1hdguRJuEM9yVaXaldEuJ8QGYTAeWvnZY26+QXEidb9oHIzCbkLhOOxT97cwWaF9qf6P60+e/HC7hjBtICyyUjvTcfUyNf2dBa1EE5zH/6/C9ftNtC3LZr21RA/8Tndn7q+6KfMaemyFN5xYHVItKpm//kqlqXubkam4vHbaT1ZD51mbsYtwi8i1cAA=",
+            "placeholder": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACQBwCdASooABsAPrVIoEmnJCMhMBqqqOAWiWYAnTLHAJ9FgKqj0YmBVwdY6O4vNbqayZd4Oz1s7qAl+1GQh0B29NtxXDAA/vt96RF/6ma5cexQ10wLcfJrCdIKm40NNO2Lv1vIufnxuKrSO5/ZRmPpDRJzaGG0X/PCl+fcV9UTVMMZfCJZ4FlcA0aUycQZspHjgHoslGOuj5euDqyUT8VTkHfQnvgasKSeK29ZTzjVtfrP0IA5G6Ksn32bjqVmotVNAR2/YgDkTo4AAAA=",
             "width": 2400,
             "widths": [
                 320,
@@ -107,7 +107,7 @@
         },
         "hero-kickboxing": {
             "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAABwBACdASoYABAAPrVInkmnJCKhMAgA4BaJaACdMoGvzC1pVmvg/stVBRiDgADOPlNb65Kbk+4E5cywP1y929OBg6ESkoBf4or49tI7XhiFQw8YLIhDhwoD+Wvb39j2K/qB9FUUx69s4MNqyBCQNPs0+xmBxycMobvGwzf6m5vbQEbIObA0FUFbvIdijQyDKMlrxHRfoD10JpX3r31Sz31ZiykZ58/EK55tw0S56ShhuIEpReFurzVRzZKefi4YLg8tcX5kPGw0PK6iST6ra4DKswZi/EVftJFIc2H9+/Z4IxcZc4gAAA==",
+            "placeholder": "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAADwBgCdASooABsAPrVGnEmnI6KhMBVdUOAWiWYAsR77QI9/ihX+Ywp89AHL6UvhJqI6IeoIXLSBBLc7nSnNDh5wAPj9tply474o639tsjayiVlbt7BJ7jmvm2gHDW4aUe6qQbvuFDqxPxnmfxDtlpk28XkwiTe1m+AJodP2Wtx+u7NAttGhec2AlOaMSYq/EaSUYzGwpqx1gmvbPONfql85XpCX4h8Voyni53zDVYeASB0oEzmYwxaWsbgqH+yKV8Za0+5+AAA=",
             "width": 2400,
             "widths": [
                 320,
@@ -122,7 +122,7 @@
         },
         "pad-work": {
             "height": 1024,
-            "placeholder": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAAAQBACdASoYABAAPrVKnkmnJCKhMAgA4BaJbACdAYv+yAXA+z6U7apVYAD+8r/me1Rn3AHrtS46+sNZq3R1rl5addaIXGcSlDpDK1+AZiyV6HdQ6zzzau8484XCBg0w4+WIw++Iy7LLW/3qlrVSJ7t/+Sf6sWeOjLaQvgwbPEpm/YGG+25b0QVkbjUPlBUtRbouGu+vPXqvo5Dx3CcQK1pmIMfDiMWEr1aWnUDMygSQAA==",
+            "placeholder": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAACwBgCdASooABsAPrVKn0qnJCKhsBqoAOAWiWIAqSd2yICCSJgNs9qTPpFM5oYENJScyCXezDuzKVu2cvnuAAD+/L1Mh/kipYhWNw2ONCO78RwiZwpKmDFyb5qcyLqmpBSYgwV9K1oQEXV5iXr6+g/Q6F6EusUo4sgDVT8m01OZDXymBNMFWZfLW3OrwUgKczOoARGR9v2daQz0ZeVL5edT9+HEFcjop6AAAA==",
             "width": 1536,
             "widths": [
                 320,
@@ -134,7 +134,7 @@
         },
         "ring-training": {
             "height": 1024,
-            "placeholder": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAACwBACdASoYABAAPrVIn0mnJCKhMAgA4BaJbACdMoRwFf/i1lnIk1nSSnha2gCAAP7sVLNCbUUzVUtIwVLPypw9mC0J6GvfYibfaBUVydBOSXsU71c71pXV9BukqPJTnPHBmxWCIl0ZHDOMkAw0BdpZoBOxx/9KYpdN6On7WSD/TUnP+ENujnh9SR0/M8qW8noU15Id0FH0HXcmiSnC6iXBfKIwl0ZLJcTFTuVo+4tuWCkmoAA=",
+            "placeholder": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAACQBgCdASooABsAPq1Cn0mmI6MhNVgMAMAViWIAqSeKDI0csx4BNogATH1166PJkNGjFAlLwZcES5kB+UoAAP757bns/6PUXIn6I3W/V0HBhLHh623JyoehaltmzE/fM4ouAjLKD3qe9kdhYQdTV9j3pJu1gXtt1OGnclnWlS9IyxhIvIVBLJjwi+LFWSkNbQhdbiYWmZGuL6U3iZfloMHxxbz+g7c/cYXFAAAA",
             "width": 1536,
             "widths": [
                 320,
@@ -146,7 +146,7 @@
         },
         "schedule-hero": {
             "height": 2400,
-            "placeholder": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAACwBACdASoQABgAPrVInkmnJCKhMAgA4BaJaACdAYua5OftPva9OxMozFgfdDUAAP7s4bYhhjRtYBu3Mi1BiMvK8IMNAJFEDuR39rVAIBlr5REnotPpjILszoosOscQh+cFnfXbtZsc4OF5ET5WZjRMZBIiUg1oYPk1swjx12JdvCoNzSOdIAFf4VPUjU5Z252wYZ6cU1LhF9sh82hK+NAAg65Ptrsu13AnVyWBPIxfgAAA",
+            "placeholder": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAABQBgCdASobACgAPqVCmUmmI6IhNUgAwBSJQBYdhZs4hf0anPr2Io6ASbN9RoykzbuM0Bcf1L1YgiupEAD+7vGfPXP9qbtig7zMpepWyDfnbJIFK2q/HQOZUxKy4IEBSTWh/hyLkK0XuR51zEsv1W0UXWcGN8FKP5Xh2FwSxMySaF+h7mK65FBmZefOkAQAr3cNPdn279cAAA==",
             "width": 1600,
             "widths": [
                 320,
@@ -159,7 +159,7 @@
         },
         "schedule-rhythm": {
             "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRv4AAABXRUJQVlA4IPIAAACQBACdASoQABgAPrVInkmnJCKhMAgA4BaJagCdMoB3S8eganyY4T/Veky3P0QA/uAu2nDqlf8YwIG4s/9WIoYp6p3H0kTvoLO9rktAuF27uHgBzu0jj1BZxNJm0a3CkLAL9Z3YDYZpDXYNq4DatRe/+uT99Z96SPdZYJAU5ylfI9+UkkPxDMVWReiostra+TDTHeeaWRrd2EBfWgB3o+xUU+9/n/e/nGBTUiXZe3/28PLSeIKJ3Oq/P0TXqNeFAfzoPgWPguOGyQylo33k5ont4+4Y69sWo0hpKk7Da4ejkCCOwS18NjmfG4FL7Svb06AAAA==",
+            "placeholder": "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAACwBwCdASobACgAPq1MmkmmJKIhMBqtUMAViUATpl2gzwAgNntlFbE57k3sQSiJNadvEbjBXXTSBHPJjfO7oonny5dEpBFAAP7Vl95AKDp+ZO5nApLBTzImln7oIwnUFPYHkEIG055Z5r3ryQyiSYWPzlWUSjmh3G2eI4kV/2FbjPmL4BWO6Q3rSSPEGlBeNVeSkUvhKPwINHxE5MotwkAgnkCH4Hk6FLVnuU2vMDi7KS7/VpGOyyajU0OjXcAuqd/ZjgyVAAA=",
             "width": 1067,
             "widths": [
                 320,
@@ -180,16 +180,15 @@
             ]
         },
         "sparring": {
-            "height": 1067,
-            "placeholder": "data:image/webp;base64,UklGRsoAAABXRUJQVlA4IL4AAAAQBACdASoYABAAPrVInkmnJCKhMAgA4BaJZgC06BuDQiZ4q+l0tRTWAAD+2A08X9Y71CvI9SWtObekN/cLXpCj4XAx5ET0pILkcaRro0EjdB1PXpc5qSMaruTYVHvTrldthJoIdGYBQ70RctSByrq0tzCgU6OhvszJh1mYgsgDEYSgyeyIrRVSXLdSO+1iVyas/uWXTYeQ+Xsptl4mteWrZsioOy7UZ6JT5tjD7oPRspPB/JNPkXxPvapcQAAA",
-            "width": 1600,
+            "height": 1024,
+            "placeholder": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAACQBgCdASooABsAPqFAmkmmI6KhNVv8AMAUCWQAnSjOVripo+tSNB/6OkkCUVWVfsw1HZ8viY8t9JetcxUAAP7/GsXN+Q28smgWO/EFbyYG3zBe/nBn0HYfdm3Qgt1FgTqkNfV6WiZxwOSGdFxJo5GL2yOYstCF05mPkgPwiK5DctWA04ZHBrX+DmBLguomV1r60BM0ZQBRAGPGMlPfY2IOCfnElTmIAAA=",
+            "width": 1536,
             "widths": [
                 320,
                 480,
                 768,
                 1024,
-                1280,
-                1600
+                1280
             ]
         }
     },

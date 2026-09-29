@@ -29,7 +29,7 @@ export default function Article({ article }) {
     return (
         <div className="w-full max-w-full overflow-x-clip bg-ink-0" ref={pageRef}>
             <article>
-                <section className="grain relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink-0">
+                <section className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0">
                     {hasCover ? (
                         <ArticleImage
                             alt=""
@@ -55,7 +55,7 @@ export default function Article({ article }) {
                     <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.08),rgba(5,5,5,.95)_100%)]" />
 
                     <div
-                        className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-10 pt-24 sm:px-8 sm:pb-12 lg:px-12 lg:pb-14"
+                        className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-10 pt-24 sm:px-8 sm:pb-12 lg:px-12 lg:pb-14"
                         data-article-hero-content
                     >
                         <div data-article-section>

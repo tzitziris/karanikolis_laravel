@@ -5,14 +5,14 @@ import SiteImage from '../Components/SiteImage';
 import { useHomePageAnimation } from '../animation/useHomePageAnimation';
 
 const stats = [
-    ['15+', 'χρόνια παρουσίας'],
-    ['240', 'αθλητές & αθλήτριες'],
-    ['18', 'μαθήματα την εβδομάδα'],
+    ['20+', 'χρόνια παρουσίας'],
+    ['250', 'αθλητές & αθλήτριες'],
+    ['5', 'groups την εβδομάδα'],
 ];
 
 const chapters = [
     {
-        body: 'Η τεχνική ξεκινά πριν από το πρώτο χτύπημα. Στάση, ισορροπία, ακρίβεια.',
+        body: 'Κάθε τεχνική χτίζεται αργά. Η πρόοδος έρχεται σε όποιον δεν βιάζεται.',
         image: 'ring-training',
         imageAlt: 'Αθλητές kickboxing προπονούνται μέσα στο ρινγκ',
         // Where the full-screen desktop panel crops: low, so the dark arena
@@ -26,35 +26,38 @@ const chapters = [
         imageMobileFrame:
             'inset-x-0 top-0 h-auto aspect-[5/8] -translate-y-[14%] object-[94%_center] [mask-image:linear-gradient(#000_70%,transparent)]',
         number: '01',
-        titleAction: 'στέκεσαι.',
-        titleLead: 'Μάθε να',
+        titleAction: '',
+        titleLead: 'Υπομονή',
     },
     {
-        body: 'Η πειθαρχία μετατρέπει την επανάληψη σε αυτοπεποίθηση και την προσπάθεια σε πρόοδο.',
+        body: 'Εκεί που οι άλλοι σταματούν, εσύ κάνεις έναν γύρο ακόμα.',
         image: 'pad-work',
         imageAlt: 'Δύο αθλητές kickboxing αγωνίζονται μέσα στο ρινγκ',
         imageDesktopPosition: 'object-center',
         imageMobileFrame:
             'inset-x-0 top-0 h-auto aspect-[8/13] -translate-y-[18%] object-[88%_center] [mask-image:linear-gradient(#000_70%,transparent)]',
         number: '02',
-        titleAction: 'επιμένεις.',
-        titleLead: 'Μάθε να',
+        titleAction: '',
+        titleLead: 'Επιμονή',
     },
     {
-        body: 'Με έλεγχο, σεβασμό και καθαρό μυαλό. Μέσα στο ρινγκ και έξω από αυτό.',
+        body: 'Η ίδια δουλειά κάθε μέρα, ακόμα κι όταν δεν έχεις διάθεση. Εκεί φαίνεται ο μαχητής.',
         image: 'sparring',
-        imageAlt: 'Δύο αθλητές εξασκούν τεχνικές kickboxing',
+        imageAlt: 'Αθλητής kickboxing χτυπά με γόνατο σε αγώνα, με τον διαιτητή δίπλα',
         imageDesktopPosition: 'object-center',
-        imageMobileFrame: 'inset-0 h-full object-center',
+        // Taller than wide, so here the height is the limit: fighters and
+        // referee in the upper part, the text over their feet at most.
+        imageMobileFrame:
+            'inset-x-0 top-0 h-auto aspect-[2/3] -translate-y-[12%] object-[96%_center] [mask-image:linear-gradient(#000_70%,transparent)]',
         number: '03',
-        titleAction: 'μάχεσαι.',
-        titleLead: 'Μάθε να',
+        titleAction: '',
+        titleLead: 'Πειθαρχία',
     },
 ];
 
 function HomeHero() {
     return (
-        <section className="grain relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink-0">
+        <section className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0">
             <SiteImage
                 alt="Δύο αθλητές kickboxing σε δυναμική προπόνηση"
                 className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center]"
@@ -67,7 +70,7 @@ function HomeHero() {
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_28%,rgba(212,161,66,.18),transparent_35%)]" />
 
             <div
-                className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-20 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
+                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-20 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
                 data-home-hero-content
             >
                 <p
@@ -91,8 +94,7 @@ function HomeHero() {
                     data-home-reveal
                 >
                     <p className="max-w-md text-sm leading-6 text-bone/80 sm:text-base">
-                        Η δύναμη δεν χαρίζεται. Χτίζεται, μία προπόνηση τη
-                        φορά.
+                        Κάθε μέρα 1% καλύτερος.
                     </p>
                     <div className="flex items-center justify-between gap-6 sm:justify-end">
                         <Link className="cinematic-link" href="/schedule">
@@ -114,8 +116,8 @@ function ManifestoSection() {
         <section className="grain relative isolate overflow-clip bg-ink-0">
             <div className="absolute inset-0 lg:hidden">
                 <SiteImage
-                    alt="Δύο αθλητές kickboxing προπονούνται με ένταση και έλεγχο"
-                    className="h-full w-full object-cover object-[62%_center]"
+                    alt="Αγώνας kickboxing μπροστά σε γεμάτες κερκίδες"
+                    className="h-full w-full object-cover object-[75%_center]"
                     data-home-statement-image
                     image="sparring"
                     slot="full"
@@ -125,7 +127,7 @@ function ManifestoSection() {
 
             <div className="relative mx-auto grid max-w-[1600px] lg:grid-cols-2">
                 <div className="relative z-10 px-5 sm:px-8 lg:px-12 lg:pr-16">
-                    <div className="flex min-h-[100dvh] flex-col justify-center py-28">
+                    <div className="flex min-h-[100svh] flex-col justify-center py-28">
                         <span
                             aria-hidden="true"
                             className="mb-8 block h-px w-20 bg-blood"
@@ -135,13 +137,13 @@ function ManifestoSection() {
                             data-home-reveal
                         >
                             <span className="text-blood">
-                                Δεν είναι απλώς άθλημα.
+                                Τους σέβομαι όλους.
                             </span>{' '}
-                            Είναι ο τρόπος που επιλέγεις να στέκεσαι.
+                            Δεν φοβάμαι κανέναν.
                         </h2>
                     </div>
 
-                    <div className="grid min-h-[58dvh] content-center gap-8 border-t border-white/20 py-20 sm:grid-cols-3 lg:min-h-[50dvh] lg:grid-cols-1 lg:gap-10">
+                    <div className="grid min-h-[58svh] content-center gap-8 border-t border-white/20 py-20 sm:grid-cols-3 lg:min-h-[50svh] lg:grid-cols-1 lg:gap-10">
                         {stats.map(([value, label]) => (
                             <div
                                 className="grid grid-cols-[6rem_1fr] items-end gap-4 lg:grid-cols-[8rem_1fr]"
@@ -160,10 +162,10 @@ function ManifestoSection() {
                 </div>
 
                 <div className="relative hidden lg:block">
-                    <div className="sticky top-20 h-[calc(100dvh-5rem)] overflow-hidden">
+                    <div className="sticky top-20 h-[calc(100svh-5rem)] overflow-hidden">
                         <SiteImage
-                            alt="Δύο αθλητές kickboxing προπονούνται με ένταση και έλεγχο"
-                            className="h-full w-full object-cover object-center"
+                            alt="Αγώνας kickboxing μπροστά σε γεμάτες κερκίδες"
+                            className="h-full w-full object-cover object-[90%_center]"
                             data-home-statement-image
                             image="sparring"
                             slot="half"
@@ -232,13 +234,13 @@ function JourneySection() {
             </div>
 
             <div
-                className="relative hidden h-[100dvh] w-full max-w-full overflow-hidden sm:motion-safe:block"
+                className="relative hidden h-[100svh] w-full max-w-full overflow-hidden sm:motion-safe:block"
                 data-home-journey-desktop
             >
                 <div className="flex h-full w-max" data-home-journey-track>
                     {chapters.map((chapter) => (
                         <article
-                            className="grain relative isolate flex h-[100dvh] w-screen shrink-0 items-end overflow-hidden px-8 pb-16 pt-24 lg:items-center lg:px-12"
+                            className="grain relative isolate flex h-[100svh] w-screen shrink-0 items-end overflow-hidden px-8 pb-16 pt-24 lg:items-center lg:px-12"
                             key={chapter.number}
                         >
                             <div
@@ -307,20 +309,24 @@ function TestimonialSection() {
                 <p
                     className="text-[10px] font-semibold uppercase"
                     data-home-reveal
+                    lang="en"
                 >
-                    Η νοοτροπία μας
+                    Words of a legend
                 </p>
                 <blockquote
                     className="mt-8 max-w-[72rem] font-display text-[clamp(3.1rem,14vw,3.6rem)] font-black uppercase leading-[0.9] sm:text-[clamp(3.6rem,7.5vw,7rem)] sm:leading-[0.84]"
                     data-home-reveal
+                    lang="en"
                 >
-                    Δεν ψάχνουμε τον εύκολο δρόμο. Χτίζουμε τον δυνατό άνθρωπο.
+                    “To be a great champion, you must believe you are the best.
+                    If you’re not, pretend you are.”
                 </blockquote>
                 <p
                     className="mt-10 text-xs font-semibold uppercase"
                     data-home-reveal
+                    lang="en"
                 >
-                    Παναγιώτης Καρανικολής · Προπονητής
+                    Muhammad Ali
                 </p>
             </div>
         </section>
@@ -397,7 +403,7 @@ function SweepLink({ children, href, variant }) {
 
 function FinalCallSection() {
     return (
-        <section className="relative min-h-[88dvh] overflow-hidden bg-ink-0">
+        <section className="relative min-h-[88svh] overflow-hidden bg-ink-0">
             <div className="absolute inset-0" data-home-final-image>
                 <SiteImage
                     alt="Αγώνας kickboxing σε γεμάτη αρένα"
@@ -408,7 +414,7 @@ function FinalCallSection() {
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.85))]" />
             </div>
             <div
-                className="relative mx-auto flex min-h-[88dvh] max-w-[1600px] flex-col items-start justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24"
+                className="relative mx-auto flex min-h-[88svh] max-w-[1600px] flex-col items-start justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24"
                 data-home-final-copy
             >
                 <p className="text-[10px] font-medium uppercase text-blood">

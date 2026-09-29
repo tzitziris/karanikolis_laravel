@@ -241,6 +241,18 @@ body {
     will-change: transform;
 }
 
+/*
+ * The grain is an SVG noise filter, and Safari computes it on the processor
+ * each time it paints a section that carries it; on a phone that lands in the
+ * middle of a scroll, as a stall. At 5% opacity on a small screen the texture
+ * cannot be seen anyway, so it belongs to large screens only.
+ */
+@media (max-width: 1023.98px) {
+    .grain::before {
+        content: none;
+    }
+}
+
 .btn-sweep {
     position: relative;
     display: inline-flex;
