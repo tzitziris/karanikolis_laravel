@@ -39,10 +39,22 @@ const athletePlaceholders = [
 ];
 
 const coachMetrics = [
-    { label: 'Έτη', value: '15+' },
-    { label: 'Επίπεδο', value: 'Senior' },
-    { label: 'Στυλ', value: 'Kickboxing' },
-    { label: 'Έδρα', value: 'Καβάλα' },
+    { label: 'Αγώνες', value: '86' },
+    { label: 'Νίκες', value: '81', highlight: true },
+    { label: 'Ήττες', value: '5' },
+    { label: 'Νοκ άουτ', value: '27' },
+];
+
+const coachAchievements = [
+    { title: 'Παγκόσμιος πρωταθλητής', year: '2005', location: 'Κύπρος' },
+    { title: 'Παγκόσμιος πρωταθλητής', year: '2000', location: 'Γαλλία' },
+    { title: 'Πρωταθλητής Ευρώπης', year: '1999' },
+    { title: 'Βαλκανιονίκης', year: '1997' },
+    {
+        title: 'Πρωταθλητής Ελλάδος',
+        year: '1995–1999',
+        detail: '1995, 1996, 1997, 1998, 1999',
+    },
 ];
 
 const cardSpans = [
@@ -149,7 +161,10 @@ function CoachesHero() {
 
 function CoachSection() {
     return (
-        <section className="relative mx-auto grid max-w-[1600px] bg-ink-0 lg:grid-cols-2">
+        <section
+            aria-labelledby="coach-name"
+            className="relative mx-auto grid max-w-[1600px] bg-ink-0 lg:grid-cols-2"
+        >
             <div className="coaches-sticky relative h-[72svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100svh-5rem)]">
                 <SiteImage
                     alt="Αθλητής kickboxing εξασκεί τεχνική σε σάκο"
@@ -169,16 +184,17 @@ function CoachSection() {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center px-5 py-28 sm:px-8 sm:py-40 lg:min-h-[118svh] lg:px-16 lg:py-48">
+            <div className="@container flex min-w-0 flex-col justify-center px-5 py-16 sm:px-8 sm:py-24 lg:px-12 xl:px-16">
                 <p
-                    className="text-[10px] font-medium uppercase text-blood"
+                    className="text-xs font-medium uppercase tracking-wider text-blood"
                     data-coaches-reveal
                 >
                     Καθοδήγηση με ακρίβεια
                 </p>
                 <h2
-                    className="mt-6 max-w-full whitespace-normal font-display text-[clamp(2.35rem,11vw,3rem)] font-black uppercase leading-[0.9] text-bone sm:text-[clamp(3rem,5.4vw,5.5rem)] sm:leading-[0.82]"
+                    className="mt-5 max-w-full font-display text-[min(13cqw,5.5rem)] font-black uppercase leading-[0.95] text-bone"
                     data-coaches-reveal
+                    id="coach-name"
                 >
                     <span className="block overflow-visible">Παναγιώτης</span>
                     <span className="block overflow-visible text-bone-dim">
@@ -186,44 +202,69 @@ function CoachSection() {
                     </span>
                 </h2>
 
-                <div
-                    className="mt-10 grid grid-cols-2 border-b border-t border-line-strong"
+                <p
+                    className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2"
                     data-coaches-reveal
                 >
-                    {coachMetrics.map((metric, index) => (
-                        <div
-                            className={`border-line-strong py-5 sm:py-6 ${
-                                index % 2 === 0
-                                    ? 'border-r pr-4'
-                                    : 'pl-4'
-                            } ${index < 2 ? 'border-b' : ''}`}
-                            key={metric.label}
-                        >
-                            <p className="text-[9px] uppercase text-pewter">
-                                {metric.label}
-                            </p>
-                            <p className="mt-2 font-display text-[clamp(1.45rem,4vw,2.5rem)] leading-none text-bone">
-                                {metric.value}
-                            </p>
-                        </div>
-                    ))}
+                    <span className="text-xs uppercase tracking-wider text-pewter">
+                        Στυλ
+                    </span>
+                    <span className="text-base font-medium text-bone-dim">
+                        Κικ μπόξινγκ{' '}
+                        <span aria-hidden="true" className="px-2 text-blood">·</span>{' '}
+                        Μποξ
+                    </span>
+                </p>
+
+                <div className="mt-9" data-coaches-reveal>
+                    <h3 className="text-xs font-medium uppercase tracking-wider text-pewter">
+                        Αγωνιστικό ρεκόρ
+                    </h3>
+                    <dl className="mt-4 grid grid-cols-2 border-y border-line-strong @min-[28rem]:grid-cols-4">
+                        {coachMetrics.map((metric, index) => (
+                            <div
+                                className={`flex min-w-0 flex-col gap-2 border-line-strong py-5 @max-[15rem]:col-span-2 @max-[15rem]:[border-right-width:0px] @max-[15rem]:px-0 ${
+                                    index % 2 === 0 ? 'border-r pr-4' : 'pl-4'
+                                } ${index < 2 ? 'border-b @min-[28rem]:border-b-0' : ''} ${
+                                    index === 1 ? '@min-[28rem]:border-r @min-[28rem]:pr-4' : ''
+                                } ${index === 2 ? '@max-[15rem]:border-b @min-[28rem]:pl-4' : ''}`}
+                                key={metric.label}
+                            >
+                                <dt className="text-xs uppercase tracking-wide text-bone-dim">
+                                    {metric.label}
+                                </dt>
+                                <dd className={`order-first font-display text-[clamp(3rem,11cqw,4.5rem)] font-black leading-none tabular-nums ${metric.highlight ? 'text-blood' : 'text-bone'}`}>
+                                    {metric.value}
+                                </dd>
+                            </div>
+                        ))}
+                    </dl>
                 </div>
 
-                <div className="mt-10 grid gap-6 text-sm leading-[1.8] text-bone-dim sm:grid-cols-2 sm:text-base">
-                    <p data-coaches-reveal>
-                        Ο Παναγιώτης Καρανικολής καθοδηγεί τους αθλητές με
-                        έμφαση στην τεχνική ακρίβεια, τη φυσική κατάσταση και
-                        την πειθαρχία. Η προσέγγισή του συνδυάζει δυνατή
-                        προπόνηση με σεβασμό στον ρυθμό κάθε ασκούμενου.
-                    </p>
-                    <p
-                        className="border-t border-line-strong pt-6 sm:[border-left-width:1px] sm:[border-top-width:0px] sm:pl-6 sm:pt-0"
-                        data-coaches-reveal
-                    >
-                        Στόχος του είναι κάθε μαθητής να χτίζει αυτοπεποίθηση,
-                        αντοχή και καθαρή αγωνιστική νοοτροπία, μέσα και έξω
-                        από το ρινγκ.
-                    </p>
+                <div className="mt-9" data-coaches-reveal>
+                    <h3 className="text-xs font-medium uppercase tracking-wider text-blood">
+                        Διακρίσεις
+                    </h3>
+                    <ul className="mt-3 divide-y divide-line-strong">
+                        {coachAchievements.map((achievement) => (
+                            <li
+                                className="grid grid-cols-1 items-baseline gap-x-4 gap-y-1 py-4 @min-[18rem]:grid-cols-[minmax(0,1fr)_auto]"
+                                key={achievement.year}
+                            >
+                                <p className="text-base font-medium leading-6 text-bone">
+                                    {achievement.title}
+                                </p>
+                                <p className="font-display text-xl font-bold leading-6 tabular-nums text-blood">
+                                    {achievement.year}
+                                </p>
+                                {(achievement.location || achievement.detail) && (
+                                    <p className="text-sm leading-6 text-bone-dim @min-[18rem]:col-span-2">
+                                        {achievement.location || achievement.detail}
+                                    </p>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         </section>
