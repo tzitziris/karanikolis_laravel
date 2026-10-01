@@ -28,14 +28,6 @@ const athletePlaceholders = [
         title: 'Θέση αθλητή',
         trainingFocus: 'Λακτίσματα και κινητικότητα',
     },
-    {
-        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
-        image: 'athlete-sparring',
-        imageAlt: 'Δύο αθλητές kickboxing σε δυναμική προπόνηση',
-        marker: '04',
-        title: 'Θέση αθλήτριας',
-        trainingFocus: 'Sparring και αγωνιστικός ρυθμός',
-    },
 ];
 
 const coachMetrics = [
@@ -54,36 +46,6 @@ const coachAchievements = [
         title: 'Πρωταθλητής Ελλάδος',
         year: '1995–1999',
         detail: '1995, 1996, 1997, 1998, 1999',
-    },
-];
-
-const cardSpans = [
-    'lg:col-span-7',
-    'lg:col-span-5',
-    'lg:col-span-5',
-    'lg:col-span-7',
-];
-
-const gallery = [
-    {
-        alt: 'Αθλητής kickboxing προπονείται σε σάκο',
-        image: 'athlete-bag',
-        label: 'Σάκος',
-    },
-    {
-        alt: 'Αθλητής kickboxing εξασκεί γόνατο με στόχους',
-        image: 'athlete-padwork',
-        label: 'Στόχοι',
-    },
-    {
-        alt: 'Αθλητής kickboxing εκτελεί ψηλό λάκτισμα',
-        image: 'athlete-kick',
-        label: 'Λάκτισμα',
-    },
-    {
-        alt: 'Δύο αθλητές kickboxing σε δυναμική προπόνηση',
-        image: 'athlete-sparring',
-        label: 'Sparring',
     },
 ];
 
@@ -321,10 +283,10 @@ function AthletesSection() {
                     </p>
                 </div>
 
-                <div className="mt-14 grid grid-flow-dense grid-cols-1 gap-px bg-line-strong lg:grid-cols-12">
-                    {athletePlaceholders.map((athlete, index) => (
+                <div className="mt-14 grid grid-cols-1 gap-px bg-line-strong lg:grid-cols-3">
+                    {athletePlaceholders.map((athlete) => (
                         <article
-                            className={`group relative min-w-0 overflow-hidden bg-ink-1 ${cardSpans[index]}`}
+                            className="group @container relative min-w-0 overflow-hidden bg-ink-1"
                             data-coaches-reveal
                             key={athlete.image}
                         >
@@ -334,11 +296,7 @@ function AthletesSection() {
                                     className="absolute inset-0 h-full w-full object-cover object-center grayscale contrast-125 transition-[filter,transform] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                                     data-athlete-image
                                     image={athlete.image}
-                                    slot={
-                                        index === 0 || index === 3
-                                            ? 'full'
-                                            : 'half'
-                                    }
+                                    slot="third"
                                 />
                                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.06),rgba(5,5,5,.9)_90%)]" />
                                 <div className="absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
@@ -346,9 +304,9 @@ function AthletesSection() {
                                         <span>Προσωρινή θέση</span>
                                         <span>Χωρίς κατηγορία</span>
                                     </div>
-                                    <div className="mt-4 flex items-end justify-between gap-5">
+                                    <div className="mt-4 flex items-end justify-between gap-5 lg:gap-3">
                                         <div>
-                                            <h3 className="max-w-full font-display text-[clamp(2.35rem,9vw,2.8rem)] font-black uppercase leading-[0.9] text-bone sm:text-[clamp(2.6rem,5.5vw,4.5rem)] sm:leading-[0.86]">
+                                            <h3 className="max-w-full font-display text-[clamp(2rem,10cqw,4.5rem)] font-black uppercase leading-[0.9] text-bone sm:leading-[0.86]">
                                                 {athlete.title}
                                             </h3>
                                             <p className="mt-3 text-[10px] uppercase leading-5 text-blood">
@@ -360,7 +318,7 @@ function AthletesSection() {
                                         </div>
                                         <span
                                             aria-hidden="true"
-                                            className="font-display text-5xl text-blood sm:text-7xl"
+                                            className="shrink-0 font-display text-5xl text-blood sm:text-7xl lg:text-5xl"
                                         >
                                             {athlete.marker}
                                         </span>
@@ -375,65 +333,13 @@ function AthletesSection() {
     );
 }
 
-function GallerySection() {
-    return (
-        <section className="bg-ink-0 px-5 pb-28 sm:px-8 sm:pb-40 lg:px-12 lg:pb-52">
-            <div className="mx-auto max-w-[1500px]">
-                <div className="mb-12 grid gap-6 border-t border-line-strong pt-10 lg:grid-cols-[1fr_auto] lg:items-end">
-                    <div data-coaches-reveal>
-                        <p className="text-[10px] font-medium uppercase text-blood">
-                            Στιγμές προπόνησης
-                        </p>
-                        <h2 className="mt-5 max-w-[52rem] font-display text-[clamp(3.4rem,12vw,4rem)] font-black uppercase leading-[0.84] text-bone sm:text-[clamp(4rem,8vw,7.5rem)] sm:leading-[0.8]">
-                            Η δουλειά στο ρινγκ
-                        </h2>
-                    </div>
-                    <p
-                        className="max-w-md text-sm leading-7 text-bone-dim sm:text-base"
-                        data-coaches-reveal
-                    >
-                        Σάκοι, στόχοι, sparring και επανάληψη. Η εικόνα της
-                        ομάδας μένει απλή: καθημερινή δουλειά, καθαρή τεχνική,
-                        σταθερός ρυθμός.
-                    </p>
-                </div>
-
-                <div className="grid gap-px bg-line-strong md:grid-cols-2">
-                    {gallery.map((item, index) => (
-                        <figure
-                            className={`relative min-h-[20rem] overflow-hidden bg-ink-1 ${
-                                index === 1 ? 'md:translate-y-10' : ''
-                            } ${index === 2 ? 'md:-translate-y-10' : ''}`}
-                            data-coaches-reveal
-                            key={item.image}
-                        >
-                            <SiteImage
-                                alt={item.alt}
-                                className="absolute inset-0 h-full w-full object-cover object-center grayscale contrast-125"
-                                data-gallery-image
-                                image={item.image}
-                                slot="half"
-                            />
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.08),rgba(5,5,5,.62))]" />
-                            <figcaption className="absolute inset-x-5 bottom-5 flex items-center justify-between border-t border-white/25 pt-3 text-[10px] uppercase text-bone/75 sm:inset-x-7 sm:bottom-7">
-                                <span>{item.label}</span>
-                                <span>{String(index + 1).padStart(2, '0')}</span>
-                            </figcaption>
-                        </figure>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-}
-
 function ClosingSection() {
     return (
         <section className="grain relative isolate min-h-[86svh] overflow-hidden bg-ink-0">
-            <div className="absolute inset-0 -z-20" data-coaches-closing-image>
+            <div className="absolute inset-0 -z-20 lg:origin-top" data-coaches-closing-image>
                 <SiteImage
                     alt="Δυναμική προπόνηση kickboxing μέσα στη σχολή"
-                    className="h-full w-full object-cover object-center grayscale contrast-125"
+                    className="h-full w-full object-cover object-center grayscale contrast-125 lg:object-top"
                     image="athlete-kick"
                     slot="full"
                 />
@@ -473,7 +379,6 @@ export default function Coaches() {
             <CoachSection />
             <TeamStatement />
             <AthletesSection />
-            <GallerySection />
             <ClosingSection />
         </div>
     );

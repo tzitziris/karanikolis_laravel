@@ -14,7 +14,6 @@ export function useCoachesPageAnimation(scopeRef) {
         const coachImage = root.querySelector('[data-coach-image]');
         const closingImage = root.querySelector('[data-coaches-closing-image]');
         const athleteImages = root.querySelectorAll('[data-athlete-image]');
-        const galleryImages = root.querySelectorAll('[data-gallery-image]');
         const media = gsap.matchMedia();
 
         revealItems.forEach((item) => {
@@ -64,7 +63,7 @@ export function useCoachesPageAnimation(scopeRef) {
         }
 
         media.add(DESKTOP_QUERY, () => {
-            [coachImage, closingImage, ...athleteImages, ...galleryImages]
+            [coachImage, closingImage, ...athleteImages]
                 .filter(Boolean)
                 .forEach((image) => {
                     gsap.fromTo(
@@ -77,7 +76,7 @@ export function useCoachesPageAnimation(scopeRef) {
                                 end: 'center center',
                                 scrub: 0.8,
                                 start: 'top bottom',
-                                trigger: image.closest('section, article, figure'),
+                                trigger: image.closest('section, article'),
                             },
                         },
                     );
@@ -94,13 +93,6 @@ export function useCoachesPageAnimation(scopeRef) {
             // their hover effect, which would drag any drift 700ms behind the
             // scroll. Their frames open instead.
             athleteImages.forEach((image) => openFrame(gsap, image.parentElement));
-
-            galleryImages.forEach((image) => {
-                const frame = image.closest('figure');
-
-                openFrame(gsap, frame);
-                driftInFrame(gsap, image, frame);
-            });
 
             driftInFrame(gsap, closingImage, closingImage?.closest('section'));
         });

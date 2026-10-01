@@ -11,6 +11,7 @@ export const STATIC_IMAGE_SLOTS = {
     hero: '100vw',
     logo: '32px',
     portrait: '(min-width: 1024px) 40vw, 100vw',
+    third: '(min-width: 1024px) 33vw, 100vw',
 };
 
 export const STATIC_IMAGE_LOADING = {
@@ -20,6 +21,7 @@ export const STATIC_IMAGE_LOADING = {
     hero: 'eager',
     logo: 'eager',
     portrait: 'lazy',
+    third: 'lazy',
 };
 
 export const STATIC_IMAGES = staticImageData.images;
