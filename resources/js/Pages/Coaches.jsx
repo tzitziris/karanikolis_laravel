@@ -3,31 +3,10 @@ import { useRef } from 'react';
 import SiteImage from '../Components/SiteImage';
 import { useCoachesPageAnimation } from '../animation/useCoachesPageAnimation';
 
-const athletePlaceholders = [
-    {
-        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
-        image: 'athlete-padwork',
-        imageAlt: 'Αθλητής kickboxing εξασκεί γόνατο με στόχους',
-        marker: '01',
-        title: 'Θέση αθλητή',
-        trainingFocus: 'Στόχοι και τεχνική ακρίβεια',
-    },
-    {
-        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
-        image: 'athlete-bag',
-        imageAlt: 'Αθλητής kickboxing προπονείται σε σάκο',
-        marker: '02',
-        title: 'Θέση αθλήτριας',
-        trainingFocus: 'Σάκος και φυσική κατάσταση',
-    },
-    {
-        detail: 'Τα επίσημα στοιχεία θα προστεθούν όταν επιβεβαιωθούν από τη σχολή.',
-        image: 'athlete-kick',
-        imageAlt: 'Αθλητής kickboxing εκτελεί ψηλό λάκτισμα',
-        marker: '03',
-        title: 'Θέση αθλητή',
-        trainingFocus: 'Λακτίσματα και κινητικότητα',
-    },
+const athletes = [
+    { image: 'athlete-padwork', name: 'Γιάννης Στοφορίδης' },
+    { image: 'athlete-bag', name: 'Γιώργος Αραμπατζής' },
+    { image: 'athlete-kick', name: 'Βασιλική Σταυρίδου' },
 ];
 
 const coachMetrics = [
@@ -172,9 +151,9 @@ function CoachSection() {
                         Στυλ
                     </span>
                     <span className="text-base font-medium text-bone-dim">
-                        Κικ μπόξινγκ{' '}
+                        Kick Boxing{' '}
                         <span aria-hidden="true" className="px-2 text-blood">·</span>{' '}
-                        Μποξ
+                        Boxing{' '}
                     </span>
                 </p>
 
@@ -265,26 +244,15 @@ function AthletesSection() {
     return (
         <section className="bg-ink-0 px-5 py-28 sm:px-8 sm:py-40 lg:px-12 lg:py-52">
             <div className="mx-auto max-w-[1500px]">
-                <div className="flex items-end justify-between gap-6">
-                    <div data-coaches-reveal>
-                        <h2 className="max-w-[52rem] font-display text-[clamp(3.4rem,12vw,4rem)] font-black uppercase leading-[0.84] text-bone sm:text-[clamp(4rem,8vw,7.5rem)] sm:leading-[0.8]">
-                            Οι μαχητές μας
-                        </h2>
-                        <p className="mt-6 max-w-2xl text-sm leading-7 text-bone-dim sm:text-base">
-                            Η παρουσίαση των αθλητών είναι προσωρινή: μέχρι να
-                            δοθούν τα επίσημα στοιχεία, δεν εμφανίζονται
-                            ονόματα ή αγωνιστικές κατηγορίες.
-                        </p>
-                    </div>
-                    <p className="hidden border-blood pl-4 text-[10px] uppercase leading-5 text-pewter sm:block sm:[border-left-width:1px]">
-                        Προσωρινή
-                        <br />
-                        παρουσίαση
-                    </p>
-                </div>
+                <h2
+                    className="max-w-[52rem] font-display text-[clamp(3.4rem,12vw,4rem)] font-black uppercase leading-[0.84] text-bone sm:text-[clamp(4rem,8vw,7.5rem)] sm:leading-[0.8]"
+                    data-coaches-reveal
+                >
+                    Οι μαχητές μας
+                </h2>
 
                 <div className="mt-14 grid grid-cols-1 gap-px bg-line-strong lg:grid-cols-3">
-                    {athletePlaceholders.map((athlete) => (
+                    {athletes.map((athlete) => (
                         <article
                             className="group @container relative min-w-0 overflow-hidden bg-ink-1"
                             data-coaches-reveal
@@ -292,37 +260,17 @@ function AthletesSection() {
                         >
                             <div className="relative min-h-[32rem] overflow-hidden sm:min-h-[38rem]">
                                 <SiteImage
-                                    alt={athlete.imageAlt}
+                                    alt={athlete.name}
                                     className="absolute inset-0 h-full w-full object-cover object-center grayscale contrast-125 transition-[filter,transform] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                                     data-athlete-image
                                     image={athlete.image}
                                     slot="third"
                                 />
                                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.06),rgba(5,5,5,.9)_90%)]" />
-                                <div className="absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
-                                    <div className="flex items-center justify-between border-b border-white/25 pb-3 text-[9px] uppercase text-bone/75">
-                                        <span>Προσωρινή θέση</span>
-                                        <span>Χωρίς κατηγορία</span>
-                                    </div>
-                                    <div className="mt-4 flex items-end justify-between gap-5 lg:gap-3">
-                                        <div>
-                                            <h3 className="max-w-full font-display text-[clamp(2rem,10cqw,4.5rem)] font-black uppercase leading-[0.9] text-bone sm:leading-[0.86]">
-                                                {athlete.title}
-                                            </h3>
-                                            <p className="mt-3 text-[10px] uppercase leading-5 text-blood">
-                                                {athlete.trainingFocus}
-                                            </p>
-                                            <p className="mt-3 max-w-[34rem] text-sm leading-6 text-bone/70">
-                                                {athlete.detail}
-                                            </p>
-                                        </div>
-                                        <span
-                                            aria-hidden="true"
-                                            className="shrink-0 font-display text-5xl text-blood sm:text-7xl lg:text-5xl"
-                                        >
-                                            {athlete.marker}
-                                        </span>
-                                    </div>
+                                <div className="absolute inset-x-5 bottom-5 border-t border-white/25 pt-4 sm:inset-x-7 sm:bottom-7">
+                                    <h3 className="max-w-full font-display text-[clamp(2rem,10cqw,4.5rem)] font-black uppercase leading-[0.95] text-blood">
+                                        {athlete.name}
+                                    </h3>
                                 </div>
                             </div>
                         </article>
@@ -335,33 +283,38 @@ function AthletesSection() {
 
 function ClosingSection() {
     return (
-        <section className="grain relative isolate min-h-[86svh] overflow-hidden bg-ink-0">
-            <div className="absolute inset-0 -z-20 lg:origin-top" data-coaches-closing-image>
+        <section className="grain relative isolate overflow-hidden bg-ink-0 lg:min-h-[86svh]">
+            <div
+                className="relative h-[clamp(24rem,110vw,34rem)] overflow-hidden lg:absolute lg:inset-0 lg:-z-20 lg:h-auto lg:origin-top"
+                data-coaches-closing-image
+            >
                 <SiteImage
-                    alt="Δυναμική προπόνηση kickboxing μέσα στη σχολή"
-                    className="h-full w-full object-cover object-center grayscale contrast-125 lg:object-top"
-                    image="athlete-kick"
-                    slot="full"
+                    alt="Αθλήτρια με τα χρώματα της Ελλάδας φωνάζει από χαρά, καθώς ο διαιτητής την ανακηρύσσει νικήτρια"
+                    className="h-full w-full object-cover object-left lg:object-[center_60%]"
+                    image="coaches-closing"
+                    slot="coachesClosing"
                 />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_65%,#050505)] lg:bg-[linear-gradient(180deg,transparent_35%,rgba(5,5,5,.88)_100%)]" />
             </div>
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.18),rgba(5,5,5,.92))]" />
-            <div className="mx-auto flex min-h-[86svh] max-w-[1600px] flex-col items-start justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24">
-                <p
-                    className="text-[10px] font-medium uppercase text-blood"
-                    data-coaches-reveal
-                >
-                    Η θέση σου στην ομάδα
-                </p>
-                <h2
-                    className="mt-5 max-w-[60rem] [text-wrap:balance] font-display text-[clamp(3.55rem,8vw,7.5rem)] font-black uppercase leading-[0.8] text-bone"
-                    data-coaches-reveal
-                >
-                    Γνώρισε τον μαχητή μέσα σου.
-                </h2>
-                <div className="mt-8" data-coaches-reveal>
-                    <SweepLink href="/schedule" variant="blood">
-                        Δες το πρόγραμμα
-                    </SweepLink>
+            <div className="mx-auto flex max-w-[1600px] flex-col justify-end px-5 pb-12 pt-6 sm:px-8 sm:pb-16 lg:min-h-[86svh] lg:px-12 lg:pb-8 lg:pt-24">
+                <div className="w-full max-w-[40rem] lg:max-w-[48rem]">
+                    <p
+                        className="text-[10px] font-medium uppercase text-blood"
+                        data-coaches-reveal
+                    >
+                        Η θέση σου στην ομάδα
+                    </p>
+                    <h2
+                        className="mt-4 [text-wrap:balance] font-display text-[clamp(2.25rem,7.5vw,3.25rem)] font-black uppercase leading-[0.95] text-bone lg:mt-3 lg:text-[clamp(2rem,2.8vw,2.75rem)]"
+                        data-coaches-reveal
+                    >
+                        Γνώρισε τον μαχητή μέσα σου.
+                    </h2>
+                    <div className="mt-6 lg:mt-4" data-coaches-reveal>
+                        <SweepLink href="/schedule" variant="blood">
+                            Δες το πρόγραμμα
+                        </SweepLink>
+                    </div>
                 </div>
             </div>
         </section>

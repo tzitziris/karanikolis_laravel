@@ -89,12 +89,15 @@ it('does not expose the temporary motion demo route', function () {
         ->assertNotFound();
 });
 
-it('keeps the coaches roster honest while athlete details are provisional', function () {
+it('shows the confirmed athlete names without provisional roster labels', function () {
     $coaches = File::get(resource_path('js/Pages/Coaches.jsx'));
 
-    expect($coaches)->toContain('Η παρουσίαση των αθλητών είναι προσωρινή')
-        ->and($coaches)->toContain('δεν εμφανίζονται')
-        ->and($coaches)->toContain('Χωρίς κατηγορία')
+    expect($coaches)->toContain('Γιάννης Στοφορίδης')
+        ->and($coaches)->toContain('Γιώργος Αραμπατζής')
+        ->and($coaches)->toContain('Βασιλική Σταυρίδου')
+        ->and($coaches)->not->toContain('Η παρουσίαση των αθλητών είναι προσωρινή')
+        ->and($coaches)->not->toContain('Προσωρινή θέση')
+        ->and($coaches)->not->toContain('Χωρίς κατηγορία')
         ->and($coaches)->not->toContain('Νίκος Παπαδόπουλος')
         ->and($coaches)->not->toContain('Μαρία Γεωργίου')
         ->and($coaches)->not->toContain('Γιάννης Ιωαννίδης')

@@ -87,6 +87,18 @@
                 1024
             ]
         },
+        "coaches-closing": {
+            "height": 1024,
+            "placeholder": "data:image/webp;base64,UklGRtQAAABXRUJQVlA4IMgAAADwBgCdASooABsAPp1CnEmlpCMhNUwAsBOJZgC7L9SFrK8xLeTzX8ywolJYQgsblOTDuHELU5GeyFnyNEBUCGGAAP7+SA4NioGbGFaTy1bKp6AedZF5cDqZLjNkllNJJxXO+vlsVaRTZL8h80FHzjvINpiyWdP44yLjxTmdIrS2/bpj32375QtNf6rBu3m/2W0Ug5J7aFD6oUmiQ2ENYNhqdGPPMwdCDVbZgSAPnt7juol1LpeQtYfxUo4QNUGBqwlcziccYAAAAA==",
+            "width": 1536,
+            "widths": [
+                320,
+                480,
+                768,
+                1024,
+                1280
+            ]
+        },
         "coaches-hero": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACwBgCdASooABsAPrVOoUunJCMhqrgMAOAWiUAVyfQ5bvZ3hSDDG3O8q/XLx63DenHcAY5X69dWH4U2N4WuAAD+/uKcxkrLiQXNlaY3syZ950avzZF3Z33uNdG7mQFNwL8dLq26R2jxF/Wdj5YiaCkRwXz8pY6/JxKtMJDz8reW2AX5O3txOEb5zRPTYKabNF9kbbBlky06hMab6e6BaLyGIe4uiAAA",

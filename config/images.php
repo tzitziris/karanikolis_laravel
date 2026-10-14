@@ -36,6 +36,7 @@ return [
             'athlete-padwork' => 'athlete-padwork.jpg',
             'athlete-sparring' => 'athlete-sparring.jpg',
             'coach-portrait' => 'coach-portrait.png',
+            'coaches-closing' => 'coaches-closing.jpg',
             'coaches-hero' => 'coaches-hero.jpg',
             'hero-kickboxing' => 'hero-kickboxing.jpg',
             'pad-work' => 'pad-work.jpg',

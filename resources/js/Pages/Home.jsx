@@ -114,15 +114,17 @@ function HomeHero() {
 function ManifestoSection() {
     return (
         <section className="grain relative isolate overflow-clip bg-ink-0">
-            <div className="absolute inset-0 lg:hidden">
+            {/* Only the first screen of the section: stretched over the whole
+                of it, a phone would show a sliver of one fighter. */}
+            <div className="absolute inset-x-0 top-0 h-[100svh] lg:hidden">
                 <SiteImage
-                    alt="Αγώνας kickboxing μπροστά σε γεμάτες κερκίδες"
-                    className="h-full w-full object-cover object-[75%_center]"
+                    alt="Δύο αθλητές kickboxing αγωνίζονται μέσα στο ρινγκ"
+                    className="h-[86%] w-full object-cover object-[84%_center]"
                     data-home-statement-image
-                    image="sparring"
+                    image="pad-work"
                     slot="full"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.8),rgba(5,5,5,.45)_42%,rgba(5,5,5,.92))]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.8),rgba(5,5,5,.4)_40%,rgba(5,5,5,.6)_66%,#050505_86%)]" />
             </div>
 
             <div className="relative mx-auto grid max-w-[1600px] lg:grid-cols-2">
@@ -164,10 +166,10 @@ function ManifestoSection() {
                 <div className="relative hidden lg:block">
                     <div className="sticky top-20 h-[calc(100svh-5rem)] overflow-hidden">
                         <SiteImage
-                            alt="Αγώνας kickboxing μπροστά σε γεμάτες κερκίδες"
+                            alt="Δύο αθλητές kickboxing αγωνίζονται μέσα στο ρινγκ"
                             className="h-full w-full object-cover object-[90%_center]"
                             data-home-statement-image
-                            image="sparring"
+                            image="pad-work"
                             slot="half"
                         />
                         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,.32),transparent_35%),linear-gradient(180deg,rgba(5,5,5,.14),rgba(5,5,5,.5))]" />
@@ -406,9 +408,9 @@ function FinalCallSection() {
         <section className="relative min-h-[88svh] overflow-hidden bg-ink-0">
             <div className="absolute inset-0" data-home-final-image>
                 <SiteImage
-                    alt="Αγώνας kickboxing σε γεμάτη αρένα"
-                    className="h-full w-full object-cover object-[72%_center] lg:object-center"
-                    image="pad-work"
+                    alt="Αθλητής kickboxing χτυπά με γόνατο σε αγώνα, με τον διαιτητή δίπλα"
+                    className="h-full w-full object-cover object-[80%_center] lg:object-center"
+                    image="sparring"
                     slot="full"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.85))]" />

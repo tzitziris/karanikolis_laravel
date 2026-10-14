@@ -75,14 +75,14 @@ export default function News({ articles = [], pagination }) {
             <section className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0">
                 <SiteImage
                     alt="Αθλητές kickboxing σε έντονη προπόνηση"
-                    className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center] saturate-[.65] contrast-125 lg:object-[center_44%]"
+                    className="absolute inset-x-0 top-0 -z-30 h-[80%] w-full object-cover object-[94%_center] saturate-[.65] contrast-125 sm:h-full sm:object-[58%_center] lg:object-[center_44%]"
                     data-news-hero-image
                     image="ring-training"
                     priority
                     slot="hero"
                 />
-                <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,.97)_0%,rgba(5,5,5,.74)_48%,rgba(5,5,5,.14)_100%)]" />
-                <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.03),rgba(5,5,5,.9)_100%)]" />
+                <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,.82)_0%,rgba(5,5,5,.45)_48%,rgba(5,5,5,.05)_100%)]" />
+                <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_35%,rgba(5,5,5,.7)_62%,#050505_80%)] sm:bg-[linear-gradient(180deg,transparent_35%,rgba(5,5,5,.78)_100%)]" />
 
                 <div
                     className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
@@ -91,7 +91,7 @@ export default function News({ articles = [], pagination }) {
                     <p className="mb-5 text-[10px] font-medium uppercase text-blood">
                         Αγώνες · Διακρίσεις · Ανακοινώσεις
                     </p>
-                    <h1 className="max-w-full font-display text-[clamp(4rem,17vw,5.3rem)] font-black uppercase leading-[0.82] text-bone sm:max-w-[15ch] sm:text-[clamp(4.6rem,14vw,13.6rem)] sm:leading-[0.74]">
+                    <h1 className="max-w-full font-display text-[clamp(3rem,13vw,4rem)] font-black uppercase leading-[0.82] text-bone sm:max-w-[15ch] sm:text-[clamp(4rem,11vw,10.5rem)] sm:leading-[0.78]">
                         Νέα
                         <span className="block text-blood">&amp; Ιστορίες</span>
                     </h1>

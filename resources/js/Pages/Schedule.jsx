@@ -227,7 +227,7 @@ function StatementSection() {
                     className="mt-7 max-w-[18ch] whitespace-normal font-display text-[clamp(3.15rem,8vw,8.2rem)] font-black uppercase leading-[0.86] text-bone"
                     data-schedule-reveal
                 >
-                    Η πρόοδος χτίζεται μέσα στον ρυθμό της εβδομάδας.
+                    Για να χρίσουμε μία καινούργια συνήθεια, το κλειδί είναι η επανάληψη, όχι η τελειότητα.
                 </h2>
             </div>
         </section>

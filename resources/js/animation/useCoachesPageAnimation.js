@@ -1,7 +1,6 @@
 import {
     DESKTOP_QUERY,
     HANDHELD_QUERY,
-    driftInFrame,
     openFrame,
 } from './imageMotion';
 import { onOwnLayer, usePageAnimation } from './pageAnimation';
@@ -93,8 +92,6 @@ export function useCoachesPageAnimation(scopeRef) {
             // their hover effect, which would drag any drift 700ms behind the
             // scroll. Their frames open instead.
             athleteImages.forEach((image) => openFrame(gsap, image.parentElement));
-
-            driftInFrame(gsap, closingImage, closingImage?.closest('section'));
         });
 
         return () => media.revert();
