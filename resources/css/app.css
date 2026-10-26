@@ -157,6 +157,25 @@ body {
     font-feature-settings: "ss01", "cv11";
 }
 
+/* The schedule hero photograph fills the room above the text. --room is
+ * what the screen leaves once the text is placed; the photograph is at least
+ * full width (or wider, cropping the gym at the sides, on a tall phone) and
+ * placed so the seated row, 77% of the way down, ends where the text begins.
+ * It never moves high enough to cut the back row's heads, at 31%. */
+.schedule-hero-photo {
+    --room: calc(100svh - 28rem);
+    --photo-height: max(110vw, calc(var(--room) / 0.77));
+    height: var(--photo-height);
+    top: max(calc(var(--photo-height) * -0.29), calc(var(--room) - var(--photo-height) * 0.77));
+}
+
+@media (min-width: 1024px) {
+    .schedule-hero-photo {
+        --room: calc(100svh - 22rem - 4.8vw);
+        --photo-height: max(66.67vw, calc(var(--room) / 0.77));
+    }
+}
+
 .cinematic-link {
     display: inline-flex;
     min-height: 3rem;

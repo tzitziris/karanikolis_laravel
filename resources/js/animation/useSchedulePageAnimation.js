@@ -4,13 +4,11 @@ import {
     driftInFrame,
     openFrame,
 } from './imageMotion';
-import { onOwnLayer, usePageAnimation } from './pageAnimation';
+import { usePageAnimation } from './pageAnimation';
 
 export function useSchedulePageAnimation(scopeRef) {
     usePageAnimation(scopeRef, ({ gsap, root }) => {
         const revealItems = root.querySelectorAll('[data-schedule-reveal]');
-        const heroImage = root.querySelector('[data-schedule-hero-image]');
-        const heroContent = root.querySelector('[data-schedule-hero-content]');
         const rhythmImage = root.querySelector('[data-schedule-rhythm-image]');
         const closingImage = root.querySelector('[data-schedule-closing-image]');
         const media = gsap.matchMedia();
@@ -31,35 +29,6 @@ export function useSchedulePageAnimation(scopeRef) {
                 },
             );
         });
-
-        onOwnLayer(gsap, [heroImage, heroContent]);
-
-        if (heroImage) {
-            gsap.to(heroImage, {
-                ease: 'none',
-                scale: 1.07,
-                scrollTrigger: {
-                    end: 'bottom top',
-                    scrub: 1,
-                    start: 'top top',
-                    trigger: heroImage.closest('section'),
-                },
-                yPercent: 7,
-            });
-        }
-
-        if (heroContent) {
-            gsap.to(heroContent, {
-                ease: 'none',
-                scrollTrigger: {
-                    end: 'bottom top',
-                    scrub: 1,
-                    start: 'top top',
-                    trigger: heroContent.closest('section'),
-                },
-                yPercent: 6,
-            });
-        }
 
         media.add(DESKTOP_QUERY, () => {
             [rhythmImage, closingImage].filter(Boolean).forEach((image) => {

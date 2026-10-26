@@ -112,18 +112,15 @@
             ]
         },
         "hero-kickboxing": {
-            "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAADwBgCdASooABsAPrVGnEmnI6KhMBVdUOAWiWYAsR77QI9/ihX+Ywp89AHL6UvhJqI6IeoIXLSBBLc7nSnNDh5wAPj9tply474o639tsjayiVlbt7BJ7jmvm2gHDW4aUe6qQbvuFDqxPxnmfxDtlpk28XkwiTe1m+AJodP2Wtx+u7NAttGhec2AlOaMSYq/EaSUYzGwpqx1gmvbPONfql85XpCX4h8Voyni53zDVYeASB0oEzmYwxaWsbgqH+yKV8Za0+5+AAA=",
-            "width": 2400,
+            "height": 755,
+            "placeholder": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQBQCdASooABQAPq1GmUmmI6IhMA1QwBWJZQDKM9YC+zWQF+NtoqUNdIYYMTNH0AQLN1kCQ30AAN2WW9DvyPc6HYJjjildQpBQfdKUgH1PZfBvqgn0OKQawaiLOKLXY/iotknevj02juDg5Ggey8A9BApRn5gMAAA=",
+            "width": 1511,
             "widths": [
                 320,
                 480,
                 768,
                 1024,
-                1280,
-                1600,
-                1920,
-                2400
+                1280
             ]
         },
         "pad-work": {
@@ -151,22 +148,21 @@
             ]
         },
         "schedule-hero": {
-            "height": 2400,
-            "placeholder": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAABQBgCdASobACgAPqVCmUmmI6IhNUgAwBSJQBYdhZs4hf0anPr2Io6ASbN9RoykzbuM0Bcf1L1YgiupEAD+7vGfPXP9qbtig7zMpepWyDfnbJIFK2q/HQOZUxKy4IEBSTWh/hyLkK0XuR51zEsv1W0UXWcGN8FKP5Xh2FwSxMySaF+h7mK65FBmZefOkAQAr3cNPdn279cAAA==",
-            "width": 1600,
+            "height": 1024,
+            "placeholder": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAABwBgCdASooABsAPrFQnUmnJSKhMBqqqOAWCWMAwcwWZMEyvGRnPbb9L4fslad+KTzAYCNXLOemaG6jbIAA/s11NolL0ugxcc0xQ6XO1Pl6y/F2gRbf6VTaQuJmAzEcKDdAlk9anQbFnNNW7bj8tXHrer3TBZpgwzcQUs2v/lxDGXHmApEAAA==",
+            "width": 1536,
             "widths": [
                 320,
                 480,
                 768,
                 1024,
-                1280,
-                1600
+                1280
             ]
         },
         "schedule-rhythm": {
-            "height": 1600,
-            "placeholder": "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAACwBwCdASobACgAPq1MmkmmJKIhMBqtUMAViUATpl2gzwAgNntlFbE57k3sQSiJNadvEbjBXXTSBHPJjfO7oonny5dEpBFAAP7Vl95AKDp+ZO5nApLBTzImln7oIwnUFPYHkEIG055Z5r3ryQyiSYWPzlWUSjmh3G2eI4kV/2FbjPmL4BWO6Q3rSSPEGlBeNVeSkUvhKPwINHxE5MotwkAgnkCH4Hk6FLVnuU2vMDi7KS7/VpGOyyajU0OjXcAuqd/ZjgyVAAA=",
-            "width": 1067,
+            "height": 720,
+            "placeholder": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAACQBgCdASooABsAPrVMnUonJCKhqqwA4BaJZwC/7BZp5ChwoOLuY97DFmKJY6Np8AgzDUcFMwbpMQqGq3aAAP72qHuxQrSpJ3f0rbumKkhQPacFCWlAgQ8RJxVxKo4CGjD4EAju9RrtuFok3FbpaDo+OxruF16eLZ9kPrgncyGIF/ZPSUJH891/ctRooJE7544HMErbfaiZsqrK53o5zwAA",
+            "width": 1080,
             "widths": [
                 320,
                 480,

@@ -57,20 +57,25 @@ const chapters = [
 
 function HomeHero() {
     return (
-        <section className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0">
+        <section className="grain relative isolate overflow-hidden bg-ink-0 lg:min-h-[calc(100svh-5rem)]">
+            {/* The stands are cut off at the top and the seated row ends just
+                over the heading, so no empty court shows between the two. Below
+                desktop width the text follows the photograph instead of the bottom of
+                the screen; above that, the photograph is placed from the room
+                the text leaves. */}
             <SiteImage
-                alt="Δύο αθλητές kickboxing σε δυναμική προπόνηση"
-                className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center]"
+                alt="Οι αθλητές της σχολής, μικροί και μεγάλοι, όλοι μαζί σε ένα γήπεδο"
+                className="absolute inset-x-0 -z-30 top-[-49.6vw] h-[160vw] w-full object-cover object-center saturate-[.75] [mask-image:linear-gradient(#000_70%,transparent_84%)] sm:top-[-34.1vw] sm:h-[110vw] lg:aspect-[1511/755] lg:h-auto lg:top-[min(0px,calc(100svh_-_5rem_-_15.6rem_-_42.5vw))]"
                 data-home-hero-image
                 image="hero-kickboxing"
                 priority
                 slot="hero"
             />
-            <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,.1)_36%,rgba(0,0,0,.86)_100%)]" />
+            <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.1)_25%,rgba(0,0,0,.15)_50%,rgba(0,0,0,.75)_100%)]" />
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_28%,rgba(212,161,66,.18),transparent_35%)]" />
 
             <div
-                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-20 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
+                className="mx-auto flex max-w-[1600px] flex-col justify-end px-5 pb-10 pt-[calc(64vw+0.75rem)] sm:px-8 sm:pb-10 sm:pt-[calc(44vw+0.75rem)] lg:min-h-[calc(100svh-5rem)] lg:px-12 lg:pb-12 lg:pt-20"
                 data-home-hero-content
             >
                 <p
@@ -80,11 +85,11 @@ function HomeHero() {
                     Kickboxing · Ελευθερούπολη
                 </p>
                 <h1
-                    className="max-w-[64rem] font-display text-[clamp(4.7rem,15.4vw,14.8rem)] font-black uppercase leading-[0.73] text-blood [text-shadow:0_10px_60px_rgba(0,0,0,.55)]"
+                    className="max-w-[64rem] font-display text-[clamp(3.8rem,19.2vw,4.7rem)] font-black sm:text-[clamp(4.7rem,15.4vw,14.8rem)] lg:text-[clamp(5rem,9vw,10rem)] uppercase leading-[0.73] text-blood [text-shadow:0_10px_60px_rgba(0,0,0,.55)]"
                     data-home-reveal
                 >
                     Μαχητές
-                    <span className="block text-[clamp(2.4rem,8.3vw,8rem)] text-bone">
+                    <span className="block text-[clamp(1.95rem,9.8vw,2.4rem)] text-bone sm:text-[clamp(2.4rem,8.3vw,8rem)] lg:text-[clamp(2.7rem,4.85vw,5.4rem)]">
                         Ελευθερούπολης
                     </span>
                 </h1>

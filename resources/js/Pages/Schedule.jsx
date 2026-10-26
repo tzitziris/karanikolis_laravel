@@ -131,19 +131,20 @@ function ScheduleHero() {
             className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0"
             data-schedule-hero
         >
+            {/* Fills the screen like the other heroes, with the photograph in
+                the room above the text: sized and placed in app.css so the
+                seated row ends where the text starts. */}
             <SiteImage
-                alt="Αθλητής kickboxing προπονείται με συγκέντρωση στη σχολή"
-                className="absolute inset-0 -z-30 h-full w-full object-cover object-[62%_center] saturate-[.7] contrast-125 sm:object-[58%_center] lg:object-[72%_42%]"
-                data-schedule-hero-image
+                alt="Τα παιδιά της σχολής μαζί στην αίθουσα προπόνησης, με τις γροθιές σηκωμένες"
+                className="schedule-hero-photo absolute inset-x-0 -z-30 w-full object-cover object-center saturate-[.85] [mask-image:linear-gradient(#000_76%,transparent_90%)]"
                 image="schedule-hero"
                 priority
                 slot="hero"
             />
-            <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,.96)_0%,rgba(5,5,5,.74)_45%,rgba(5,5,5,.16)_100%)]" />
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.04),rgba(5,5,5,.88)_100%)]" />
+            <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,rgba(5,5,5,.3),transparent_25%)]" />
 
             <div
-                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
+                className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-10 pt-24 sm:px-8 lg:px-12 lg:pb-12"
                 data-schedule-hero-content
             >
                 <p
@@ -153,11 +154,11 @@ function ScheduleHero() {
                     Η συνέπεια γίνεται δύναμη
                 </p>
                 <h1
-                    className="max-w-full font-display text-[clamp(3.85rem,13vw,12.4rem)] font-black uppercase leading-[0.76] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
+                    className="max-w-full font-display text-[clamp(3rem,15.8vw,3.85rem)] font-black uppercase leading-[0.76] sm:text-[clamp(3.85rem,13vw,12.4rem)] lg:text-[clamp(5rem,8vw,8.6rem)] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
                     data-schedule-reveal
                 >
                     Πρόγραμμα
-                    <span className="block text-[clamp(2.9rem,8.4vw,7.8rem)] text-blood">
+                    <span className="block text-[clamp(2.9rem,8.4vw,7.8rem)] text-blood lg:text-[clamp(3.2rem,5.2vw,5.4rem)]">
                         Μαθημάτων
                     </span>
                 </h1>
@@ -171,8 +172,6 @@ function ScheduleHero() {
                         σου.
                     </p>
                     <p className="text-[10px] uppercase leading-5 text-bone/65 lg:[text-align:right]">
-                        6 ημέρες · 11 προπονήσεις
-                        <br />
                         Ελευθερούπολη · Καβάλα
                     </p>
                 </div>
@@ -271,8 +270,8 @@ function WeeklyTimetable() {
                 <div className="relative border-b border-line lg:border-r lg:[border-bottom-width:0px]">
                     <aside className="schedule-sticky relative h-[68svh] min-h-[34rem] overflow-hidden lg:sticky lg:top-20 lg:h-[calc(100svh-5rem)]">
                         <SiteImage
-                            alt="Αθλητής kickboxing εκτελεί γόνατο σε προπονητικό στόχο"
-                            className="h-full w-full object-cover object-[58%_center] saturate-[.55] contrast-125"
+                            alt="Δύο αθλητές kickboxing αγωνίζονται στο ρινγκ"
+                            className="h-full w-full object-cover object-[44%_center] saturate-[.55] contrast-125"
                             data-schedule-rhythm-image
                             image="schedule-rhythm"
                             slot="portrait"
@@ -282,7 +281,7 @@ function WeeklyTimetable() {
                             <p className="text-[10px] font-medium uppercase text-blood">
                                 Ο εβδομαδιαίος ρυθμός
                             </p>
-                            <p className="mt-4 max-w-full whitespace-normal font-display text-[clamp(2.65rem,11vw,3rem)] font-black uppercase leading-[0.9] text-bone sm:max-w-md sm:text-[clamp(3rem,7vw,5.8rem)] sm:leading-[0.84]">
+                            <p className="mt-4 max-w-full whitespace-normal font-display text-[clamp(2rem,8.5vw,2.5rem)] font-black uppercase leading-[0.95] text-bone sm:max-w-md sm:text-[clamp(2.5rem,4vw,3.75rem)]">
                                 Βρες την ώρα. Μπες στην προπόνηση.
                             </p>
                         </div>
