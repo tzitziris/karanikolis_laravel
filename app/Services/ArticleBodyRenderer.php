@@ -133,11 +133,12 @@ class ArticleBodyRenderer
         ));
         $widths = array_map('intval', $widths);
         $fallbackWidth = $widths[array_key_last($widths)];
+        $version = is_string($metadata['version'] ?? null) ? '?v='.$metadata['version'] : '';
         $srcset = collect($widths)
-            ->map(fn (int $width): string => "{$basePath}/{$imageName}-{$width}.webp {$width}w")
+            ->map(fn (int $width): string => "{$basePath}/{$imageName}-{$width}.webp{$version} {$width}w")
             ->implode(', ');
 
-        return '<img class="article-inline-image" src="'.$this->attribute("{$basePath}/{$imageName}-{$fallbackWidth}.webp").'" srcset="'.$this->attribute($srcset).'" sizes="(min-width: 768px) 48rem, 100vw" width="'.(int) $metadata['width'].'" height="'.(int) $metadata['height'].'" alt="'.$this->attribute($alt).'" loading="lazy" decoding="async">';
+        return '<img class="article-inline-image" src="'.$this->attribute("{$basePath}/{$imageName}-{$fallbackWidth}.webp{$version}").'" srcset="'.$this->attribute($srcset).'" sizes="(min-width: 768px) 48rem, 100vw" width="'.(int) $metadata['width'].'" height="'.(int) $metadata['height'].'" alt="'.$this->attribute($alt).'" loading="lazy" decoding="async">';
     }
 
     /**

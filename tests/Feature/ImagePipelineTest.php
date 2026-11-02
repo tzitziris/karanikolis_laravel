@@ -53,6 +53,59 @@ function writeImagePipelineTestPng(string $path, int $width = 80, int $height = 
     imagedestroy($image);
 }
 
+it('gives a replaced photograph a new address, so no cache can serve the old one', function () {
+    $sourceDir = storage_path('framework/testing/static-image-version-source');
+    $markSourceDir = storage_path('framework/testing/static-mark-version-source');
+    $manifestPath = storage_path('framework/testing/static-image-version-manifest.json');
+    $outputDir = 'images/testing-static-version';
+
+    File::deleteDirectory($sourceDir);
+    File::deleteDirectory($markSourceDir);
+    File::deleteDirectory(public_path($outputDir));
+    File::delete($manifestPath);
+
+    writeImagePipelineTestPng("{$markSourceDir}/mark.png");
+
+    config()->set('images.static.source_dir', $sourceDir);
+    config()->set('images.static.mark_source_dir', $markSourceDir);
+    config()->set('images.static.output_dir', $outputDir);
+    config()->set('images.static.manifest_path', $manifestPath);
+    config()->set('images.static.photos', ['demo' => 'demo.jpg']);
+    config()->set('images.static.marks', ['mark' => 'mark.png']);
+    config()->set('images.static.widths', [320, 480]);
+    config()->set('images.static.mark_widths', [32]);
+
+    $version = function () use ($manifestPath): ?string {
+        $manifest = json_decode(File::get($manifestPath), true, flags: JSON_THROW_ON_ERROR);
+
+        return $manifest['images']['demo']['version'] ?? null;
+    };
+
+    try {
+        writeImagePipelineTestJpeg("{$sourceDir}/demo.jpg");
+        $this->artisan('images:build-static')->assertExitCode(0);
+        $first = $version();
+
+        $this->artisan('images:build-static')->assertExitCode(0);
+
+        expect($first)->toMatch('/^[0-9a-f]{10}$/')
+            ->and($version())->toBe($first);
+
+        // The same name, a different photograph: what the owner does when
+        // swapping a picture.
+        writeImagePipelineTestJpeg("{$sourceDir}/demo.jpg", 600, 400);
+        $this->artisan('images:build-static', ['--force' => true])->assertExitCode(0);
+
+        expect($version())->toMatch('/^[0-9a-f]{10}$/')
+            ->not->toBe($first);
+    } finally {
+        File::deleteDirectory($sourceDir);
+        File::deleteDirectory($markSourceDir);
+        File::deleteDirectory(public_path($outputDir));
+        File::delete($manifestPath);
+    }
+});
+
 it('converts static images through an idempotent local command', function () {
     $sourceDir = storage_path('framework/testing/static-image-source');
     $markSourceDir = storage_path('framework/testing/static-mark-source');
@@ -295,6 +348,7 @@ it('keeps the generated JavaScript static image manifest exactly aligned with lo
         $expectedImages[$name] = [
             'height' => $info[1],
             'placeholder' => $images->placeholder($path),
+            'version' => $images->version($path),
             'width' => $info[0],
             'widths' => array_values(array_filter(
                 config('images.static.widths'),
@@ -304,10 +358,12 @@ it('keeps the generated JavaScript static image manifest exactly aligned with lo
     }
 
     foreach ($marks as $name => $filename) {
-        $info = getimagesize(config('images.static.mark_source_dir')."/{$filename}");
+        $path = config('images.static.mark_source_dir')."/{$filename}";
+        $info = getimagesize($path);
 
         $expectedImages[$name] = [
             'height' => $info[1],
+            'version' => $images->version($path),
             'width' => $info[0],
             'widths' => array_values(array_filter(
                 config('images.static.mark_widths'),

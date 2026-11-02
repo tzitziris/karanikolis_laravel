@@ -140,6 +140,9 @@ export default function SiteImage({
 
     const widths = widthsFor(metadata);
     const fallbackWidth = widths[widths.length - 1];
+    // Changes whenever the photograph does, so a replaced file is never
+    // served from a cache under its old address.
+    const version = metadata.version ? `?v=${metadata.version}` : '';
     const fetchPriority = priority ? 'high' : (props.fetchPriority ?? 'auto');
 
     return (
@@ -152,11 +155,11 @@ export default function SiteImage({
             loading={loadingMode}
             ref={imageRef}
             sizes={sizes}
-            src={`${STATIC_IMAGE_BASE_PATH}/${image}-${fallbackWidth}.webp`}
+            src={`${STATIC_IMAGE_BASE_PATH}/${image}-${fallbackWidth}.webp${version}`}
             srcSet={widths
                 .map(
                     (width) =>
-                        `${STATIC_IMAGE_BASE_PATH}/${image}-${width}.webp ${width}w`,
+                        `${STATIC_IMAGE_BASE_PATH}/${image}-${width}.webp${version} ${width}w`,
                 )
                 .join(', ')}
             width={metadata.width}

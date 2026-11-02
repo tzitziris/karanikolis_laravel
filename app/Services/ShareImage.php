@@ -53,7 +53,7 @@ class ShareImage
             return null;
         }
 
-        return $this->describe("/images/{$name}-{$chosen}.webp", $chosen, $width, $height);
+        return $this->describe("/images/{$name}-{$chosen}.webp", '', $chosen, $width, $height);
     }
 
     /**
@@ -83,9 +83,11 @@ class ShareImage
         }
 
         $base = rtrim((string) ($manifest['basePath'] ?? ''), '/');
+        $version = is_string($image['version'] ?? null) ? '?v='.$image['version'] : '';
 
         return $this->describe(
             $base.'/'.$name."-{$chosen}.webp",
+            $version,
             $chosen,
             (int) $image['width'],
             (int) $image['height'],
@@ -117,7 +119,7 @@ class ShareImage
     /**
      * @return array{url: string, width: int, height: int}|null
      */
-    private function describe(string $url, int $renderedWidth, int $sourceWidth, int $sourceHeight): ?array
+    private function describe(string $url, string $query, int $renderedWidth, int $sourceWidth, int $sourceHeight): ?array
     {
         // A preview that points at a file which is not there shows nothing at
         // all, and the owner would have no way to tell from the page itself.
@@ -129,7 +131,7 @@ class ShareImage
             'height' => (int) round($sourceHeight * ($renderedWidth / $sourceWidth)),
             // A crawler is on another machine, so a path starting with a slash
             // means nothing to it. Only an absolute address is usable.
-            'url' => url($url),
+            'url' => url($url).$query,
             'width' => $renderedWidth,
         ];
     }

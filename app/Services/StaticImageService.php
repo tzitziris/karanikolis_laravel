@@ -9,7 +9,7 @@ use RuntimeException;
 class StaticImageService
 {
     /**
-     * @return array{name: string, source_bytes: int, original_width: int, original_height: int, placeholder: string|null, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}
+     * @return array{name: string, source_bytes: int, original_width: int, original_height: int, placeholder: string|null, version: string, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}
      */
     public function convert(string $name, string $sourcePath, bool $force = false, ?array $widths = null, bool $placeholder = false): array
     {
@@ -72,7 +72,25 @@ class StaticImageService
             'original_width' => (int) $info['width'],
             'placeholder' => $placeholderUri,
             'source_bytes' => (int) $info['bytes'],
+            'version' => $this->version($sourcePath),
         ];
+    }
+
+    /**
+     * A short fingerprint of the photograph and the quality it is encoded at,
+     * added to every address it is served from. A file replaced under the same
+     * name gets a new address, so no browser and no cache in front of the host
+     * can go on serving the old one.
+     */
+    public function version(string $sourcePath): string
+    {
+        $contents = hash_file('sha256', $sourcePath);
+
+        if (! is_string($contents)) {
+            throw new RuntimeException('Unable to read static image source.');
+        }
+
+        return substr(hash('sha256', $contents.'|'.(int) config('images.static.quality')), 0, 10);
     }
 
     /**
@@ -132,7 +150,7 @@ class StaticImageService
     }
 
     /**
-     * @param  array<int, array{name: string, source_bytes: int, original_width: int, original_height: int, placeholder?: string|null, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}>  $convertedImages
+     * @param  array<int, array{name: string, source_bytes: int, original_width: int, original_height: int, placeholder?: string|null, version?: string, derivatives: array<int, array{path: string, width: int, height: int, bytes: int, status: string}>}>  $convertedImages
      */
     public function writeManifest(array $convertedImages): string
     {
@@ -146,6 +164,10 @@ class StaticImageService
 
             if (is_string($image['placeholder'] ?? null)) {
                 $entry['placeholder'] = $image['placeholder'];
+            }
+
+            if (is_string($image['version'] ?? null)) {
+                $entry['version'] = $image['version'];
             }
 
             $images[$name] = [

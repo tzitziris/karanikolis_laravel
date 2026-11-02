@@ -4,6 +4,7 @@
         "about-hero": {
             "height": 2400,
             "placeholder": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAACQBgCdASobACgAPqVGnEmmJCMhNVgMAMAUiUAXugisVlZaPB+H+9X0dqEKKyoAVMs2TY2Z8X5PYaZU7/rAAP77aJSTvaVNDQyg6lUNiKjgmiuf6pxJPfrgwazz1Umb3BP8KGgoginhGuS/bJ76nmkg3the9oSg5ci3FS39EztN9fQjmJ9L8kNlol57ii/4OkDIx4DBEylxlWHQWJHAAA==",
+            "version": "58cf30772b",
             "width": 1600,
             "widths": [
                 320,
@@ -17,6 +18,7 @@
         "about-story": {
             "height": 1068,
             "placeholder": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAADwBgCdASooABsAPrVSoUqnJSMhsBqoAOAWiWUAvzg6RakoszYJeqx9Aia8q4TDjgDxXrsFth3P/zDDs97ut1QAAP6755Vsjmzzcr39aLpe/eAoW8p5IYmaDl3vvPlrYLVk26DTs6MhOm58QF0yOZUvUXYNhW19Ja9gSiSXAA0gZCMzGc7hzxklFwA/LermP7UatSOJDX9LZ3d92Z2RWTOebLmhV0EBHUpSAA==",
+            "version": "a5b75afdf8",
             "width": 1600,
             "widths": [
                 320,
@@ -30,6 +32,7 @@
         "athlete-bag": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAACwBQCdASooABsAPqVEl0mmJCIhNVv8AMAUiWUAuwAhX22cf8H74VcT3xhRLzRQOkL9/IhySIAA/vagww8XlufdeIl/4oGf64YG/7XLvonNbaH8eKM45xwvhlg820g9tXH99TzWuY2ftj9l76T7/cMM6PI9lI9V/iKWpqlAxOHZrZllS0iu9CO3fifKysAA",
+            "version": "02cca169fd",
             "width": 1536,
             "widths": [
                 320,
@@ -42,6 +45,7 @@
         "athlete-kick": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAACQBQCdASooABsAPplCl0mlpyIhOrzIAOATCWQAvnfUgcEkT+iRd3v7BqfsQjyrBBgxeE6VkAD+70iVKVIOqOybXPleEyiXvrjx1IjeqoNN2WdWx9CehieNL+htSFOM0isQ1W/6kHrvNMQcc0HEcHdUm6q2kBnpcK40A7vvuUxyAxHxa5ezH80B/u5fWFBTZJRX4Ro/f8xAAA==",
+            "version": "7f94202782",
             "width": 1536,
             "widths": [
                 320,
@@ -54,6 +58,7 @@
         "athlete-padwork": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRs4AAABXRUJQVlA4IMIAAACQBgCdASooABsAPrVOoUunJCMhpWzI4BaJQBdgBzeCdDHxWhckIYyTPH47FuYMjetvBdFPLYp8amjhn3mAAP77aSWI9x0d3/eAU3W9r/NsvY9nZzNE2KAP4jR5QLljJheOk0WhrJJxqFkbzhr5kKmoPc37SFWjffdR3wvYLUosTj0UMZAaf9A8/YLHM8XSygHH+LrHrFwy6knxacpMFr1rUYru6ncv7p82Rpg2TthE4+0cJEKt9UjFYdBFAoGvygAAAA==",
+            "version": "f3f6d2ba2c",
             "width": 1536,
             "widths": [
                 320,
@@ -66,6 +71,7 @@
         "athlete-sparring": {
             "height": 1067,
             "placeholder": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAABQBwCdASooABsAPq1CmUmmI6IhNVgMAMAViWgAnTKEfjdAAJmPYG3vd2D3wNXEauNfJ8T49hEzVaJDJDa40gq0MfIAAP753iyHTKuSEEH2OKbH727ss29LstxbggWtYyinPWYdga9z+3YuFY7VmixDREwT9LY65LLEa/B0xOJnbn8fblKJC6avLJCgbytX6yiuQbaLSUbxPeITR/ti8MNBhPsIzqGlGIths0T0M9NsNKb63HdWBbhRwEKQELfvzG031eneKYJOUrEgAAA=",
+            "version": "6eb71eb150",
             "width": 1600,
             "widths": [
                 320,
@@ -79,6 +85,7 @@
         "coach-portrait": {
             "height": 1536,
             "placeholder": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAACwBQCdASobACgAPq1Km0mmJKIhNVgIAMAViWIAxNgUAyzBUJehEG8wlRlnbIDiUzrxXCQ38EAAzfa9UUvayrXvipA6WOz78B/mv+SM2yCEgfpUG90jSB/oJ91OqOd09Hl81aUVh5VzDBAfyPDmogQseNdJ3SQdZstVy05NvPbtedpZqOzn4NTuMjzgP0AA",
+            "version": "f206e0e825",
             "width": 1024,
             "widths": [
                 320,
@@ -90,6 +97,7 @@
         "coaches-closing": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRtQAAABXRUJQVlA4IMgAAADwBgCdASooABsAPp1CnEmlpCMhNUwAsBOJZgC7L9SFrK8xLeTzX8ywolJYQgsblOTDuHELU5GeyFnyNEBUCGGAAP7+SA4NioGbGFaTy1bKp6AedZF5cDqZLjNkllNJJxXO+vlsVaRTZL8h80FHzjvINpiyWdP44yLjxTmdIrS2/bpj32375QtNf6rBu3m/2W0Ug5J7aFD6oUmiQ2ENYNhqdGPPMwdCDVbZgSAPnt7juol1LpeQtYfxUo4QNUGBqwlcziccYAAAAA==",
+            "version": "14e1eee35e",
             "width": 1536,
             "widths": [
                 320,
@@ -102,6 +110,7 @@
         "coaches-hero": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACwBgCdASooABsAPrVOoUunJCMhqrgMAOAWiUAVyfQ5bvZ3hSDDG3O8q/XLx63DenHcAY5X69dWH4U2N4WuAAD+/uKcxkrLiQXNlaY3syZ950avzZF3Z33uNdG7mQFNwL8dLq26R2jxF/Wdj5YiaCkRwXz8pY6/JxKtMJDz8reW2AX5O3txOEb5zRPTYKabNF9kbbBlky06hMab6e6BaLyGIe4uiAAA",
+            "version": "ff372dcf81",
             "width": 1536,
             "widths": [
                 320,
@@ -114,6 +123,7 @@
         "hero-kickboxing": {
             "height": 755,
             "placeholder": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQBQCdASooABQAPq1GmUmmI6IhMA1QwBWJZQDKM9YC+zWQF+NtoqUNdIYYMTNH0AQLN1kCQ30AAN2WW9DvyPc6HYJjjildQpBQfdKUgH1PZfBvqgn0OKQawaiLOKLXY/iotknevj02juDg5Ggey8A9BApRn5gMAAA=",
+            "version": "a472d8e369",
             "width": 1511,
             "widths": [
                 320,
@@ -126,6 +136,7 @@
         "pad-work": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAACwBgCdASooABsAPrVKn0qnJCKhsBqoAOAWiWIAqSd2yICCSJgNs9qTPpFM5oYENJScyCXezDuzKVu2cvnuAAD+/L1Mh/kipYhWNw2ONCO78RwiZwpKmDFyb5qcyLqmpBSYgwV9K1oQEXV5iXr6+g/Q6F6EusUo4sgDVT8m01OZDXymBNMFWZfLW3OrwUgKczOoARGR9v2daQz0ZeVL5edT9+HEFcjop6AAAA==",
+            "version": "95f657181e",
             "width": 1536,
             "widths": [
                 320,
@@ -138,6 +149,7 @@
         "ring-training": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAACQBgCdASooABsAPq1Cn0mmI6MhNVgMAMAViWIAqSeKDI0csx4BNogATH1166PJkNGjFAlLwZcES5kB+UoAAP757bns/6PUXIn6I3W/V0HBhLHh623JyoehaltmzE/fM4ouAjLKD3qe9kdhYQdTV9j3pJu1gXtt1OGnclnWlS9IyxhIvIVBLJjwi+LFWSkNbQhdbiYWmZGuL6U3iZfloMHxxbz+g7c/cYXFAAAA",
+            "version": "83270df293",
             "width": 1536,
             "widths": [
                 320,
@@ -150,6 +162,7 @@
         "schedule-hero": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAABwBgCdASooABsAPrFQnUmnJSKhMBqqqOAWCWMAwcwWZMEyvGRnPbb9L4fslad+KTzAYCNXLOemaG6jbIAA/s11NolL0ugxcc0xQ6XO1Pl6y/F2gRbf6VTaQuJmAzEcKDdAlk9anQbFnNNW7bj8tXHrer3TBZpgwzcQUs2v/lxDGXHmApEAAA==",
+            "version": "2f75c1c41f",
             "width": 1536,
             "widths": [
                 320,
@@ -162,6 +175,7 @@
         "schedule-rhythm": {
             "height": 720,
             "placeholder": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAACQBgCdASooABsAPrVMnUonJCKhqqwA4BaJZwC/7BZp5ChwoOLuY97DFmKJY6Np8AgzDUcFMwbpMQqGq3aAAP72qHuxQrSpJ3f0rbumKkhQPacFCWlAgQ8RJxVxKo4CGjD4EAju9RrtuFok3FbpaDo+OxruF16eLZ9kPrgncyGIF/ZPSUJH891/ctRooJE7544HMErbfaiZsqrK53o5zwAA",
+            "version": "f7fd29d8b5",
             "width": 1080,
             "widths": [
                 320,
@@ -172,6 +186,7 @@
         },
         "site-logo": {
             "height": 1536,
+            "version": "df20c81bcb",
             "width": 1024,
             "widths": [
                 32,
@@ -184,6 +199,7 @@
         "sparring": {
             "height": 1024,
             "placeholder": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAACQBgCdASooABsAPqFAmkmmI6KhNVv8AMAUCWQAnSjOVripo+tSNB/6OkkCUVWVfsw1HZ8viY8t9JetcxUAAP7/GsXN+Q28smgWO/EFbyYG3zBe/nBn0HYfdm3Qgt1FgTqkNfV6WiZxwOSGdFxJo5GL2yOYstCF05mPkgPwiK5DctWA04ZHBrX+DmBLguomV1r60BM0ZQBRAGPGMlPfY2IOCfnElTmIAAA=",
+            "version": "a41d3cc9b0",
             "width": 1536,
             "widths": [
                 320,

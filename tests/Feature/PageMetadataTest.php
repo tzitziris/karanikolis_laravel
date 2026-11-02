@@ -107,7 +107,7 @@ it('offers a share picture that is webp, sized, and actually on the disk', funct
         $head = headOf($path);
         $url = $head['og:image'] ?? '';
 
-        expect(str_starts_with($url, 'http') && str_ends_with($url, '.webp'))
+        expect(str_starts_with($url, 'http') && str_ends_with((string) parse_url($url, PHP_URL_PATH), '.webp'))
             ->toBeTrue("The share picture for {$path} is not an absolute webp address: {$url}");
 
         // A preview pointing at a missing file shows nothing, and the page
