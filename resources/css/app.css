@@ -176,6 +176,39 @@ body {
     }
 }
 
+/* The ring photograph is a tall frame, dark above the back wall. It is sized and placed so the ring
+ * rests on the text, its front ropes at 82% of the height, and never grows so large that the back
+ * wall, from 58%, rises out of the hero. On a phone it may grow past the screen's width, up to 130%,
+ * trimming the corner posts; on wide screens it stays narrower than the page and its sides fade
+ * into the dark. */
+.about-hero-photo {
+    --room: calc(100svh - 27rem);
+    --photo-height: clamp(150vw, calc(var(--room) / 0.25), 195vw);
+    left: calc(50% - var(--photo-height) / 3);
+    width: calc(var(--photo-height) / 1.5);
+    max-width: none;
+    height: var(--photo-height);
+    top: calc(var(--room) - var(--photo-height) * 0.82);
+    mask-image: linear-gradient(#000 80%, transparent 93%);
+}
+
+@media (min-width: 640px) {
+    .about-hero-photo {
+        --room: calc(100svh - 16rem - 16.5vw);
+    }
+}
+
+@media (min-width: 1024px) {
+    .about-hero-photo {
+        --room: calc(100svh - 27.5rem);
+        --photo-height: min(150vw, calc(var(--room) / 0.25));
+        mask-image:
+            linear-gradient(#000 80%, transparent 93%),
+            linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+        mask-composite: intersect;
+    }
+}
+
 .cinematic-link {
     display: inline-flex;
     min-height: 3rem;

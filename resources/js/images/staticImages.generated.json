@@ -2,17 +2,15 @@
     "basePath": "/images/static",
     "images": {
         "about-hero": {
-            "height": 2400,
-            "placeholder": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAACQBgCdASobACgAPqVGnEmmJCMhNVgMAMAUiUAXugisVlZaPB+H+9X0dqEKKyoAVMs2TY2Z8X5PYaZU7/rAAP77aJSTvaVNDQyg6lUNiKjgmiuf6pxJPfrgwazz1Umb3BP8KGgoginhGuS/bJ76nmkg3the9oSg5ci3FS39EztN9fQjmJ9L8kNlol57ii/4OkDIx4DBEylxlWHQWJHAAA==",
-            "version": "58cf30772b",
-            "width": 1600,
+            "height": 1536,
+            "placeholder": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABwBACdASobACgAPp1El0mlpCIhOrmYALATiWUA0BhlmZcYOOSDv68MJfSLAAD++XuRZZCF8qEtNd+8mHifVLikFiE0b8CcClzoLFxm1oMM4cftVnIFVNih6nY8zrkYtSAAAA==",
+            "version": "e55529321c",
+            "width": 1024,
             "widths": [
                 320,
                 480,
                 768,
-                1024,
-                1280,
-                1600
+                1024
             ]
         },
         "about-story": {

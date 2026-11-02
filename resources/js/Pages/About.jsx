@@ -64,17 +64,15 @@ function AboutHero() {
             className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0"
             data-about-hero
         >
+            {/* The ring rests just above the text, in the dark room above it: sized and placed in app.css. */}
             <SiteImage
-                alt="Αθλητής kickboxing προπονείται με συγκέντρωση μέσα στη σχολή"
-                className="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center] saturate-[.65] contrast-125 sm:object-[62%_center] lg:object-[72%_42%]"
+                alt="Το ρινγκ της σχολής με τα γάντια και το κράνος μπροστά του, κάτω από ένα φως στο σκοτάδι"
+                className="about-hero-photo absolute -z-30 object-cover saturate-[.7] contrast-110"
                 data-about-hero-image
                 image="about-hero"
                 priority
                 slot="hero"
             />
-            <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(5,5,5,.97)_0%,rgba(5,5,5,.76)_46%,rgba(5,5,5,.12)_100%)]" />
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,5,5,.04),rgba(5,5,5,.9)_100%)]" />
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_74%_40%,rgba(212,161,66,.16),transparent_30%)]" />
 
             <div
                 className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-[1600px] flex-col justify-end px-5 pb-8 pt-24 sm:px-8 sm:pb-10 lg:px-12 lg:pb-12"
@@ -87,11 +85,11 @@ function AboutHero() {
                     Ταυτότητα · Πειθαρχία · Εξέλιξη
                 </p>
                 <h1
-                    className="max-w-full font-display text-[clamp(4.4rem,14vw,13.4rem)] font-black uppercase leading-[0.74] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
+                    className="max-w-full font-display text-[clamp(4.2rem,14vw,9.5rem)] font-black uppercase leading-[0.74] text-bone [text-shadow:0_10px_60px_rgba(0,0,0,.6)]"
                     data-about-reveal
                 >
                     Μαχητές
-                    <span className="block text-[clamp(2.4rem,8.3vw,8rem)] text-blood">
+                    <span className="block text-[clamp(2.2rem,8.3vw,5.7rem)] text-blood">
                         Ελευθερούπολης
                     </span>
                 </h1>
@@ -255,8 +253,8 @@ function StatementSection() {
         <section className="grain relative isolate min-h-[100svh] overflow-hidden px-5 py-32 sm:px-8 sm:py-44 lg:flex lg:items-center lg:px-12 lg:py-52">
             <div className="absolute inset-0 -z-30" data-about-statement-image>
                 <SiteImage
-                    alt="Αθλητής kickboxing εκτελεί τεχνική με ακρίβεια"
-                    className="h-full w-full object-cover object-[66%_center] saturate-[.6] contrast-125"
+                    alt="Το ρινγκ της σχολής στο σκοτάδι"
+                    className="h-full w-full object-cover object-[center_85%] saturate-[.6] contrast-125"
                     image="about-hero"
                     slot="full"
                 />
