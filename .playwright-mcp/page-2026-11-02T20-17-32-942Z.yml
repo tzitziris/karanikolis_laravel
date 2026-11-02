@@ -1,0 +1,387 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - navigation "Κύρια πλοήγηση" [ref=e5]:
+      - link "Μαχητές Ελευθερούπολης ΜΑΧΗΤΕΣ / ΕΛΕΥΘΕΡΟΥΠΟΛΗΣ" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "Μαχητές Ελευθερούπολης" [ref=e7]
+        - generic [ref=e8]: ΜΑΧΗΤΕΣ / ΕΛΕΥΘΕΡΟΥΠΟΛΗΣ
+      - generic [ref=e9]:
+        - link "Αρχική" [ref=e10] [cursor=pointer]:
+          - /url: /
+        - link "Ομάδα" [ref=e12] [cursor=pointer]:
+          - /url: /coaches
+        - link "Πρόγραμμα" [ref=e14] [cursor=pointer]:
+          - /url: /schedule
+        - link "Νέα" [ref=e17] [cursor=pointer]:
+          - /url: /news
+        - link "Σχετικά" [ref=e19] [cursor=pointer]:
+          - /url: /about
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - img "Τα παιδιά της σχολής μαζί στην αίθουσα προπόνησης, με τις γροθιές σηκωμένες" [ref=e24]
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: Η συνέπεια γίνεται δύναμη
+          - heading "Πρόγραμμα Μαθημάτων" [level=1] [ref=e28]:
+            - text: Πρόγραμμα
+            - generic [ref=e29]: Μαθημάτων
+          - generic [ref=e30]:
+            - paragraph [ref=e31]: Από τα πρώτα βήματα μέχρι την αγωνιστική προετοιμασία. Βρες το τμήμα που ταιριάζει στο επίπεδο και τον ρυθμό σου.
+            - paragraph [ref=e32]: Ελευθερούπολη · Καβάλα
+      - generic "Επίπεδα και τμήματα" [ref=e33]:
+        - generic [aria-hidden] [ref=e34]:
+          - generic [ref=e35]: Αρχάριοι
+          - generic [ref=e37]: Προχωρημένοι
+          - generic [ref=e39]: Παιδικό
+          - generic [ref=e41]: Αγωνιστικό
+          - generic [ref=e43]: Ομαδική
+          - generic [ref=e45]: Αρχάριοι
+          - generic [ref=e47]: Προχωρημένοι
+          - generic [ref=e49]: Παιδικό
+          - generic [ref=e51]: Αγωνιστικό
+          - generic [ref=e53]: Ομαδική
+          - generic [ref=e55]: Αρχάριοι
+          - generic [ref=e57]: Προχωρημένοι
+          - generic [ref=e59]: Παιδικό
+          - generic [ref=e61]: Αγωνιστικό
+          - generic [ref=e63]: Ομαδική
+          - generic [ref=e65]: Αρχάριοι
+          - generic [ref=e67]: Προχωρημένοι
+          - generic [ref=e69]: Παιδικό
+          - generic [ref=e71]: Αγωνιστικό
+          - generic [ref=e73]: Ομαδική
+        - generic [ref=e75]: Αρχάριοι, Προχωρημένοι, Παιδικό, Αγωνιστικό, Ομαδική
+      - generic [ref=e76]:
+        - generic [aria-hidden] [ref=e77]: Ω
+        - generic [ref=e78]:
+          - paragraph [ref=e79]: Κάθε μέρα με στόχο
+          - heading "Για να χρίσουμε μία καινούργια συνήθεια, το κλειδί είναι η επανάληψη, όχι η τελειότητα." [level=2] [ref=e80]
+      - generic [ref=e82]:
+        - complementary [ref=e84]:
+          - img "Δύο αθλητές kickboxing αγωνίζονται στο ρινγκ" [ref=e85]
+          - generic [ref=e87]:
+            - paragraph [ref=e88]: Ο εβδομαδιαίος ρυθμός
+            - paragraph [ref=e89]: Βρες την ώρα. Μπες στην προπόνηση.
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - paragraph [ref=e92]: Εβδομαδιαία προπόνηση
+            - heading "Διάλεξε τη μέρα σου." [level=2] [ref=e93]
+            - paragraph [ref=e94]: Ομαδικά προγράμματα 2026-2027. Το γυμναστήριο είναι ανοιχτό Δευτέρα έως Παρασκευή, 16:00 – 21:30.
+          - list "Εβδομαδιαίο πρόγραμμα μαθημάτων" [ref=e95]:
+            - listitem [ref=e96]:
+              - generic [ref=e97]:
+                - generic [ref=e98]:
+                  - paragraph [ref=e99]: ΔΕΥ · 01
+                  - heading "Δευτέρα" [level=3] [ref=e100]
+                - generic [aria-hidden] [ref=e101]: ΔΕΥ
+              - list [ref=e102]:
+                - listitem [ref=e103]:
+                  - generic [ref=e104]:
+                    - paragraph [ref=e105]: Ώρα
+                    - time [ref=e106]: 16:00 — 17:00
+                  - generic [ref=e107]:
+                    - paragraph [ref=e108]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e109]:
+                      - generic [ref=e111]: Ηλικία 6 έως 8 ετών
+                - listitem [ref=e112]:
+                  - generic [ref=e113]:
+                    - paragraph [ref=e114]: Ώρα
+                    - time [ref=e115]: 17:00 — 18:00
+                  - generic [ref=e116]:
+                    - paragraph [ref=e117]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e118]:
+                      - generic [ref=e120]: Ηλικία 9 έως 12 ετών
+                - listitem [ref=e121]:
+                  - generic [ref=e122]:
+                    - paragraph [ref=e123]: Ώρα
+                    - time [ref=e124]: 18:00 — 19:00
+                  - generic [ref=e125]:
+                    - paragraph [ref=e126]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e127]:
+                      - generic [ref=e129]: Ηλικία 10 έως 14 ετών
+                - listitem [ref=e130]:
+                  - generic [ref=e131]:
+                    - paragraph [ref=e132]: Ώρα
+                    - time [ref=e133]: 19:00 — 20:00
+                  - generic [ref=e134]:
+                    - paragraph [ref=e135]: Cross Training
+                    - paragraph [ref=e136]:
+                      - generic [ref=e138]: Γυναικείο
+                - listitem [ref=e139]:
+                  - generic [ref=e140]:
+                    - paragraph [ref=e141]: Ώρα
+                    - time [ref=e142]: 20:00 — 21:00
+                  - generic [ref=e143]:
+                    - paragraph [ref=e144]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e145]:
+                      - generic [ref=e147]: Ενηλίκων
+            - listitem [ref=e148]:
+              - generic [ref=e149]:
+                - generic [ref=e150]:
+                  - paragraph [ref=e151]: ΤΡΙ · 02
+                  - heading "Τρίτη" [level=3] [ref=e152]
+                - generic [aria-hidden] [ref=e153]: ΤΡΙ
+              - list [ref=e154]:
+                - listitem [ref=e155]:
+                  - generic [ref=e156]:
+                    - paragraph [ref=e157]: Ώρα
+                    - time [ref=e158]: 16:10 — 17:00
+                  - generic [ref=e159]:
+                    - paragraph [ref=e160]: Baby Kick Boxing
+                    - paragraph [ref=e161]:
+                      - generic [ref=e163]: Ηλικία 4 έως 6 ετών
+                - listitem [ref=e164]:
+                  - generic [ref=e165]:
+                    - paragraph [ref=e166]: Ώρα
+                    - time [ref=e167]: 17:10 — 18:00
+                  - generic [ref=e168]:
+                    - paragraph [ref=e169]: Baby Kick Boxing
+                    - paragraph [ref=e170]:
+                      - generic [ref=e172]: Ηλικία 4 έως 6 ετών
+                - listitem [ref=e173]:
+                  - generic [ref=e174]:
+                    - paragraph [ref=e175]: Ώρα
+                    - time [ref=e176]: 18:00 — 19:00
+                  - generic [ref=e177]:
+                    - paragraph [ref=e178]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e179]:
+                      - generic [ref=e181]: Ηλικία 6 έως 9 ετών
+                - listitem [ref=e182]:
+                  - generic [ref=e183]:
+                    - paragraph [ref=e184]: Ώρα
+                    - time [ref=e185]: 19:00 — 20:00
+                  - generic [ref=e186]:
+                    - paragraph [ref=e187]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e188]:
+                      - generic [ref=e190]: Ηλικία 9 έως 12 ετών
+                - listitem [ref=e191]:
+                  - generic [ref=e192]:
+                    - paragraph [ref=e193]: Ώρα
+                    - time [ref=e194]: 20:00 — 21:00
+                  - generic [ref=e195]:
+                    - paragraph [ref=e196]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e197]:
+                      - generic [ref=e199]: Αγωνιστικό παίδων – ενηλίκων
+            - listitem [ref=e200]:
+              - generic [ref=e201]:
+                - generic [ref=e202]:
+                  - paragraph [ref=e203]: ΤΕΤ · 03
+                  - heading "Τετάρτη" [level=3] [ref=e204]
+                - generic [aria-hidden] [ref=e205]: ΤΕΤ
+              - list [ref=e206]:
+                - listitem [ref=e207]:
+                  - generic [ref=e208]:
+                    - paragraph [ref=e209]: Ώρα
+                    - time [ref=e210]: 16:00 — 17:00
+                  - generic [ref=e211]:
+                    - paragraph [ref=e212]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e213]:
+                      - generic [ref=e215]: Ηλικία 6 έως 8 ετών
+                - listitem [ref=e216]:
+                  - generic [ref=e217]:
+                    - paragraph [ref=e218]: Ώρα
+                    - time [ref=e219]: 17:00 — 18:00
+                  - generic [ref=e220]:
+                    - paragraph [ref=e221]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e222]:
+                      - generic [ref=e224]: Ηλικία 9 έως 12 ετών
+                - listitem [ref=e225]:
+                  - generic [ref=e226]:
+                    - paragraph [ref=e227]: Ώρα
+                    - time [ref=e228]: 18:00 — 19:00
+                  - generic [ref=e229]:
+                    - paragraph [ref=e230]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e231]:
+                      - generic [ref=e233]: Ηλικία 10 έως 14 ετών
+                - listitem [ref=e234]:
+                  - generic [ref=e235]:
+                    - paragraph [ref=e236]: Ώρα
+                    - time [ref=e237]: 19:00 — 20:00
+                  - generic [ref=e238]:
+                    - paragraph [ref=e239]: Cross Training
+                    - paragraph [ref=e240]:
+                      - generic [ref=e242]: Γυναικείο
+                - listitem [ref=e243]:
+                  - generic [ref=e244]:
+                    - paragraph [ref=e245]: Ώρα
+                    - time [ref=e246]: 20:00 — 21:00
+                  - generic [ref=e247]:
+                    - paragraph [ref=e248]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e249]:
+                      - generic [ref=e251]: Ενηλίκων
+            - listitem [ref=e252]:
+              - generic [ref=e253]:
+                - generic [ref=e254]:
+                  - paragraph [ref=e255]: ΠΕΜ · 04
+                  - heading "Πέμπτη" [level=3] [ref=e256]
+                - generic [aria-hidden] [ref=e257]: ΠΕΜ
+              - list [ref=e258]:
+                - listitem [ref=e259]:
+                  - generic [ref=e260]:
+                    - paragraph [ref=e261]: Ώρα
+                    - time [ref=e262]: 16:10 — 17:00
+                  - generic [ref=e263]:
+                    - paragraph [ref=e264]: Baby Kick Boxing
+                    - paragraph [ref=e265]:
+                      - generic [ref=e267]: Ηλικία 4 έως 6 ετών
+                - listitem [ref=e268]:
+                  - generic [ref=e269]:
+                    - paragraph [ref=e270]: Ώρα
+                    - time [ref=e271]: 17:10 — 18:00
+                  - generic [ref=e272]:
+                    - paragraph [ref=e273]: Baby Kick Boxing
+                    - paragraph [ref=e274]:
+                      - generic [ref=e276]: Ηλικία 4 έως 6 ετών
+                - listitem [ref=e277]:
+                  - generic [ref=e278]:
+                    - paragraph [ref=e279]: Ώρα
+                    - time [ref=e280]: 18:00 — 19:00
+                  - generic [ref=e281]:
+                    - paragraph [ref=e282]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e283]:
+                      - generic [ref=e285]: Ηλικία 6 έως 9 ετών
+                - listitem [ref=e286]:
+                  - generic [ref=e287]:
+                    - paragraph [ref=e288]: Ώρα
+                    - time [ref=e289]: 19:00 — 20:00
+                  - generic [ref=e290]:
+                    - paragraph [ref=e291]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e292]:
+                      - generic [ref=e294]: Ηλικία 9 έως 12 ετών
+                - listitem [ref=e295]:
+                  - generic [ref=e296]:
+                    - paragraph [ref=e297]: Ώρα
+                    - time [ref=e298]: 20:00 — 21:00
+                  - generic [ref=e299]:
+                    - paragraph [ref=e300]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e301]:
+                      - generic [ref=e303]: Αγωνιστικό παίδων – ενηλίκων
+            - listitem [ref=e304]:
+              - generic [ref=e305]:
+                - generic [ref=e306]:
+                  - paragraph [ref=e307]: ΠΑΡ · 05
+                  - heading "Παρασκευή" [level=3] [ref=e308]
+                - generic [aria-hidden] [ref=e309]: ΠΑΡ
+              - list [ref=e310]:
+                - listitem [ref=e311]:
+                  - generic [ref=e312]:
+                    - paragraph [ref=e313]: Ώρα
+                    - time [ref=e314]: 16:00 — 17:00
+                  - generic [ref=e315]:
+                    - paragraph [ref=e316]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e317]:
+                      - generic [ref=e319]: Ηλικία 6 έως 8 ετών
+                - listitem [ref=e320]:
+                  - generic [ref=e321]:
+                    - paragraph [ref=e322]: Ώρα
+                    - time [ref=e323]: 17:00 — 18:00
+                  - generic [ref=e324]:
+                    - paragraph [ref=e325]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e326]:
+                      - generic [ref=e328]: Ηλικία 9 έως 12 ετών
+                - listitem [ref=e329]:
+                  - generic [ref=e330]:
+                    - paragraph [ref=e331]: Ώρα
+                    - time [ref=e332]: 18:00 — 19:00
+                  - generic [ref=e333]:
+                    - paragraph [ref=e334]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e335]:
+                      - generic [ref=e337]: Ηλικία 10 έως 14 ετών
+                - listitem [ref=e338]:
+                  - generic [ref=e339]:
+                    - paragraph [ref=e340]: Ώρα
+                    - time [ref=e341]: 19:00 — 20:00
+                  - generic [ref=e342]:
+                    - paragraph [ref=e343]: Cross Training
+                    - paragraph [ref=e344]:
+                      - generic [ref=e346]: Γυναικείο
+                - listitem [ref=e347]:
+                  - generic [ref=e348]:
+                    - paragraph [ref=e349]: Ώρα
+                    - time [ref=e350]: 20:00 — 21:00
+                  - generic [ref=e351]:
+                    - paragraph [ref=e352]: Kick Boxing – Πυγμαχία
+                    - paragraph [ref=e353]:
+                      - generic [ref=e355]: Ενηλίκων
+      - generic [ref=e357]:
+        - generic [ref=e358]:
+          - generic [ref=e359]:
+            - paragraph [ref=e360]: Υπόμνημα επιπέδων
+            - heading "Πέντε τρόποι προπόνησης." [level=2] [ref=e361]
+          - paragraph [ref=e362]: Οι ετικέτες δείχνουν τον τύπο τμήματος, ώστε κάθε ασκούμενος να βρίσκει γρήγορα το επίπεδο που του ταιριάζει.
+        - list [ref=e363]:
+          - listitem [ref=e364]:
+            - paragraph [ref=e365]: "01"
+            - heading "Αρχάριοι" [level=3] [ref=e366]
+            - paragraph [ref=e367]: Για τα πρώτα βήματα στην τεχνική και τη φυσική κατάσταση.
+          - listitem [ref=e368]:
+            - paragraph [ref=e369]: "02"
+            - heading "Προχωρημένοι" [level=3] [ref=e370]
+            - paragraph [ref=e371]: Για ασκούμενους με σταθερή βάση και μεγαλύτερη ένταση.
+          - listitem [ref=e372]:
+            - paragraph [ref=e373]: "03"
+            - heading "Παιδικό" [level=3] [ref=e374]
+            - paragraph [ref=e375]: Προπόνηση προσαρμοσμένη σε μικρότερες ηλικίες.
+          - listitem [ref=e376]:
+            - paragraph [ref=e377]: "04"
+            - heading "Αγωνιστικό" [level=3] [ref=e378]
+            - paragraph [ref=e379]: Προετοιμασία για αθλητές με αγωνιστικούς στόχους.
+          - listitem [ref=e380]:
+            - paragraph [ref=e381]: "05"
+            - heading "Ομαδική" [level=3] [ref=e382]
+            - paragraph [ref=e383]: Κοινή προπόνηση ρυθμού, τεχνικής και συνεργασίας.
+      - generic [ref=e387]:
+        - paragraph [ref=e388]: Πριν την πρώτη προπόνηση
+        - heading "Μην ξεκινήσεις χωρίς επιβεβαίωση." [level=2] [ref=e389]
+        - paragraph [ref=e390]: Για την πρώτη σου προπόνηση, επικοινώνησε με τη σχολή ώστε να σε βάλουμε στο τμήμα που ταιριάζει στην ηλικία και το επίπεδό σου.
+        - link "Επικοινωνία" [ref=e392] [cursor=pointer]:
+          - /url: /about
+          - generic [aria-hidden] [ref=e394]: →
+  - contentinfo [ref=e395]:
+    - generic [ref=e397]:
+      - generic [ref=e398]:
+        - paragraph [ref=e399]: Ελευθερούπολη · Καβάλα
+        - heading "Μαχητές Ελευθερούπολης" [level=2] [ref=e400]:
+          - text: Μαχητές
+          - generic [ref=e401]: Ελευθερούπολης
+        - paragraph [ref=e402]: Πειθαρχία, τεχνική και δύναμη μέσα από την καθημερινή προπόνηση. Ένας χώρος για όσους ζητούν κάτι παραπάνω από γυμναστήριο.
+      - generic [ref=e403]:
+        - paragraph [ref=e404]: Σχολή
+        - list [ref=e405]:
+          - listitem [ref=e406]:
+            - link "Αρχική" [ref=e407] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e408]:
+            - link "Σχετικά" [ref=e409] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e410]:
+            - link "Προπονητές & Αθλητές" [ref=e411] [cursor=pointer]:
+              - /url: /coaches
+      - generic [ref=e412]:
+        - paragraph [ref=e413]: Προπόνηση
+        - list [ref=e414]:
+          - listitem [ref=e415]:
+            - link "Πρόγραμμα" [ref=e416] [cursor=pointer]:
+              - /url: /schedule
+          - listitem [ref=e417]:
+            - link "Νέα" [ref=e418] [cursor=pointer]:
+              - /url: /news
+      - generic [ref=e419]:
+        - paragraph [ref=e420]: Επικοινωνία
+        - list [ref=e421]:
+          - listitem [ref=e422]: Τηλέφωνο
+          - listitem [ref=e423]: 2510 000000
+          - listitem [ref=e424]: Email
+          - listitem [ref=e425]: info@maxites-eleftheroupolis.gr
+          - listitem [ref=e426]: Διεύθυνση
+          - listitem [ref=e427]: Ελευθερούπολη, Καβάλα
+        - generic [ref=e428]:
+          - link "Facebook" [ref=e429] [cursor=pointer]:
+            - /url: "#"
+            - text: FB
+          - link "Instagram" [ref=e430] [cursor=pointer]:
+            - /url: "#"
+            - text: IG
+    - generic [ref=e432]:
+      - paragraph [ref=e433]: © 2026 Μαχητές Ελευθερούπολης
+      - paragraph [ref=e434]: Όλα τα δικαιώματα κατοχυρωμένα

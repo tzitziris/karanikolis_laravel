@@ -3,85 +3,87 @@ import { useRef } from 'react';
 import SiteImage from '../Components/SiteImage';
 import { useSchedulePageAnimation } from '../animation/useSchedulePageAnimation';
 
+const mondayWednesdayFridaySlots = [
+    {
+        time: '16:00 — 17:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Ηλικία 6 έως 8 ετών',
+    },
+    {
+        time: '17:00 — 18:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Ηλικία 9 έως 12 ετών',
+    },
+    {
+        time: '18:00 — 19:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Ηλικία 10 έως 14 ετών',
+    },
+    {
+        time: '19:00 — 20:00',
+        title: 'Cross Training',
+        level: 'Γυναικείο',
+    },
+    {
+        time: '20:00 — 21:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Ενηλίκων',
+    },
+];
+
+const tuesdayThursdaySlots = [
+    {
+        time: '16:10 — 17:00',
+        title: 'Baby Kick Boxing',
+        level: 'Ηλικία 4 έως 6 ετών',
+    },
+    {
+        time: '17:10 — 18:00',
+        title: 'Baby Kick Boxing',
+        level: 'Ηλικία 4 έως 6 ετών',
+    },
+    {
+        time: '18:00 — 19:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Ηλικία 6 έως 9 ετών',
+    },
+    {
+        time: '19:00 — 20:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Ηλικία 9 έως 12 ετών',
+    },
+    {
+        time: '20:00 — 21:00',
+        title: 'Kick Boxing – Πυγμαχία',
+        level: 'Αγωνιστικό παίδων – ενηλίκων',
+    },
+];
+
 const schedule = [
     {
         code: 'ΔΕΥ',
         day: 'Δευτέρα',
-        slots: [
-            { level: 'Αρχάριοι', time: '18:00 — 19:30', title: 'Kickboxing' },
-            {
-                level: 'Προχωρημένοι',
-                time: '19:30 — 21:00',
-                title: 'Kickboxing',
-            },
-        ],
+        slots: mondayWednesdayFridaySlots,
     },
     {
         code: 'ΤΡΙ',
         day: 'Τρίτη',
-        slots: [
-            {
-                level: 'Παιδικό',
-                time: '17:30 — 18:30',
-                title: 'Παιδικό Τμήμα',
-            },
-            {
-                level: 'Προχωρημένοι',
-                time: '19:00 — 20:30',
-                title: 'Τεχνική & Φ.Κ.',
-            },
-        ],
+        slots: tuesdayThursdaySlots,
     },
     {
         code: 'ΤΕΤ',
         day: 'Τετάρτη',
-        slots: [
-            { level: 'Αρχάριοι', time: '18:00 — 19:30', title: 'Kickboxing' },
-            {
-                level: 'Προχωρημένοι',
-                time: '19:30 — 21:00',
-                title: 'Kickboxing',
-            },
-        ],
+        slots: mondayWednesdayFridaySlots,
     },
     {
         code: 'ΠΕΜ',
         day: 'Πέμπτη',
-        slots: [
-            {
-                level: 'Παιδικό',
-                time: '17:30 — 18:30',
-                title: 'Παιδικό Τμήμα',
-            },
-            {
-                level: 'Αγωνιστικό',
-                time: '19:00 — 20:30',
-                title: 'Αγωνιστικό',
-            },
-        ],
+        slots: tuesdayThursdaySlots,
     },
     {
         code: 'ΠΑΡ',
         day: 'Παρασκευή',
-        slots: [
-            { level: 'Αρχάριοι', time: '18:00 — 19:30', title: 'Kickboxing' },
-            {
-                level: 'Προχωρημένοι',
-                time: '19:30 — 21:00',
-                title: 'Kickboxing',
-            },
-        ],
-    },
-    {
-        code: 'ΣΑΒ',
-        day: 'Σάββατο',
-        slots: [
-            {
-                level: 'Ομαδική',
-                time: '11:00 — 12:30',
-                title: 'Ομαδική Προπόνηση',
-            },
-        ],
+        slots: mondayWednesdayFridaySlots,
     },
 ];
 
@@ -235,7 +237,7 @@ function StatementSection() {
 
 function ScheduleSlot({ slot }) {
     return (
-        <li className="grid min-w-0 gap-6 bg-ink-1 px-4 py-5 transition-colors duration-300 hover:bg-ink-2 sm:px-5 sm:py-6 xl:grid-cols-[minmax(8rem,.44fr)_minmax(0,1fr)]">
+        <li className="grid min-w-0 gap-6 bg-ink-1 px-4 py-5 transition-colors duration-300 hover:bg-ink-2 sm:px-5 sm:py-6 xl:grid-cols-[minmax(8rem,.44fr)_minmax(0,1fr)] 2xl:last:odd:col-span-2">
             <div className="min-w-0">
                 <p className="text-[9px] font-semibold uppercase leading-5 text-blood">
                     Ώρα
@@ -300,9 +302,8 @@ function WeeklyTimetable() {
                             Διάλεξε τη μέρα σου.
                         </h2>
                         <p className="mt-6 max-w-2xl text-sm leading-7 text-bone-dim sm:text-base">
-                            Οι ώρες που εμφανίζονται εδώ είναι ενδεικτικές και
-                            δεν αποτελούν ακόμη το επίσημο πρόγραμμα της
-                            σχολής.
+                            Ομαδικά προγράμματα 2026-2027. Το γυμναστήριο είναι
+                            ανοιχτό Δευτέρα έως Παρασκευή, 16:00 – 21:30.
                         </p>
                     </header>
 
@@ -433,9 +434,9 @@ function ClosingSection() {
                     className="mt-7 max-w-2xl text-sm leading-[1.8] text-bone/80 sm:text-base"
                     data-schedule-reveal
                 >
-                    Το πρόγραμμα αυτής της σελίδας είναι προσωρινό. Για την
-                    πρώτη σου προπόνηση, επικοινώνησε με τη σχολή ώστε να
-                    επιβεβαιώσεις ημέρα, ώρα και τμήμα.
+                    Για την πρώτη σου προπόνηση, επικοινώνησε με τη σχολή ώστε
+                    να σε βάλουμε στο τμήμα που ταιριάζει στην ηλικία και το
+                    επίπεδό σου.
                 </p>
                 <div className="mt-9" data-schedule-reveal>
                     <SweepLink href="/about" variant="blood">

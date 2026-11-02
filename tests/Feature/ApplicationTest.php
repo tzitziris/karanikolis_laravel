@@ -46,19 +46,23 @@ it('serves the schedule page through its finished Inertia component', function (
         );
 });
 
-it('keeps the schedule hours visibly provisional until the owner supplies real data', function () {
-    $schedule = File::get(resource_path('js/Pages/Schedule.jsx'));
+it('shows the official 2026-2027 weekday schedule and first-training guidance', function () {
+    $schedule = preg_replace('/\s+/u', ' ', File::get(resource_path('js/Pages/Schedule.jsx')));
 
-    expect($schedule)->toContain('ενδεικτικές')
-        ->and($schedule)->toContain('δεν αποτελούν ακόμη το επίσημο πρόγραμμα')
+    expect($schedule)->toContain('Ομαδικά προγράμματα 2026-2027. Το γυμναστήριο είναι ανοιχτό Δευτέρα έως Παρασκευή, 16:00 – 21:30.')
+        ->and($schedule)->toContain('Για την πρώτη σου προπόνηση, επικοινώνησε με τη σχολή ώστε να σε βάλουμε στο τμήμα που ταιριάζει στην ηλικία και το επίπεδό σου.')
         ->and($schedule)->toContain('Μην ξεκινήσεις χωρίς επιβεβαίωση')
-        ->and($schedule)->toContain('Το πρόγραμμα αυτής της σελίδας είναι προσωρινό')
-        ->and(substr_count($schedule, 'ενδεικτικές'))->toBe(1)
-        ->and(substr_count($schedule, 'δεν αποτελούν ακόμη το επίσημο πρόγραμμα'))->toBe(1)
+        ->and($schedule)->not->toContain('ενδεικτικές')
+        ->and($schedule)->not->toContain('δεν αποτελούν ακόμη το επίσημο πρόγραμμα')
+        ->and($schedule)->not->toContain('Το πρόγραμμα αυτής της σελίδας είναι προσωρινό')
         ->and($schedule)->not->toContain('Προσωρινό πρόγραμμα')
         ->and($schedule)->not->toContain('Ενδεικτική ώρα')
         ->and($schedule)->toContain('Δευτέρα')
-        ->and($schedule)->toContain('Σάββατο')
+        ->and($schedule)->toContain('Τρίτη')
+        ->and($schedule)->toContain('Τετάρτη')
+        ->and($schedule)->toContain('Πέμπτη')
+        ->and($schedule)->toContain('Παρασκευή')
+        ->and($schedule)->not->toContain('Σάββατο')
         ->and($schedule)->toContain('Αρχάριοι')
         ->and($schedule)->toContain('Προχωρημένοι')
         ->and($schedule)->toContain('Παιδικό')
