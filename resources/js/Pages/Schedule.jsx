@@ -237,23 +237,23 @@ function StatementSection() {
 
 function ScheduleSlot({ slot }) {
     return (
-        <li className="grid min-w-0 gap-6 bg-ink-1 px-4 py-5 transition-colors duration-300 hover:bg-ink-2 sm:px-5 sm:py-6 xl:grid-cols-[minmax(8rem,.44fr)_minmax(0,1fr)] 2xl:last:odd:col-span-2">
+        <li className="grid min-w-0 gap-6 bg-ink-1 px-4 py-5 transition-colors duration-300 hover:bg-ink-2 sm:px-5 sm:py-6 lg:grid-cols-[8.25rem_minmax(0,1fr)] lg:items-center lg:border-b lg:border-line lg:bg-transparent lg:px-3 lg:last:border-b-0 xl:grid-cols-[8.25rem_minmax(0,1fr)_minmax(0,.64fr)]">
             <div className="min-w-0">
-                <p className="text-[9px] font-semibold uppercase leading-5 text-blood">
+                <p className="text-[9px] font-semibold uppercase leading-5 text-blood lg:sr-only">
                     Ώρα
                 </p>
-                <time className="mt-2 block whitespace-normal font-mono text-sm font-semibold leading-6 text-bone sm:text-base">
+                <time className="mt-2 block whitespace-normal font-mono text-sm font-semibold leading-6 text-bone sm:text-base lg:mt-0 lg:whitespace-nowrap lg:text-sm lg:text-blood">
                     {slot.time}
                 </time>
             </div>
-            <div className="min-w-0">
-                <p className="whitespace-normal font-display text-[clamp(1.55rem,6vw,2.1rem)] font-black uppercase leading-[0.94] text-bone md:text-[clamp(1.65rem,2.7vw,2.35rem)]">
+            <div className="min-w-0 xl:contents">
+                <p className="min-w-0 whitespace-normal font-display text-[clamp(1.55rem,6vw,2.1rem)] font-black uppercase leading-[0.94] text-bone md:text-[clamp(1.65rem,2.7vw,2.35rem)] lg:text-[clamp(1.375rem,1.6vw,1.625rem)] lg:leading-[1.15]">
                     {slot.title}
                 </p>
-                <p className="mt-3 flex min-w-0 items-center gap-2.5 text-[9px] font-semibold uppercase leading-5 text-blood">
+                <p className="mt-3 flex min-w-0 items-center gap-2.5 text-[9px] font-semibold uppercase leading-5 text-blood lg:mt-2 lg:text-[13px] lg:font-normal lg:normal-case lg:text-bone-dim xl:mt-0">
                     <span
                         aria-hidden="true"
-                        className="h-1.5 w-1.5 shrink-0 bg-blood"
+                        className="h-1.5 w-1.5 shrink-0 bg-blood lg:hidden"
                     />
                     <span className="min-w-0 whitespace-normal">{slot.level}</span>
                 </p>
@@ -310,35 +310,38 @@ function WeeklyTimetable() {
                     <ol aria-label="Εβδομαδιαίο πρόγραμμα μαθημάτων">
                         {schedule.map((day, dayIndex) => (
                             <li
-                                className="group border-b border-line-strong py-9 first:border-t sm:py-11"
+                                className="group border-b border-line-strong py-9 first:border-t sm:py-11 lg:py-10"
                                 data-schedule-reveal
                                 key={day.day}
                             >
                                 <header className="grid min-w-0 gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
                                     <div className="min-w-0">
-                                        <p className="text-[9px] font-medium uppercase leading-5 text-blood">
+                                        <p className="text-[9px] font-medium uppercase leading-5 text-blood lg:text-[11px]">
                                             {day.code} ·{' '}
                                             {String(dayIndex + 1).padStart(2, '0')}
                                         </p>
-                                        <h3 className="mt-3 whitespace-normal font-display text-[clamp(3rem,11vw,5.8rem)] font-black uppercase leading-[0.86] text-bone transition-colors duration-300 group-hover:text-blood sm:text-[clamp(3.5rem,6vw,6.2rem)] sm:leading-[0.82]">
+                                        <h3 className="mt-3 whitespace-normal font-display text-[clamp(3rem,11vw,5.8rem)] font-black uppercase leading-[0.86] text-bone transition-colors duration-300 group-hover:text-blood sm:text-[clamp(3.5rem,6vw,6.2rem)] sm:leading-[0.82] lg:mt-2 lg:text-[clamp(2.5rem,3vw,3.25rem)] lg:leading-none">
                                             {day.day}
                                         </h3>
                                     </div>
                                     <span
                                         aria-hidden="true"
-                                        className="hidden font-display text-[clamp(4.5rem,8vw,7.5rem)] font-black leading-[.7] text-blood/10 sm:block"
+                                        className="hidden font-display text-[clamp(4.5rem,8vw,7.5rem)] font-black leading-[.7] text-blood/10 sm:block lg:hidden"
                                     >
                                         {day.code}
                                     </span>
                                 </header>
 
-                                <ul
-                                    className={`mt-7 grid gap-px bg-line-strong sm:mt-9 ${
-                                        day.slots.length > 1
-                                            ? '2xl:grid-cols-2'
-                                            : ''
-                                    }`}
+                                <div
+                                    aria-hidden="true"
+                                    className="mt-7 hidden grid-cols-[8.25rem_minmax(0,1fr)_minmax(0,.64fr)] gap-6 border-b border-blood/40 px-3 pb-4 text-[11px] font-medium uppercase tracking-[.12em] text-pewter xl:grid"
                                 >
+                                    <span>Ώρα</span>
+                                    <span>Μάθημα</span>
+                                    <span>Τμήμα</span>
+                                </div>
+
+                                <ul className="mt-7 grid gap-px bg-line-strong sm:mt-9 lg:mt-6 lg:gap-0 lg:bg-transparent xl:mt-0">
                                     {day.slots.map((slot) => (
                                         <ScheduleSlot
                                             key={`${day.day}-${slot.time}-${slot.title}`}
