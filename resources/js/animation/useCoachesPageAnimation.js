@@ -1,3 +1,4 @@
+import { setupAthletesCoverflow } from './athletesCoverflow';
 import {
     DESKTOP_QUERY,
     HANDHELD_QUERY,
@@ -6,13 +7,12 @@ import {
 import { onOwnLayer, usePageAnimation } from './pageAnimation';
 
 export function useCoachesPageAnimation(scopeRef) {
-    usePageAnimation(scopeRef, ({ gsap, root }) => {
+    usePageAnimation(scopeRef, ({ gsap, ScrollTrigger, root }) => {
         const revealItems = root.querySelectorAll('[data-coaches-reveal]');
         const heroImage = root.querySelector('[data-coaches-hero-image]');
         const heroContent = root.querySelector('[data-coaches-hero-content]');
         const coachImage = root.querySelector('[data-coach-image]');
         const closingImage = root.querySelector('[data-coaches-closing-image]');
-        const athleteImages = root.querySelectorAll('[data-athlete-image]');
         const media = gsap.matchMedia();
 
         revealItems.forEach((item) => {
@@ -61,8 +61,10 @@ export function useCoachesPageAnimation(scopeRef) {
             });
         }
 
-        media.add(DESKTOP_QUERY, () => {
-            [coachImage, closingImage, ...athleteImages]
+        media.add(DESKTOP_QUERY, (context) => {
+            const cleanup = setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, desktop: true });
+
+            [coachImage, closingImage]
                 .filter(Boolean)
                 .forEach((image) => {
                     gsap.fromTo(
@@ -80,20 +82,19 @@ export function useCoachesPageAnimation(scopeRef) {
                         },
                     );
                 });
+
+            return cleanup;
         });
 
-        media.add(HANDHELD_QUERY, () => {
+        media.add(HANDHELD_QUERY, (context) => {
             // The portrait is framed to the pixel (head near the top, shorts
             // near the bottom), so it opens but does not drift: the zoom that
             // drifting needs would crop the head.
             openFrame(gsap, coachImage?.parentElement);
 
-            // The athlete photographs carry a CSS transition on transform for
-            // their hover effect, which would drag any drift 700ms behind the
-            // scroll. Their frames open instead.
-            athleteImages.forEach((image) => openFrame(gsap, image.parentElement));
+            return setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, desktop: false });
         });
 
         return () => media.revert();
-    }, []);
+    }, [], { beforePaint: true });
 }

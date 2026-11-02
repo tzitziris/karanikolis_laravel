@@ -242,39 +242,58 @@ function TeamStatement() {
 
 function AthletesSection() {
     return (
-        <section className="bg-ink-0 px-5 py-28 sm:px-8 sm:py-40 lg:px-12 lg:py-52">
-            <div className="mx-auto max-w-[1500px]">
-                <h2
-                    className="max-w-[52rem] font-display text-[clamp(3.4rem,12vw,4rem)] font-black uppercase leading-[0.84] text-bone sm:text-[clamp(4rem,8vw,7.5rem)] sm:leading-[0.8]"
-                    data-coaches-reveal
-                >
+        <section
+            aria-label="Οι μαχητές μας"
+            aria-roledescription="carousel"
+            className="athletes-section bg-ink-0"
+            data-athletes
+        >
+            <div className="athletes-inner" data-athletes-inner>
+                <h2 className="athletes-heading font-display font-black uppercase text-bone">
                     Οι μαχητές μας
                 </h2>
-
-                <div className="mt-14 grid grid-cols-1 gap-px bg-line-strong lg:grid-cols-3">
-                    {athletes.map((athlete) => (
-                        <article
-                            className="group @container relative min-w-0 overflow-hidden bg-ink-1"
-                            data-coaches-reveal
-                            key={athlete.image}
-                        >
-                            <div className="relative min-h-[32rem] overflow-hidden sm:min-h-[38rem]">
+                <ul className="athletes-stage" data-athletes-track>
+                    {athletes.map((athlete, index) => (
+                        <li className="athletes-slot" data-athlete-slot key={athlete.image}>
+                            <article className="athlete-card" data-athlete-card>
                                 <SiteImage
                                     alt={athlete.name}
-                                    className="absolute inset-0 h-full w-full object-cover object-center grayscale contrast-125 transition-[filter,transform] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                                    className="athlete-image"
                                     data-athlete-image
                                     image={athlete.image}
-                                    slot="third"
+                                    slot="coverflow"
                                 />
-                                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,.06),rgba(5,5,5,.9)_90%)]" />
-                                <div className="absolute inset-x-5 bottom-5 border-t border-white/25 pt-4 sm:inset-x-7 sm:bottom-7">
-                                    <h3 className="max-w-full font-display text-[clamp(2rem,10cqw,4.5rem)] font-black uppercase leading-[0.95] text-blood">
+                                <div className="athlete-gradient" aria-hidden="true" />
+                                <div className="athlete-caption">
+                                    <h3 className="font-display font-black uppercase text-blood">
                                         {athlete.name}
                                     </h3>
                                 </div>
-                            </div>
-                        </article>
+                                <div className="athlete-dim" data-athlete-dim aria-hidden="true" />
+                                <button
+                                    aria-label={`Προβολή αθλητή: ${athlete.name}`}
+                                    className="athlete-select"
+                                    data-athlete-select={index}
+                                    hidden
+                                    type="button"
+                                />
+                            </article>
+                        </li>
                     ))}
+                </ul>
+                <div className="athletes-controls" data-athletes-controls hidden>
+                    <span className="font-mono text-sm" aria-atomic="true" aria-live="polite">
+                        <span data-athletes-counter>01</span> / {String(athletes.length).padStart(2, '0')}
+                    </span>
+                    <div className="athletes-progress" aria-hidden="true">
+                        <div data-athletes-progress />
+                    </div>
+                    <button aria-label="Προηγούμενος αθλητής" data-athletes-prev type="button">
+                        <span aria-hidden="true">←</span>
+                    </button>
+                    <button aria-label="Επόμενος αθλητής" data-athletes-next type="button">
+                        <span aria-hidden="true">→</span>
+                    </button>
                 </div>
             </div>
         </section>

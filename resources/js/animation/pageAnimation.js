@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -39,8 +39,8 @@ export function onOwnLayer(gsap, targets, property = 'transform') {
     }
 }
 
-export function usePageAnimation(scopeRef, setup, dependencies = []) {
-    useEffect(() => {
+export function usePageAnimation(scopeRef, setup, dependencies = [], { beforePaint = false } = {}) {
+    const setupEffect = () => {
         const root = scopeRef.current;
 
         if (!root || typeof window === 'undefined') {
@@ -104,7 +104,12 @@ export function usePageAnimation(scopeRef, setup, dependencies = []) {
             context?.revert();
             updateScrollTriggerCount();
         };
-    }, dependencies);
+    };
+
+    // Layout-changing enhancements opt in without changing other pages' timing.
+    // Both paths own exactly the same cleanup/context.
+    useLayoutEffect(() => beforePaint ? setupEffect() : undefined, dependencies);
+    useEffect(() => beforePaint ? undefined : setupEffect(), dependencies);
 }
 
 export function animateMobileMenuOpen(panel) {

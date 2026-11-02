@@ -509,3 +509,210 @@ body {
     background: var(--blood);
     color: var(--bone);
 }
+
+/* Readable grid first. Only synchronous animation setup opts into coverflow;
+ * reduced motion keeps the grid and never gets interactive controls. */
+.athletes-section {
+    padding: 7rem 1.25rem;
+}
+
+.athletes-inner {
+    max-width: 1500px;
+    margin-inline: auto;
+}
+
+.athletes-heading {
+    font-size: clamp(3.4rem, 8vw, 7.5rem);
+    line-height: 0.9;
+}
+
+.athletes-stage {
+    display: grid;
+    gap: 1px;
+    margin-top: 3.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+.athletes-slot {
+    min-width: 0;
+}
+
+.athlete-card {
+    position: relative;
+    container-type: inline-size;
+    aspect-ratio: 3 / 4;
+    background: var(--ink-1);
+}
+
+.athlete-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(1) contrast(1.25);
+}
+
+.athlete-gradient, .athlete-dim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.athlete-gradient {
+    background: linear-gradient(180deg, rgba(5,5,5,.06), rgba(5,5,5,.9) 90%);
+}
+
+[data-coverflow] .athlete-dim {
+    background: #050505;
+}
+
+.athlete-caption {
+    position: absolute;
+    inset-inline: 6%;
+    bottom: 6%;
+    border-top: 1px solid rgba(255,255,255,.25);
+    padding-top: 4%;
+}
+
+.athlete-caption h3 {
+    font-size: min(9cqw, 4rem);
+    line-height: 1;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.athlete-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.athletes-controls:not([hidden]) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: min(100%, 30rem);
+    margin-inline: auto;
+}
+
+.athletes-controls button {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line-strong);
+    color: var(--blood);
+    cursor: pointer;
+    flex: none;
+}
+
+.athletes-controls button:disabled {
+    opacity: .35;
+    cursor: default;
+}
+
+.athletes-controls button:focus-visible, .athlete-select:focus-visible {
+    outline: 2px solid var(--blood);
+    outline-offset: -3px;
+}
+
+.athletes-progress {
+    height: 1px;
+    flex: 1;
+    background: var(--line-strong);
+}
+
+.athletes-progress > div {
+    height: 100%;
+    background: var(--blood);
+    transform-origin: left;
+}
+
+[data-coverflow] .athlete-image {
+    transition: filter .45s ease-out;
+}
+
+[data-coverflow] .is-active .athlete-image {
+    filter: grayscale(0) contrast(1.25);
+}
+
+[data-coverflow="desktop"] {
+    padding: 0 3rem;
+}
+
+[data-coverflow="desktop"] .athletes-inner {
+    height: calc(100svh - 5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-block: 1.5rem;
+}
+
+[data-coverflow="desktop"] .athletes-heading {
+    font-size: clamp(2rem, 6svh, 5rem);
+    flex: none;
+    text-align: center;
+}
+
+[data-coverflow] .athletes-stage {
+    /* The stage plane must not intercept clicks on cards at negative depth. */
+    pointer-events: none;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1600px;
+    perspective-origin: center;
+    width: 100%;
+    height: min(64svh, 40rem);
+    margin: 0;
+    flex: 0 1 auto;
+    min-height: 0;
+}
+
+[data-coverflow] .athletes-slot {
+    position: absolute;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    transform-style: preserve-3d;
+}
+
+[data-coverflow] .athlete-card {
+    height: 100%;
+}
+
+[data-coverflow="handheld"] {
+    padding: 4rem 0;
+}
+
+[data-coverflow="handheld"] .athletes-heading {
+    padding-inline: 1.25rem;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+}
+
+[data-coverflow="handheld"] .athletes-stage {
+    height: min(calc(74vw / .75), calc(22rem / .75));
+    margin: 2rem 0 1.5rem;
+}
+
+[data-coverflow="handheld"] .athletes-controls {
+    width: min(calc(100% - 2.5rem), 30rem);
+}
+
+@media (min-width: 1024px) {
+    .athletes-stage {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 400px) {
+    [data-coverflow="handheld"] {
+        padding-block: 3rem;
+    }
+}

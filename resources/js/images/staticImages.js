@@ -6,6 +6,7 @@ export const STATIC_IMAGE_BASE_PATH = staticImageData.basePath;
 
 export const STATIC_IMAGE_SLOTS = {
     coachesClosing: '(min-width: 1024px) 100vw, max(100vw, clamp(576px, 165vw, 816px))',
+    coverflow: '(prefers-reduced-motion: reduce) and (min-width: 1024px) 33vw, (prefers-reduced-motion: reduce) calc(100vw - 40px), (min-width: 1024px) min(48svh, 480px), min(74vw, 352px)',
     card: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
     full: '100vw',
     half: '(min-width: 768px) 50vw, 100vw',
@@ -17,6 +18,7 @@ export const STATIC_IMAGE_SLOTS = {
 
 export const STATIC_IMAGE_LOADING = {
     coachesClosing: 'lazy',
+    coverflow: 'lazy',
     card: 'lazy',
     full: 'lazy',
     half: 'lazy',
