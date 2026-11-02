@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { animateMobileMenuOpen } from '../animation/pageAnimation';
+import { contact } from '../data/contact';
 import SiteImage from './SiteImage';
 
 const focusableSelector =
@@ -296,7 +297,18 @@ export default function Navbar() {
                                   data-mobile-menu-footer
                               >
                                   <p>Ελευθερούπολη · Καβάλα</p>
-                                  <p>info@maxites-eleftheroupolis.gr</p>
+                                  <a
+                                      className="flex min-h-11 w-fit items-center whitespace-nowrap font-normal normal-case text-bone-dim transition-colors hover:text-blood focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood"
+                                      href={contact.email.href}
+                                  >
+                                      {contact.email.text}
+                                  </a>
+                                  <a
+                                      className="flex min-h-11 w-fit items-center whitespace-nowrap text-bone-dim transition-colors hover:text-blood focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood"
+                                      href={contact.mobile.href}
+                                  >
+                                      {contact.mobile.text}
+                                  </a>
                               </div>
                           </div>
                       </div>,

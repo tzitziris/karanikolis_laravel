@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import { useRef } from 'react';
 import SiteImage from '../Components/SiteImage';
 import { useSchedulePageAnimation } from '../animation/useSchedulePageAnimation';
+import { contact } from '../data/contact';
 
 const mondayWednesdayFridaySlots = [
     {
@@ -307,7 +308,7 @@ function WeeklyTimetable() {
                         </h2>
                         <p className="mt-6 max-w-2xl text-sm leading-7 text-bone-dim sm:text-base">
                             Ομαδικά προγράμματα 2026-2027. Το γυμναστήριο είναι
-                            ανοιχτό Δευτέρα έως Παρασκευή, 16:00 – 21:30.
+                            ανοιχτό {contact.openingHours}.
                         </p>
                     </header>
 

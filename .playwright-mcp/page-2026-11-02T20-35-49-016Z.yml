@@ -1,0 +1,168 @@
+- generic [ref=f6e3]:
+  - banner [ref=f6e4]:
+    - navigation "Κύρια πλοήγηση" [ref=f6e5]:
+      - link "Μαχητές Ελευθερούπολης ΜΑΧΗΤΕΣ / ΕΛΕΥΘΕΡΟΥΠΟΛΗΣ" [ref=f6e6] [cursor=pointer]:
+        - /url: /
+        - img "Μαχητές Ελευθερούπολης" [ref=f6e7]
+        - generic [ref=f6e8]: ΜΑΧΗΤΕΣ / ΕΛΕΥΘΕΡΟΥΠΟΛΗΣ
+      - generic [ref=f6e9]:
+        - link "Αρχική" [ref=f6e10] [cursor=pointer]:
+          - /url: /
+        - link "Ομάδα" [ref=f6e12] [cursor=pointer]:
+          - /url: /coaches
+        - link "Πρόγραμμα" [ref=f6e14] [cursor=pointer]:
+          - /url: /schedule
+        - link "Νέα" [ref=f6e16] [cursor=pointer]:
+          - /url: /news
+        - link "Σχετικά" [ref=f6e18] [cursor=pointer]:
+          - /url: /about
+  - main [ref=f6e21]:
+    - generic [ref=f6e22]:
+      - generic [ref=f6e23]:
+        - img "Το ρινγκ της σχολής με τα γάντια και το κράνος μπροστά του, κάτω από ένα φως στο σκοτάδι" [ref=f6e24]
+        - generic [ref=f6e25]:
+          - paragraph [ref=f6e26]: Ταυτότητα · Πειθαρχία · Εξέλιξη
+          - heading "Μαχητές Ελευθερούπολης" [level=1] [ref=f6e27]:
+            - text: Μαχητές
+            - generic [ref=f6e28]: Ελευθερούπολης
+          - generic [ref=f6e29]:
+            - paragraph [ref=f6e30]: Μια σχολή που χτίζει τεχνική, πειθαρχία και χαρακτήρα. Από την πρώτη προπόνηση μέχρι το αγωνιστικό επίπεδο, η εξέλιξη είναι πάντα συλλογική.
+            - paragraph [ref=f6e31]: Από το 2010Ελευθερούπολη · Καβάλα
+      - generic [ref=f6e32]:
+        - generic [ref=f6e34]:
+          - img "Σάκοι προπόνησης σε οργανωμένο χώρο πυγμαχίας" [ref=f6e35]
+          - paragraph [ref=f6e38]: Ο χώρος δεν σε αλλάζει μόνος του.Η καθημερινή δουλειά το κάνει.
+        - generic [ref=f6e39]:
+          - article [ref=f6e40]:
+            - paragraph [ref=f6e41]: Η αρχή
+            - heading "Από το 2010" [level=2] [ref=f6e42]:
+              - text: Από το
+              - generic [ref=f6e43]: "2010"
+            - paragraph [ref=f6e44]: Οι Μαχητές Ελευθερούπολης δημιουργήθηκαν για να προσφέρουν έναν σοβαρό και οργανωμένο χώρο προπόνησης kickboxing στην περιοχή. Με σταθερή παρουσία στην τοπική κοινότητα, η σχολή στηρίζει νέους και ενήλικες που θέλουν να γυμναστούν, να μάθουν τεχνική και να εξελιχθούν με πειθαρχία.
+          - article [ref=f6e45]:
+            - paragraph [ref=f6e46]: Η φιλοσοφία
+            - heading "Σεβασμός & τεχνική" [level=2] [ref=f6e47]:
+              - text: Σεβασμός
+              - generic [ref=f6e48]: "& τεχνική"
+            - paragraph [ref=f6e49]: Η προπόνηση βασίζεται στον σεβασμό, την καθαρή τεχνική και τη συνεχή προσπάθεια. Κάθε μάθημα έχει στόχο να χτίσει δυνατό σώμα, γρήγορη σκέψη και αυτοπεποίθηση, χωρίς υπερβολές και χωρίς βιασύνη. Η ομάδα προχωράει μαζί, με σοβαρότητα και αγωνιστικό πνεύμα.
+      - generic [ref=f6e51]:
+        - generic [ref=f6e52]:
+          - generic [ref=f6e53]:
+            - paragraph [ref=f6e54]: Το σύστημά μας
+            - heading "Τέσσερις σταθερές." [level=2] [ref=f6e55]:
+              - text: Τέσσερις
+              - generic [ref=f6e56]: σταθερές.
+          - paragraph [ref=f6e57]: Η πρόοδος δεν είναι στιγμιαία. Είναι ένας τρόπος να στέκεσαι, να μαθαίνεις και να επιστρέφεις κάθε μέρα λίγο πιο δυνατός.
+        - list [ref=f6e58]:
+          - listitem [ref=f6e59]:
+            - paragraph [aria-hidden] [ref=f6e60]: I
+            - heading "Σεβασμός" [level=3] [ref=f6e61]
+            - paragraph [ref=f6e62]: Στον προπονητή, τον συναθλητή και τον εαυτό σου.
+          - listitem [ref=f6e63]:
+            - paragraph [aria-hidden] [ref=f6e64]: II
+            - heading "Τεχνική" [level=3] [ref=f6e65]
+            - paragraph [ref=f6e66]: Καθαρές κινήσεις πριν από την ταχύτητα. Πάντα.
+          - listitem [ref=f6e67]:
+            - paragraph [aria-hidden] [ref=f6e68]: III
+            - heading "Συνέχεια" [level=3] [ref=f6e69]
+            - paragraph [ref=f6e70]: Η σταθερή παρουσία είναι το πραγματικό ταλέντο.
+          - listitem [ref=f6e71]:
+            - paragraph [aria-hidden] [ref=f6e72]: IV
+            - heading "Σκληράδα" [level=3] [ref=f6e73]
+            - paragraph [ref=f6e74]: Νοητική και σωματική. Χωρίς δικαιολογίες.
+      - generic [ref=f6e75]:
+        - img "Το ρινγκ της σχολής στο σκοτάδι" [ref=f6e77]
+        - generic [ref=f6e80]:
+          - paragraph [ref=f6e81]: Η νοοτροπία μας
+          - blockquote [ref=f6e82]: Δεν ψάχνουμε τον εύκολο δρόμο. Χτίζουμε τον δυνατό άνθρωπο.
+          - paragraph [ref=f6e83]: Παναγιώτης Καρανικολής · Προπονητής
+      - generic [ref=f6e87]:
+        - generic [ref=f6e88]:
+          - generic [ref=f6e89]:
+            - paragraph [ref=f6e90]: Η πρώτη προπόνηση
+            - heading "Έλα να μας γνωρίσεις." [level=2] [ref=f6e91]:
+              - text: Έλα να μας
+              - generic [ref=f6e92]: γνωρίσεις.
+          - link "Δες το Πρόγραμμα" [ref=f6e94] [cursor=pointer]:
+            - /url: /schedule
+            - generic [aria-hidden] [ref=f6e96]: →
+        - generic [ref=f6e97]:
+          - generic [ref=f6e98]:
+            - term [ref=f6e99]: Διεύθυνση
+            - definition [ref=f6e100]:
+              - generic [ref=f6e101]: Ι΄ Φουστέρη 10, Ελευθερούπολη
+              - generic [ref=f6e102]: Καβάλα
+          - generic [ref=f6e103]:
+            - term [ref=f6e104]: Τηλέφωνο
+            - definition [ref=f6e105]:
+              - link "25920 23924" [ref=f6e106] [cursor=pointer]:
+                - /url: tel:+302592023924
+              - link "697 189 1515" [ref=f6e107] [cursor=pointer]:
+                - /url: tel:+306971891515
+          - generic [ref=f6e108]:
+            - term [ref=f6e109]: Email
+            - definition [ref=f6e110]:
+              - link "karanikolis_panagiotis@yahoo.gr" [ref=f6e111] [cursor=pointer]:
+                - /url: mailto:karanikolis_panagiotis@yahoo.gr
+          - generic [ref=f6e112]:
+            - term [ref=f6e113]: Ωράριο
+            - definition [ref=f6e114]:
+              - generic [ref=f6e115]: Δευτέρα έως Παρασκευή, 16:00 – 21:30
+  - contentinfo [ref=f6e116]:
+    - generic [ref=f6e118]:
+      - generic [ref=f6e119]:
+        - paragraph [ref=f6e120]: Ελευθερούπολη · Καβάλα
+        - heading "Μαχητές Ελευθερούπολης" [level=2] [ref=f6e121]:
+          - text: Μαχητές
+          - generic [ref=f6e122]: Ελευθερούπολης
+        - paragraph [ref=f6e123]: Πειθαρχία, τεχνική και δύναμη μέσα από την καθημερινή προπόνηση. Ένας χώρος για όσους ζητούν κάτι παραπάνω από γυμναστήριο.
+      - generic [ref=f6e124]:
+        - paragraph [ref=f6e125]: Σχολή
+        - list [ref=f6e126]:
+          - listitem [ref=f6e127]:
+            - link "Αρχική" [ref=f6e128] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f6e129]:
+            - link "Σχετικά" [ref=f6e130] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f6e131]:
+            - link "Προπονητές & Αθλητές" [ref=f6e132] [cursor=pointer]:
+              - /url: /coaches
+      - generic [ref=f6e133]:
+        - paragraph [ref=f6e134]: Προπόνηση
+        - list [ref=f6e135]:
+          - listitem [ref=f6e136]:
+            - link "Πρόγραμμα" [ref=f6e137] [cursor=pointer]:
+              - /url: /schedule
+          - listitem [ref=f6e138]:
+            - link "Νέα" [ref=f6e139] [cursor=pointer]:
+              - /url: /news
+      - generic [ref=f6e140]:
+        - paragraph [ref=f6e141]: Επικοινωνία
+        - list [ref=f6e142]:
+          - listitem [ref=f6e143]: Τηλέφωνο
+          - listitem [ref=f6e144]:
+            - link "25920 23924" [ref=f6e145] [cursor=pointer]:
+              - /url: tel:+302592023924
+          - listitem [ref=f6e146]: Κινητό
+          - listitem [ref=f6e147]:
+            - link "697 189 1515" [ref=f6e148] [cursor=pointer]:
+              - /url: tel:+306971891515
+          - listitem [ref=f6e149]: Email
+          - listitem [ref=f6e150]:
+            - link "karanikolis_panagiotis@yahoo.gr" [ref=f6e151] [cursor=pointer]:
+              - /url: mailto:karanikolis_panagiotis@yahoo.gr
+          - listitem [ref=f6e152]: Διεύθυνση
+          - listitem [ref=f6e153]: Ι΄ Φουστέρη 10, ΕλευθερούποληΚαβάλα
+          - listitem [ref=f6e154]: Ωράριο
+          - listitem [ref=f6e155]: Δευτέρα έως Παρασκευή, 16:00 – 21:30
+        - generic [ref=f6e156]:
+          - link "Facebook" [ref=f6e157] [cursor=pointer]:
+            - /url: https://www.facebook.com/panagiotis.karanikolis
+            - text: FB
+          - link "Instagram" [ref=f6e158] [cursor=pointer]:
+            - /url: https://www.instagram.com/panagiotiskaranikolis/
+            - text: IG
+    - generic [ref=f6e160]:
+      - paragraph [ref=f6e161]: © 2026 Μαχητές Ελευθερούπολης
+      - paragraph [ref=f6e162]: Όλα τα δικαιώματα κατοχυρωμένα

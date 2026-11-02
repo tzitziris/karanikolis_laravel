@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import { useRef } from 'react';
 import SiteImage from '../Components/SiteImage';
 import { useAboutPageAnimation } from '../animation/useAboutPageAnimation';
+import { contact } from '../data/contact';
 
 const principles = [
     {
@@ -29,15 +30,22 @@ const principles = [
 const contactDetails = [
     {
         key: 'Διεύθυνση',
-        lines: ['Ελευθερούπολη, Καβάλα', 'Κεντρική οδός 00 · προσωρινή διεύθυνση'],
+        lines: [
+            { text: contact.address.line1 },
+            { text: contact.address.line2 },
+        ],
     },
     {
         key: 'Τηλέφωνο',
-        lines: ['2510 000000'],
+        lines: [contact.phone, contact.mobile],
     },
     {
         key: 'Email',
-        lines: ['info@maxites-eleftheroupolis.gr'],
+        lines: [contact.email],
+    },
+    {
+        key: 'Ωράριο',
+        lines: [{ text: contact.openingHours }],
     },
 ];
 
@@ -317,10 +325,10 @@ function ContactSection() {
                     </div>
                 </div>
 
-                <dl className="grid lg:grid-cols-3">
+                <dl className="grid md:grid-cols-2">
                     {contactDetails.map((detail) => (
                         <div
-                            className="border-b border-white/20 py-8 md:border-r md:px-8 md:first:pl-0 md:last:[border-right-width:0px] md:last:pr-0"
+                            className="min-w-0 border-b border-white/20 py-8 md:px-8 md:odd:border-r md:odd:pl-0 md:even:pr-0"
                             data-about-reveal
                             key={detail.key}
                         >
@@ -328,18 +336,27 @@ function ContactSection() {
                                 {detail.key}
                             </dt>
                             <dd className="mt-4 space-y-1">
-                                {detail.lines.map((line) => (
-                                    <span
-                                        className={`block text-bone ${
-                                            detail.key === 'Email'
-                                                ? 'font-mono text-xs sm:text-sm lg:text-[0.72rem] xl:text-sm'
-                                                : 'font-display text-[clamp(1.3rem,5vw,2rem)] font-black uppercase'
-                                        }`}
-                                        key={line}
-                                    >
-                                        {line}
-                                    </span>
-                                ))}
+                                {detail.lines.map((line) => {
+                                    const Tag = line.href ? 'a' : 'span';
+
+                                    return (
+                                        <Tag
+                                            className={`block text-bone ${
+                                                line.href
+                                                    ? 'w-fit min-h-11 py-2 transition-colors hover:text-blood focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood '
+                                                    : ''
+                                            }${
+                                                detail.key === 'Email'
+                                                    ? 'whitespace-nowrap font-mono text-xs sm:text-sm'
+                                                    : 'font-display text-[clamp(1.3rem,5vw,2rem)] font-black uppercase'
+                                            }`}
+                                            href={line.href}
+                                            key={line.text}
+                                        >
+                                            {line.text}
+                                        </Tag>
+                                    );
+                                })}
                             </dd>
                         </div>
                     ))}

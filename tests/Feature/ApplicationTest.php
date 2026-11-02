@@ -49,7 +49,7 @@ it('serves the schedule page through its finished Inertia component', function (
 it('shows the official 2026-2027 weekday schedule and first-training guidance', function () {
     $schedule = preg_replace('/\s+/u', ' ', File::get(resource_path('js/Pages/Schedule.jsx')));
 
-    expect($schedule)->toContain('Ομαδικά προγράμματα 2026-2027. Το γυμναστήριο είναι ανοιχτό Δευτέρα έως Παρασκευή, 16:00 – 21:30.')
+    expect($schedule)->toContain('Ομαδικά προγράμματα 2026-2027. Το γυμναστήριο είναι ανοιχτό {contact.openingHours}.')
         ->and($schedule)->toContain('Για την πρώτη σου προπόνηση, επικοινώνησε με τη σχολή ώστε να σε βάλουμε στο τμήμα που ταιριάζει στην ηλικία και το επίπεδό σου.')
         ->and($schedule)->toContain('Μην ξεκινήσεις χωρίς επιβεβαίωση')
         ->and($schedule)->not->toContain('ενδεικτικές')

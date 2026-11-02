@@ -1,9 +1,5 @@
 import { Link } from '@inertiajs/react';
-
-const socials = [
-    { label: 'Facebook', href: '#', code: 'FB' },
-    { label: 'Instagram', href: '#', code: 'IG' },
-];
+import { contact } from '../data/contact';
 
 const linkColumns = [
     {
@@ -31,7 +27,7 @@ export default function Footer() {
             id="site-footer"
         >
             <div className="mx-auto max-w-[1500px] px-5 py-20 sm:px-8 lg:px-12 lg:py-24">
-                <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.7fr_1fr_1fr_1fr]">
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 xl:grid-cols-[1.7fr_1fr_1fr_1fr]">
                     <div>
                         <p className="text-[10px] font-medium uppercase text-blood">
                             Ελευθερούπολη · Καβάλα
@@ -71,32 +67,99 @@ export default function Footer() {
                         </div>
                     ))}
 
-                    <div>
+                    <div className="min-w-0">
                         <p className="font-mono text-[10px] font-bold uppercase text-pewter-dim">
                             Επικοινωνία
                         </p>
                         <ul className="mt-5 space-y-2 font-mono text-xs leading-relaxed text-bone-dim">
                             <li>Τηλέφωνο</li>
-                            <li className="text-bone">2510 000000</li>
+                            <li className="text-bone">
+                                <a
+                                    className="inline-flex min-h-11 items-center whitespace-nowrap transition-colors hover:text-blood focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood"
+                                    href={contact.phone.href}
+                                >
+                                    {contact.phone.text}
+                                </a>
+                            </li>
+                            <li className="pt-2">Κινητό</li>
+                            <li className="text-bone">
+                                <a
+                                    className="inline-flex min-h-11 items-center whitespace-nowrap transition-colors hover:text-blood focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood"
+                                    href={contact.mobile.href}
+                                >
+                                    {contact.mobile.text}
+                                </a>
+                            </li>
                             <li className="pt-2">Email</li>
                             <li className="text-bone">
-                                info@maxites-eleftheroupolis.gr
+                                <a
+                                    className="inline-flex min-h-11 items-center whitespace-nowrap font-sans text-xs transition-colors hover:text-blood focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood"
+                                    href={contact.email.href}
+                                >
+                                    {contact.email.text}
+                                </a>
                             </li>
                             <li className="pt-2">Διεύθυνση</li>
                             <li className="text-bone">
-                                Ελευθερούπολη, Καβάλα
+                                {contact.address.line1}
+                                <br />
+                                {contact.address.line2}
                             </li>
+                            <li className="pt-2">Ωράριο</li>
+                            <li className="text-bone">{contact.openingHours}</li>
                         </ul>
 
                         <div className="mt-8 flex gap-2">
-                            {socials.map((social) => (
+                            {contact.socials.map((social) => (
                                 <a
                                     aria-label={social.label}
                                     className="group flex h-11 w-11 items-center justify-center border border-line-strong font-mono text-[11px] font-bold text-bone-dim transition-all duration-300 hover:border-blood hover:bg-blood hover:text-bone focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blood"
                                     href={social.href}
                                     key={social.label}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                    title={`${social.label} · ${social.accountName}`}
                                 >
-                                    {social.code}
+                                    <svg
+                                        aria-hidden="true"
+                                        className="h-5 w-5"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        {social.label === 'Facebook' ? (
+                                            <path
+                                                d="M14 21v-8h2.8l.4-3H14V8.1c0-.9.3-1.5 1.6-1.5h1.7V3.9a22 22 0 0 0-2.5-.1c-2.5 0-4.2 1.5-4.2 4.3V10H8v3h2.6v8H14Z"
+                                                fill="currentColor"
+                                            />
+                                        ) : (
+                                            <>
+                                                <rect
+                                                    fill="none"
+                                                    height="18"
+                                                    rx="5"
+                                                    stroke="currentColor"
+                                                    strokeWidth="1.8"
+                                                    width="18"
+                                                    x="3"
+                                                    y="3"
+                                                />
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    fill="none"
+                                                    r="4"
+                                                    stroke="currentColor"
+                                                    strokeWidth="1.8"
+                                                />
+                                                <circle
+                                                    cx="17.5"
+                                                    cy="6.5"
+                                                    fill="currentColor"
+                                                    r="1"
+                                                />
+                                            </>
+                                        )}
+                                    </svg>
                                 </a>
                             ))}
                         </div>
