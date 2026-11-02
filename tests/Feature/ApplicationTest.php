@@ -63,11 +63,12 @@ it('shows the official 2026-2027 weekday schedule and first-training guidance', 
         ->and($schedule)->toContain('Πέμπτη')
         ->and($schedule)->toContain('Παρασκευή')
         ->and($schedule)->not->toContain('Σάββατο')
-        ->and($schedule)->toContain('Αρχάριοι')
-        ->and($schedule)->toContain('Προχωρημένοι')
-        ->and($schedule)->toContain('Παιδικό')
-        ->and($schedule)->toContain('Αγωνιστικό')
-        ->and($schedule)->toContain('Ομαδική');
+        ->and($schedule)->toContain("name: 'Baby Kick Boxing'")
+        ->and($schedule)->toContain("name: 'Παιδικά Τμήματα'")
+        ->and($schedule)->toContain("name: 'Ενηλίκων'")
+        ->and($schedule)->toContain("name: 'Αγωνιστικό'")
+        ->and($schedule)->toContain("name: 'Cross Training Γυναικείο'")
+        ->and($schedule)->toContain("name: 'Personal Training'");
 });
 
 it('keeps schedule class names sized to their timetable cells', function () {

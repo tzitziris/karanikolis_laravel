@@ -89,24 +89,28 @@ const schedule = [
 
 const levels = [
     {
-        description: 'Για τα πρώτα βήματα στην τεχνική και τη φυσική κατάσταση.',
-        name: 'Αρχάριοι',
+        description: 'Η πρώτη γνωριμία με το άθλημα για παιδιά 4 έως 6 ετών, μέσα από παιχνίδι, κίνηση και συντονισμό.',
+        name: 'Baby Kick Boxing',
     },
     {
-        description: 'Για ασκούμενους με σταθερή βάση και μεγαλύτερη ένταση.',
-        name: 'Προχωρημένοι',
+        description: 'Kick boxing και πυγμαχία για παιδιά 6 έως 14 ετών, σε ομάδες ανά ηλικία.',
+        name: 'Παιδικά Τμήματα',
     },
     {
-        description: 'Προπόνηση προσαρμοσμένη σε μικρότερες ηλικίες.',
-        name: 'Παιδικό',
+        description: 'Kick boxing και πυγμαχία για ενήλικες: τεχνική, φυσική κατάσταση και πειθαρχία.',
+        name: 'Ενηλίκων',
     },
     {
-        description: 'Προετοιμασία για αθλητές με αγωνιστικούς στόχους.',
+        description: 'Προετοιμασία για παιδιά και ενήλικες με αγωνιστικούς στόχους.',
         name: 'Αγωνιστικό',
     },
     {
-        description: 'Κοινή προπόνηση ρυθμού, τεχνικής και συνεργασίας.',
-        name: 'Ομαδική',
+        description: 'Γυναικείο τμήμα για δύναμη, αντοχή και φυσική κατάσταση.',
+        name: 'Cross Training Γυναικείο',
+    },
+    {
+        description: 'Ατομική προπόνηση με τον προπονητή, σε ημέρα και ώρα που κανονίζουμε μαζί.',
+        name: 'Personal Training',
     },
 ];
 
@@ -193,7 +197,7 @@ function LevelsMarquee() {
             <div aria-hidden="true" className="marquee-track">
                 {repeatedLevels.map((level, index) => (
                     <span
-                        className="flex items-center gap-7 px-7 font-display text-3xl font-black uppercase leading-none sm:text-4xl"
+                        className="flex items-center gap-7 px-7 font-display text-2xl font-black uppercase leading-none sm:text-4xl"
                         key={`${level.name}-${index}`}
                     >
                         {level.name}
@@ -368,20 +372,20 @@ function LevelsLegend() {
                 >
                     <div>
                         <p className="text-[10px] font-medium uppercase text-blood">
-                            Υπόμνημα επιπέδων
+                            Τα τμήματά μας
                         </p>
                         <h2 className="mt-5 max-w-full whitespace-normal font-display text-[clamp(3.1rem,11vw,4rem)] font-black uppercase leading-[0.86] text-bone sm:max-w-[13ch] sm:text-[clamp(4rem,7.2vw,6.8rem)] sm:leading-[0.82]">
-                            Πέντε τρόποι προπόνησης.
+                            Έξι τρόποι προπόνησης.
                         </h2>
                     </div>
                     <p className="max-w-2xl text-sm leading-7 text-bone-dim sm:text-base lg:justify-self-end">
-                        Οι ετικέτες δείχνουν τον τύπο τμήματος, ώστε κάθε
-                        ασκούμενος να βρίσκει γρήγορα το επίπεδο που του
-                        ταιριάζει.
+                        Από το πρώτο παιχνίδι στο ρινγκ μέχρι τον αγώνα. Κάθε
+                        τμήμα έχει τον δικό του ρυθμό, ώστε να βρίσκεις αυτό που
+                        σου ταιριάζει.
                     </p>
                 </div>
 
-                <ol className="mt-12 grid gap-px bg-line-strong md:grid-cols-2 xl:grid-cols-5">
+                <ol className="mt-12 grid gap-px bg-line-strong md:grid-cols-2 xl:grid-cols-3">
                     {levels.map((level, index) => (
                         <li
                             className="min-w-0 bg-ink-1 p-5 sm:p-6"
