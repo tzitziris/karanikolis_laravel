@@ -109,22 +109,27 @@ export default function News({ articles = [], pagination }) {
                 </div>
             </section>
 
-            <section className="relative overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-                <div
-                    aria-hidden="true"
-                    className="absolute -right-[.06em] top-[-.1em] font-display text-[clamp(18rem,44vw,42rem)] font-black leading-none text-blood/[.035]"
-                >
-                    Ν
-                </div>
-                <div className="relative mx-auto max-w-[1500px]">
-                    <p className="text-[10px] font-medium uppercase text-blood">
-                        Το αρχείο της ομάδας
-                    </p>
-                    <h2 className="mt-7 max-w-[20ch] font-display text-[clamp(3.35rem,14vw,4rem)] font-black uppercase leading-[0.88] text-bone sm:text-[clamp(3.65rem,8.5vw,8.5rem)] sm:leading-[0.82]">
-                        Κάθε αγώνας αφήνει ένα αποτέλεσμα. Κάθε προπόνηση
-                        αφήνει μια ιστορία.
-                    </h2>
-                </div>
+            <section className="grain relative isolate overflow-hidden bg-ink-0 px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
+                <SiteImage
+                    alt=""
+                    className="absolute inset-y-0 right-0 -z-30 h-full w-full object-cover object-[65%_center] grayscale contrast-125 lg:w-[72%]"
+                    image="pad-work"
+                    slot="full"
+                />
+                <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,var(--ink-0)_5%,rgba(5,5,5,.86)_40%,rgba(5,5,5,.55)_100%)]" />
+                <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,var(--ink-0),transparent_24%,transparent_76%,var(--ink-0))]" />
+                <figure className="relative mx-auto max-w-[1500px]">
+                    <figcaption className="flex items-center gap-3 text-xs font-medium uppercase tracking-[.16em] text-blood">
+                        <span aria-hidden="true" className="h-px w-8 bg-blood" />
+                        Mike Tyson
+                    </figcaption>
+                    <blockquote
+                        className="mt-7 max-w-[20ch] font-display text-[clamp(1.4rem,11vw,4rem)] font-black uppercase leading-[0.94] text-bone sm:text-[clamp(3.8rem,6.5vw,6.5rem)] lg:max-w-[21ch]"
+                        lang="en"
+                    >
+                        “Everyone has a plan till they get punched in the mouth”
+                    </blockquote>
+                </figure>
             </section>
 
             <section className="border-b border-t border-line bg-ink-1 px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-36">
