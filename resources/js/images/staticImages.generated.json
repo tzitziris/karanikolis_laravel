@@ -206,6 +206,37 @@
                 1024,
                 1280
             ]
+        },
+        "video-papadelis": {
+            "height": 450,
+            "placeholder": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACwBQCdASooABcAPp1AmUmlpCKhNUwAsBOJZQC3675EW5KFGrvAybLBWlyPsN8csL9LBw5NvAAA/vplBGuk9fRl9KQiWccm0ZGuo0e50U+nAUDmUiD2nkwXXXXdNJQEA0D0lNAPN/ABr6ESAHM72EwgHOjETHo83wrYEKpD8TFhWDTkMAAAAA==",
+            "version": "5d3c46ae88",
+            "width": 800,
+            "widths": [
+                320,
+                480,
+                768
+            ]
+        },
+        "video-stavridou": {
+            "height": 288,
+            "placeholder": "data:image/webp;base64,UklGRsoAAABXRUJQVlA4IL4AAABQBwCdASooABcAPpk8l0mlo6IhOqgAsBMJagC+ezx84TABJo6eTo1V+pUoH7xrdGbnlDnsPtLhuJ0stiTOlFCkKC8AAP72k9SSCjlvm69XwZX0dAa9rOloX90O9llQZD0ICUimO3LuFHpg4ll4QI5zS9BPR5VQId6bSKNISry27IZ3d1TNa3IVc32ic4HNQmSedURzC8ZCxvDiLgwm0SZcKOLKWpP/eh5IQM93T2mSZbIbbBBmi7Rfe/VrRAAA",
+            "version": "2d32ec8ab4",
+            "width": 512,
+            "widths": [
+                320,
+                480
+            ]
+        },
+        "video-stoforidis": {
+            "height": 378,
+            "placeholder": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAAAQBgCdASooABcAPrFInkmnJCKhNVgIAOAWCUAXZmjALgRmuvabfllejjkuMPIhY5ul/AHZt45MjQAA/ozrSdNPFUBJygfn9/SoN3d6cN6nWcMiCbVC5oYcPjoOuG4kdmTfwZZsaURDzwcwSok5cyXFOYpzYqoiVXbagsc8CVXkc00hwtxjMc6aPdQMuDvMwsjdFC4qCk+mUwAA",
+            "version": "2a2575e33d",
+            "width": 672,
+            "widths": [
+                320,
+                480
+            ]
         }
     },
     "widths": [

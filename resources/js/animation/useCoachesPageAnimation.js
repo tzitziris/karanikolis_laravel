@@ -15,7 +15,9 @@ export function useCoachesPageAnimation(scopeRef) {
         const closingImage = root.querySelector('[data-coaches-closing-image]');
         const media = gsap.matchMedia();
 
-        revealItems.forEach((item) => {
+        // Measure reveals after coverflow establishes its layout and pin spacing.
+        // Keeping them in matchMedia also rebuilds them on breakpoint changes.
+        const setupReveals = () => revealItems.forEach((item) => {
             gsap.fromTo(
                 item,
                 { y: 22 },
@@ -64,6 +66,8 @@ export function useCoachesPageAnimation(scopeRef) {
         media.add(DESKTOP_QUERY, (context) => {
             const cleanup = setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, desktop: true });
 
+            setupReveals();
+
             [coachImage, closingImage]
                 .filter(Boolean)
                 .forEach((image) => {
@@ -92,7 +96,11 @@ export function useCoachesPageAnimation(scopeRef) {
             // drifting needs would crop the head.
             openFrame(gsap, coachImage?.parentElement);
 
-            return setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, desktop: false });
+            const cleanup = setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, desktop: false });
+
+            setupReveals();
+
+            return cleanup;
         });
 
         return () => media.revert();

@@ -1,0 +1,253 @@
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\AnimationInvariantTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit uses GSAP as the only animation runtime dependency[39m[90m               [39m [90m0.10s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not ship stylesheet rules that hide JavaScript-revealed con[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps animation setup independent from font readiness and hidden[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit forces scroll-trigger animations through a page-scoped cleanup h[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the home journey pin inside page-scoped animation cleanup[39m[90m  [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit animates the journey cards only where the stylesheet really stac[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit sizes the page by the small viewport, so a phone toolbar never m[39m[90m…[39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\ApplicationTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit serves the home page through Inertia[39m[90m                             [39m [90m0.25s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit serves the news archive page through its finished Inertia compon[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit serves the coaches page through its finished Inertia component[39m[90m   [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit serves the about page through its finished Inertia component[39m[90m     [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit serves the schedule page through its finished Inertia component[39m[90m  [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit shows the official 2026-2027 weekday schedule and first-training[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps schedule class names sized to their timetable cells[39m[90m        [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit loads schedule photographs through SiteImage with only the hero[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not expose the temporary motion demo route[39m[90m                  [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit shows the confirmed athlete names without provisional roster lab[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the public shell outside the keyed Inertia page component[39m[90m  [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not leave unrendered page components behind[39m[90m                 [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit makes the mobile navigation a real dialog with inert page conten[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit runs the test suite against the dedicated MariaDB database[39m[90m       [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit creates a user through the model factory on the test database[39m[90m    [39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps server-side rendering out of the frontend pipeline[39m[90m         [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit references only font files that exist in the public font directo[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps fonts local, optional, and independent from JavaScript rea[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit requires every shipped font family to have a metric-matched fall[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps font preloads family-complete and aligned with shipped fon[39m[90m…[39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\ArticleBodyRendererTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit renders known TipTap nodes into constructed HTML[39m[90m                 [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps unknown structure out while preserving its words[39m[90m           [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit allows only http and https links to reach visitors with dataset[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit allows only http and https links to reach visitors with dataset[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit allows only http and https links to reach visitors with dataset[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit allows only http and https links to reach visitors with dataset[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit allows only http and https links to reach visitors with dataset[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit allows only http and https links to reach visitors with dataset[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit escapes safe link addresses after deciding they are web URLs[39m[90m     [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit turns Facebook emoji images into characters and blocks other pas[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not render youtube nodes inside article body HTML[39m[90m           [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit renders the seeded Facebook paste article without remote image f[39m[90m…[39m [90m0.08s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Auth\AdminArticleContentTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit serves create and edit article word forms only to authenticated[39m[90m… [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit creates a draft article from JSON body content and never browser[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps Greek validation errors beside the fields while rejecting[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit rewrites a published article title without changing its slug, pu[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps a live article public when its editor date field is emptie[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not erase an existing publication date when editing an undr[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit renders every node and mark the contract declares, as the elemen[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit gives the editor exactly the vocabulary the server declares, and[39m[90m…[39m [90m0.14s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit takes its heading levels and alignments from the contract it is[39m[90m… [39m [90m0.11s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses to open rather than offer a vocabulary the server will n[39m[90m…[39m [90m0.11s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Auth\AdminArticleSaveMessageTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit says the article is on the site when saving leaves it there[39m[90m      [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit says the article has left the site when a future date takes it o[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit says the date field was ignored rather than reporting a plain su[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not mention a kept date when there was none to keep[39m[90m         [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit says a hidden article is hidden[39m[90m                                  [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit describes what the owner saved with the one definition the dashb[39m[90m…[39m [90m0.02s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Auth\AdminArticleVideoTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit reads the video id out of every YouTube address shape the owner[39m[90m… [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit reads the video id out of every YouTube address shape the owner[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit reads the video id out of every YouTube address shape the owner[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit reads the video id out of every YouTube address shape the owner[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit reads the video id out of every YouTube address shape the owner[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses an address it cannot read a video out of, in Greek, stor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses an address it cannot read a video out of, in Greek, stor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses an address it cannot read a video out of, in Greek, stor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses an address it cannot read a video out of, in Greek, stor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses an address it cannot read a video out of, in Greek, stor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit asks for an address when the field is empty[39m[90m                      [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the order of the remaining videos when one is removed from[39m[90m…[39m [90m0.05s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit saves an order the owner rearranged[39m[90m                              [39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses an order that does not describe exactly this article's v[39m[90m…[39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit will not let one article delete another article's video[39m[90m          [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit hands the editing screen the videos it already has[39m[90m               [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit changes nothing when a video address is reached by GET with ('/a[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit changes nothing when a video address is reached by GET with ('/a[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit sends an unauthenticated video request to the sign-in page befor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit sends an unauthenticated video request to the sign-in page befor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit sends an unauthenticated video request to the sign-in page befor[39m[90m…[39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Auth\AdminAuthenticationTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit serves the administrator sign-in page without the public site sh[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit signs an administrator in with a regenerated session and generic[39m[90m…[39m [90m0.28s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit locks sign-in on the eleventh wrong password without confirming[39m[90m… [39m [90m2.24s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit discards the session when an administrator signs out[39m[90m             [39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects direct unauthenticated management requests to the sign[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps not-yet-built management screens unavailable after sign-in[39m[90m [39m [90m0.02s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Auth\AdminCommandsTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit creates an administrator from a one-time password file and remov[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses non-interactive administrator creation without a passwor[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit lists and deletes administrators with Greek command output while[39m[90m…[39m [90m0.02s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\Auth\AdminDashboardTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit lists every article for the owner with distinct Greek visibility[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit loads the admin article list in one article query without articl[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit publishes and unpublishes without forgetting the stored publicat[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit deletes an article and its database media records from a non-lin[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit asks before deleting, and says in Greek what goes with the artic[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects unauthenticated mutation requests to the sign-in page[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects unauthenticated mutation requests to the sign-in page[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects unauthenticated mutation requests to the sign-in page[39m[90m… [39m [90m0.02s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\DatabaseContainerTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit runs the suite against the MariaDB line the production host runs[39m[90m [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit stores every table in the one charset and collation the site is[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit leaves every text column in the site collation, apart from the J[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps Greek text and four-byte characters exactly as they were w[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit compares Greek the way utf8mb4_unicode_ci promises, so a search[39m[90m… [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\ErrorPageTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit answers an unknown article id in the admin in Greek[39m[90m              [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit answers an unknown admin address in Greek[39m[90m                        [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the public 404 on the site rather than the plain error pag[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit says in Greek that something broke, without showing what[39m[90m         [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit explains an expired form in Greek instead of showing Page Expire[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit names the real upload limit when PHP refuses the request before[39m[90m… [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit styles the error pages from a file that does not need a build[39m[90m    [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\FontCoverageTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit ships exactly the font files the coverage record describes[39m[90m       [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit promises in the stylesheet only the characters the font files ac[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not send a Greek face to draw a Latin character, or the rev[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the critical path under the weight that made the old site[39m[90m… [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\GetChangesNothingTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit changes nothing when any page of the site is fetched[39m[90m             [39m [90m0.11s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses to run a mutation that arrives as a GET[39m[90m                  [39m [90m0.12s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\ImagePipelineTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit gives a replaced photograph a new address, so no cache can serve[39m[90m…[39m [90m0.06s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit converts static images through an idempotent local command[39m[90m       [39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps static source photographs inside this repository and outsi[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps static source marks inside this repository and outside pub[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit has generated webp derivatives for every configured static photo[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit has generated transparent webp derivatives for every configured[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps original bitmap formats out of browser-reachable public pa[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps direct image file references inside the SiteImage gateway[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps bitmap URLs out of stylesheets[39m[90m                             [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the generated JavaScript static image manifest exactly ali[39m[90m…[39m [90m0.30s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps SiteImage from throwing away the page on bad image input[39m[90m   [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit lets exactly one home page photograph ask for priority loading[39m[90m   [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\NewsArchiveTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit serves the news archive with only public-ready article card data[39m[90m [39m [90m0.09s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit serves addressable archive pages from the page query string[39m[90m      [39m [90m0.08s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects archive pages that do not exist to the nearest real ar[39m[90m…[39m [90m0.08s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit redirects empty archive pages back to the empty first page[39m[90m       [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit feeds latest home articles through the shared article feed[39m[90m       [39m [90m0.07s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the public visibility rule in the shared article feed[39m[90m      [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit loads archive cards with one count query and one card query with[39m[90m…[39m [90m0.07s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\NewsArticlePageTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit serves a public article with server-rendered body html and eager[39m[90m…[39m [90m0.07s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit uses the shared public article rule for typed article addresses[39m[90m  [39m [90m0.07s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit shows the Greek not found page for a missing article slug[39m[90m        [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not make the article page one query per gallery image or vi[39m[90m…[39m [90m0.07s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the video placeholder off third-party networks until play[39m[90m… [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit makes gallery enlargement a keyboard-safe dialog[39m[90m                 [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps long seeded article titles wrapping by whole words[39m[90m         [39m [90m0.06s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\NewsDatabaseTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit creates the news tables with integer keys and image identifiers[39m[90m  [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit generates url safe Greek slugs once and resolves collisions befo[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit orders public articles only by publication timestamp[39m[90m             [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit deletes article media with the article and returns media in sort[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit extracts YouTube ids from supported public URL shapes[39m[90m            [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit seeds believable local Greek news for list and article developme[39m[90m…[39m [90m0.07s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit seeds local news through the database seeder entrypoint[39m[90m          [39m [90m0.06s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit guards the local news seeder from production database seeds[39m[90m      [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\PageMetadataTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit gives every public page its own Greek title and description[39m[90m      [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit describes an article with its own title, its own summary and its[39m[90m…[39m [90m0.34s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit offers a share picture that is webp, sized, and actually on the[39m[90m… [39m [90m0.33s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit shares the cover an article actually has, uploaded or one of the[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit falls back to the school picture when an article has no cover[39m[90m    [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the login form out of search results[39m[90m                       [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps the admin out of search results[39m[90m                            [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not offer a page that answered 404 to a search engine[39m[90m       [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit separates the second page of the archive from the first[39m[90m          [39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit writes the head on the server, where a crawler that runs no Java[39m[90m…[39m [90m0.02s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\SecurityHeadersTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit sends the headers on every page a visitor can reach[39m[90m              [39m [90m0.04s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit sends the headers on the admin pages too[39m[90m                         [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit leaves no way to run script that did not come from this applicat[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit opens a frame only for the video host the article page uses afte[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not let another site put the pages in a frame[39m[90m               [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit keeps crawlers out of the admin[39m[90m                                  [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\SitemapTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit lists every page of the site[39m[90m                                     [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit lists exactly the articles the public site shows, and no others[39m[90m  [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit drops an article from the sitemap the moment it is taken off the[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit dates each article from its own row[39m[90m                              [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells crawlers where the sitemap is, at this site address[39m[90m        [39m [90m0.01s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\StylesheetTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit exposes every design colour variable to Tailwind utilities[39m[90m       [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit draws every colour utility the components use from a rule that r[39m[90m…[39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not ship the deleted readable fallback stylesheet[39m[90m           [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not allow arbitrary mid-word text breaking in visitor compo[39m[90m…[39m [90m0.03s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\UploadLimitsTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner in Greek about every upload PHP breaks before we[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit says how large a photograph may be when it was refused for being[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not blame the size when no photograph was chosen at all[39m[90m     [39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit never promises to accept more than this PHP will actually take[39m[90m   [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit reads the size suffixes PHP writes its limits with[39m[90m               [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit writes a whole number of megabytes without a decimal[39m[90m             [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit tells the owner the limit before they choose a file[39m[90m              [39m [90m0.02s[39m  
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\UploadedArticleImageTest[39m
+  [32;1m✓[39;22m[90m [39m[90mit stores an uploaded article cover only as role-sized webp derivat[39m[90m…[39m [90m0.34s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit uses different uploaded derivative sizes for gallery photographs[39m[90m [39m [90m0.38s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit accepts a full size twelve megapixel phone photograph comfortabl[39m[90m…[39m [90m1.31s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses files whose declared type lies and leaves no uploaded fi[39m[90m…[39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit refuses oversized uploads with a Greek owner-facing message and[39m[90m… [39m [90m0.03s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit treats only site-made upload UUIDs as uploaded image names[39m[90m       [39m [90m0.01s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit replaces an article cover through its own request and deletes on[39m[90m…[39m [90m0.63s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit appends gallery uploads and preserves the owner order, descripti[39m[90m…[39m [90m1.10s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit removes a gallery image from the middle, deletes its files and c[39m[90m…[39m [90m1.12s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit returns a Greek photo message when PHP rejects the request befor[39m[90m…[39m [90m0.02s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit renders uploaded covers and gallery photos from database dimensi[39m[90m…[39m [90m0.73s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit removes uploaded files after the article rows that point at them[39m[90m…[39m [90m0.71s[39m  
+  [32;1m✓[39;22m[90m [39m[90mit does not delete uploaded files while another database row still[39m[90m… [39m [90m0.38s[39m  
+
+  [90mTests:[39m    [32;1m203 passed[39;22m[90m (2459 assertions)[39m
+  [90mDuration:[39m [39m14.97s[39m
+

@@ -1,7 +1,14 @@
 import { Link } from '@inertiajs/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import YoutubeEmbed from '../Components/News/YoutubeEmbed';
 import SiteImage from '../Components/SiteImage';
 import { useCoachesPageAnimation } from '../animation/useCoachesPageAnimation';
+
+const fightVideos = [
+    { name: 'Giannis “Hercules” Stoforidis', youtubeId: 'K0jLEe7oz8E' },
+    { name: 'Kostas “Ripper” Papadelis', youtubeId: 'r8dTR_YOQb0' },
+    { name: 'Vasiliki Stavridou', youtubeId: '4CaRuOnfSUU' },
+];
 
 const athletes = [
     { image: 'athlete-padwork', name: 'Γιάννης Στοφορίδης' },
@@ -51,9 +58,10 @@ function CoachesHero() {
             className="grain relative isolate min-h-[calc(100svh-5rem)] overflow-hidden bg-ink-0"
             data-coaches-hero
         >
+            {/* On a phone the photograph is lifted and trimmed top and bottom, so the athlete's face and chest sit above the text and the floor fades away behind it. */}
             <SiteImage
                 alt="Αθλητής σηκώνει τα χέρια του στη νίκη, με τον διαιτητή δίπλα του"
-                className="absolute inset-0 -z-30 h-full w-full object-cover object-[87%_center] saturate-[.72] contrast-125 lg:object-[center_70%]"
+                className="absolute inset-0 -z-30 h-full w-full object-cover object-[80%_center] saturate-[.72] contrast-125 max-lg:bottom-auto max-lg:top-[-20%] max-lg:h-[110%] max-lg:[mask-image:linear-gradient(#000_72%,transparent_98%)] lg:object-[center_70%]"
                 data-coaches-hero-image
                 image="coaches-hero"
                 priority
@@ -294,6 +302,60 @@ function AthletesSection() {
     );
 }
 
+function FightVideosSection() {
+    const [activeVideo, setActiveVideo] = useState(null);
+
+    return (
+        <section
+            aria-label="Βίντεο από αγώνες"
+            className="bg-ink-0 px-5 py-28 sm:px-8 sm:py-40 lg:px-12"
+        >
+            <div className="mx-auto max-w-[1500px]">
+                <div data-coaches-reveal>
+                    <p className="text-[10px] font-medium uppercase text-blood">
+                        Από τους αγώνες
+                    </p>
+                    <h2 className="mt-5 font-display text-[clamp(3.4rem,8vw,7.5rem)] font-black uppercase leading-[0.9] text-bone">
+                        Στο ρινγκ.
+                    </h2>
+                </div>
+                <div className="mt-14 grid grid-cols-1 gap-px bg-line-strong lg:grid-cols-6">
+                    {fightVideos.map((video, index) => {
+                        // Expand the final row to its actual count, without empty cells.
+                        const remainder = fightVideos.length % 3;
+                        const columns = index < fightVideos.length - remainder ? 3 : remainder;
+                        const span = { 1: 'lg:col-span-6', 2: 'lg:col-span-3', 3: 'lg:col-span-2' }[columns];
+                        const posterSizes = `(min-width: 1024px) ${columns === 3 ? 33 : 100 / columns}vw, 100vw`;
+
+                        return (
+                            <article
+                                className={`@container min-w-0 bg-ink-1 p-5 sm:p-8 lg:p-6 ${span}`}
+                                data-coaches-reveal
+                                key={video.youtubeId}
+                            >
+                                <h3 className="mb-5 flex min-h-[2.5em] items-start gap-3 font-display text-[min(7cqw,2rem)] font-black uppercase leading-tight text-blood">
+                                    <span aria-hidden="true" className="mt-[0.5em] h-1.5 w-1.5 shrink-0 bg-blood" />
+                                    {video.name}
+                                </h3>
+                                <YoutubeEmbed
+                                    isActive={activeVideo === video.youtubeId}
+                                    onActivate={() => setActiveVideo(video.youtubeId)}
+                                    playLabel={video.name}
+                                    // Posters use the athlete's final surname as their filename.
+                                    poster={`video-${video.name.split(' ').at(-1).toLowerCase()}`}
+                                    posterSizes={posterSizes}
+                                    title={`${video.name} — βίντεο αγώνα`}
+                                    youtubeId={video.youtubeId}
+                                />
+                            </article>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
+    );
+}
+
 function ClosingSection() {
     return (
         <section className="grain relative isolate overflow-hidden bg-ink-0 lg:min-h-[86svh]">
@@ -345,6 +407,7 @@ export default function Coaches() {
             <CoachSection />
             <TeamStatement />
             <AthletesSection />
+            <FightVideosSection />
             <ClosingSection />
         </div>
     );

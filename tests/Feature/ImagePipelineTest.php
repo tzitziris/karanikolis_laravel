@@ -203,7 +203,7 @@ it('keeps static source photographs inside this repository and outside public pa
         ->and($sourceDir)->toStartWith(base_path())
         ->and($sourceDir)->not->toStartWith(public_path())
         ->and(config('images.static.source_dir'))->not->toContain('karanikolis_site')
-        ->and(File::allFiles($sourceDir))->toHaveCount(15);
+        ->and(File::allFiles($sourceDir))->toHaveCount(18);
 });
 
 it('keeps static source marks inside this repository and outside public paths', function () {
@@ -222,7 +222,7 @@ it('has generated webp derivatives for every configured static photograph', func
     $sourceDir = config('images.static.source_dir');
     $outputDir = trim(config('images.static.output_dir'), '/');
 
-    expect($photos)->toHaveCount(15);
+    expect($photos)->toHaveCount(18);
 
     foreach ($photos as $name => $filename) {
         $source = "{$sourceDir}/{$filename}";

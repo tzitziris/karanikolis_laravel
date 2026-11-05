@@ -44,6 +44,9 @@ return [
             'schedule-hero' => 'schedule-hero.jpg',
             'schedule-rhythm' => 'schedule-rhythm.jpg',
             'sparring' => 'sparring.jpg',
+            'video-papadelis' => 'video-papadelis.jpg',
+            'video-stavridou' => 'video-stavridou.jpg',
+            'video-stoforidis' => 'video-stoforidis.jpg',
         ],
     ],
     'uploads' => [

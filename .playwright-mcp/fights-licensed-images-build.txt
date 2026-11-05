@@ -1,0 +1,21 @@
+about-hero: 1024x1536 source, 4 derivatives
+about-story: 1600x1068 source, 6 derivatives
+athlete-bag: 1536x1024 source, 5 derivatives
+athlete-kick: 1536x1024 source, 5 derivatives
+athlete-padwork: 1536x1024 source, 5 derivatives
+athlete-sparring: 1600x1067 source, 6 derivatives
+coach-portrait: 1024x1536 source, 4 derivatives
+coaches-closing: 1536x1024 source, 5 derivatives
+coaches-hero: 1536x1024 source, 5 derivatives
+hero-kickboxing: 1511x755 source, 5 derivatives
+pad-work: 1536x1024 source, 5 derivatives
+ring-training: 1536x1024 source, 5 derivatives
+schedule-hero: 1536x1024 source, 5 derivatives
+schedule-rhythm: 1080x720 source, 4 derivatives
+sparring: 1536x1024 source, 5 derivatives
+video-papadelis: 800x450 source, 3 derivatives
+video-stavridou: 512x288 source, 2 derivatives
+video-stoforidis: 672x378 source, 2 derivatives
+site-logo: 1024x1536 source, 5 derivatives
+Manifest: /Users/sophianostzitzires/cursor_ai/karanikolis_laravel/resources/js/images/staticImages.generated.json
+Done. 8061437 source bytes, 3750178 output bytes, 86 written, 0 skipped.

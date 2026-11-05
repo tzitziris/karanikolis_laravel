@@ -1,0 +1,42 @@
+
+> build
+> vite build
+
+vite v8.2.2 building client environment for production...
+transforming...
+
+/fonts/inter/inter-greek-400-900.woff2 referenced in /fonts/inter/inter-greek-400-900.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/fonts/inter/inter-latin-400-900.woff2 referenced in /fonts/inter/inter-latin-400-900.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/fonts/roboto-condensed/roboto-condensed-greek-700-900.woff2 referenced in /fonts/roboto-condensed/roboto-condensed-greek-700-900.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/fonts/roboto-condensed/roboto-condensed-latin-700-900.woff2 referenced in /fonts/roboto-condensed/roboto-condensed-latin-700-900.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/fonts/jetbrains-mono/jetbrains-mono-greek-400-700.woff2 referenced in /fonts/jetbrains-mono/jetbrains-mono-greek-400-700.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+/fonts/jetbrains-mono/jetbrains-mono-latin-400-700.woff2 referenced in /fonts/jetbrains-mono/jetbrains-mono-latin-400-700.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+✓ 667 modules transformed.
+rendering chunks...
+computing gzip size...
+public/build/manifest.json                           4.73 kB │ gzip:   0.75 kB
+public/build/assets/app-D3GEm1OR.css                81.89 kB │ gzip:  15.88 kB
+public/build/assets/imageMotion-l9T2413U.js          0.55 kB │ gzip:   0.31 kB
+public/build/assets/ArticleImage-DE37DGs-.js         0.96 kB │ gzip:   0.59 kB
+public/build/assets/NotFound-wePGf4Tq.js             1.99 kB │ gzip:   0.96 kB
+public/build/assets/YoutubeEmbed-BKYQfSkC.js         2.15 kB │ gzip:   1.14 kB
+public/build/assets/Login-lmBl0iIG.js                2.52 kB │ gzip:   1.08 kB
+public/build/assets/PublicPlaceholder-Cq_0NuQL.js    2.94 kB │ gzip:   1.33 kB
+public/build/assets/ArticleGrid-BB4Ujb1r.js          3.28 kB │ gzip:   1.48 kB
+public/build/assets/News-NNF0PIJF.js                 6.82 kB │ gzip:   2.63 kB
+public/build/assets/Dashboard-CBZGghwH.js            8.05 kB │ gzip:   2.30 kB
+public/build/assets/About-DCIaXmUL.js               13.70 kB │ gzip:   4.28 kB
+public/build/assets/Article-xc4ZjUnH.js             14.05 kB │ gzip:   4.27 kB
+public/build/assets/Schedule-C2vjOI_j.js            15.99 kB │ gzip:   4.76 kB
+public/build/assets/Home-rhkQBFnj.js                17.52 kB │ gzip:   5.17 kB
+public/build/assets/ArticleForm-CFt5jIlM.js         20.96 kB │ gzip:   4.72 kB
+public/build/assets/Coaches-CteSFiNk.js             21.67 kB │ gzip:   7.84 kB
+public/build/assets/RichTextEditor-Cqt2CewW.js     394.29 kB │ gzip: 124.20 kB
+public/build/assets/app-BQya7FTL.js                460.94 kB │ gzip: 156.91 kB
+
+✓ built in 544ms
