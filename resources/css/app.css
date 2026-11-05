@@ -600,21 +600,7 @@ body {
     margin-inline: auto;
 }
 
-.athletes-controls button {
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 1px solid var(--line-strong);
-    color: var(--blood);
-    cursor: pointer;
-    flex: none;
-}
-
-.athletes-controls button:disabled {
-    opacity: .35;
-    cursor: default;
-}
-
-.athletes-controls button:focus-visible, .athlete-select:focus-visible {
+.athlete-select:focus-visible {
     outline: 2px solid var(--blood);
     outline-offset: -3px;
 }

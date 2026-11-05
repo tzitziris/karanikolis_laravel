@@ -18,8 +18,6 @@ export function setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, des
     const controls = section.querySelector('[data-athletes-controls]');
     const counter = section.querySelector('[data-athletes-counter]');
     const progressLine = section.querySelector('[data-athletes-progress]');
-    const prev = section.querySelector('[data-athletes-prev]');
-    const next = section.querySelector('[data-athletes-next]');
     const selects = [...section.querySelectorAll('[data-athlete-select]')];
     const dims = [...section.querySelectorAll('[data-athlete-dim]')];
     // quickSetter writes directly: preserve exact attributes for breakpoints
@@ -76,8 +74,6 @@ export function setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, des
         if (rounded !== active) {
             active = rounded;
             counter.textContent = String(active + 1).padStart(2, '0');
-            prev.disabled = active === 0;
-            next.disabled = active === count - 1;
             cards.forEach((card, index) => {
                 card.classList.toggle('is-active', index === active);
                 slots[index].style.zIndex = String(count - Math.abs(index - active));
@@ -145,8 +141,6 @@ export function setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, des
         });
     });
     const move = (delta) => context.goToAthlete((targetIndex ?? active) + delta);
-    listen(prev, 'click', () => move(-1));
-    listen(next, 'click', () => move(1));
     selects.forEach((button, index) => listen(button, 'click', () => context.goToAthlete(index)));
     listen(section, 'keydown', (event) => {
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
@@ -175,8 +169,6 @@ export function setupAthletesCoverflow({ gsap, ScrollTrigger, root, context, des
         delete section.dataset.coverflow;
         controls.hidden = true;
         counter.textContent = '01';
-        prev.disabled = false;
-        next.disabled = false;
         slots.forEach((slot) => slot.removeAttribute('aria-current'));
         cards.forEach((card) => card.classList.remove('is-active'));
         selects.forEach((button) => {

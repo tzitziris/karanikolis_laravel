@@ -288,12 +288,6 @@ function AthletesSection() {
                     <div className="athletes-progress" aria-hidden="true">
                         <div data-athletes-progress />
                     </div>
-                    <button aria-label="Προηγούμενος αθλητής" data-athletes-prev type="button">
-                        <span aria-hidden="true">←</span>
-                    </button>
-                    <button aria-label="Επόμενος αθλητής" data-athletes-next type="button">
-                        <span aria-hidden="true">→</span>
-                    </button>
                 </div>
             </div>
         </section>
