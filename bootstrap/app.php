@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CanonicalHost;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SecurityHeaders;
 use App\Support\UploadLimits;
@@ -16,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Global, so a page that does not exist is moved to the right host too.
+        $middleware->prepend(CanonicalHost::class);
+
         $middleware->web(append: [
             HandleInertiaRequests::class,
             SecurityHeaders::class,
