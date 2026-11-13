@@ -37,6 +37,21 @@ it('moves a page that does not exist, so the right host shows the Greek 404', fu
         ->assertRedirect('https://karanikolisteam.gr/mia-anyparkti-selida');
 });
 
+it('moves the domain read over plain http to https', function () {
+    inProduction();
+
+    $this->get('http://karanikolisteam.gr/about')
+        ->assertStatus(301)
+        ->assertRedirect('https://karanikolisteam.gr/about');
+});
+
+it('does not ask for https when APP_URL itself is plain http', function () {
+    inProduction();
+    config(['app.url' => 'http://karanikolisteam.gr']);
+
+    $this->get('http://karanikolisteam.gr/')->assertOk();
+});
+
 it('serves the domain itself without a redirect', function () {
     inProduction();
 

@@ -14,6 +14,8 @@ class CanonicalHost
      * cPanel. Search engines would see each as a copy of the site, and a link
      * shared on the old address would never move. In production every page
      * read on another host is sent, permanently, to the same page on APP_URL.
+     * So is a page read over plain http when APP_URL is https: cPanel's own
+     * switch for that sits on a hidden subdomain and is easy to miss.
      *
      * Redirects in cPanel would do the same, but cPanel writes them into
      * public/.htaccess, which every deploy overwrites.
@@ -26,7 +28,10 @@ class CanonicalHost
             $target === null
             || ! app()->environment('production')
             || ! $request->isMethodSafe()
-            || strcasecmp($request->getHost(), $target['host']) === 0
+            || (
+                strcasecmp($request->getHost(), $target['host']) === 0
+                && ($target['scheme'] !== 'https' || $request->isSecure())
+            )
         ) {
             return $next($request);
         }
@@ -35,7 +40,7 @@ class CanonicalHost
     }
 
     /**
-     * @return array{host: string, origin: string}|null
+     * @return array{host: string, scheme: string, origin: string}|null
      */
     private function canonicalOrigin(): ?array
     {
@@ -46,9 +51,9 @@ class CanonicalHost
             return null;
         }
 
-        $scheme = $parts['scheme'] ?? 'https';
+        $scheme = strtolower($parts['scheme'] ?? 'https');
         $port = isset($parts['port']) ? ':'.$parts['port'] : '';
 
-        return ['host' => $host, 'origin' => "{$scheme}://{$host}{$port}"];
+        return ['host' => $host, 'scheme' => $scheme, 'origin' => "{$scheme}://{$host}{$port}"];
     }
 }
