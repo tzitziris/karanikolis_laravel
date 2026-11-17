@@ -32,6 +32,11 @@ it('serves the coaches page through its finished Inertia component', function ()
         );
 });
 
+it('distinguishes the amateur fights from the professional coach record', function () {
+    expect(File::get(resource_path('js/Pages/Coaches.jsx')))
+        ->toContain('Ερασιτεχνικοί αγώνες', 'Επαγγελματικό ρεκόρ');
+});
+
 it('serves the about page through its finished Inertia component', function () {
     $this->get('/about')
         ->assertInertia(fn (Assert $page) => $page

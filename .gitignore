@@ -27,3 +27,5 @@ Homestead.yaml
 Thumbs.db
 /test-results
 /public/images/static
+/output
+/.playwright-mcp

@@ -23,6 +23,12 @@ const coachMetrics = [
     { label: 'Νοκ άουτ', value: '27' },
 ];
 
+const coachAmateurRecord = {
+    value: '100+',
+    label: 'Ερασιτεχνικοί αγώνες',
+    spoken: 'Πάνω από 100',
+};
+
 const coachAchievements = [
     { title: 'Παγκόσμιος πρωταθλητής', year: '2005', location: 'Κύπρος' },
     { title: 'Παγκόσμιος πρωταθλητής', year: '2000', location: 'Γαλλία' },
@@ -166,9 +172,23 @@ function CoachSection() {
                 </p>
 
                 <div className="mt-9" data-coaches-reveal>
-                    <h3 className="text-xs font-medium uppercase tracking-wider text-pewter">
-                        Αγωνιστικό ρεκόρ
+                    <h3 className="text-xs font-medium uppercase tracking-wider text-blood">
+                        Αγωνιστική πορεία
                     </h3>
+                    <dl className="mt-4 border-y border-line-strong">
+                        <div className="flex min-w-0 items-baseline gap-x-4 gap-y-2 py-5 @max-[28rem]:flex-col">
+                            <dt className="text-xs uppercase tracking-wide text-bone-dim @min-[28rem]:whitespace-nowrap">
+                                <span className="sr-only">{coachAmateurRecord.spoken} </span>
+                                {coachAmateurRecord.label}
+                            </dt>
+                            <dd aria-hidden="true" className="order-first font-display text-[clamp(3rem,11cqw,4.5rem)] font-black leading-none tabular-nums text-bone">
+                                {coachAmateurRecord.value}
+                            </dd>
+                        </div>
+                    </dl>
+                    <h4 className="mt-6 text-xs font-medium uppercase tracking-wider text-blood">
+                        Επαγγελματικό ρεκόρ
+                    </h4>
                     <dl className="mt-4 grid grid-cols-2 border-y border-line-strong @min-[28rem]:grid-cols-4">
                         {coachMetrics.map((metric, index) => (
                             <div
